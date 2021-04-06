@@ -1,2 +1,2 @@
 # tinder-for-movies
-# Tyler Kim
+Developed by Tyler Kim, 
