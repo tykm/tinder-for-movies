@@ -1,2 +1,2 @@
 # tinder-for-movies
-Developed by Tyler Kim, Dezrianna Chapman
+Developed by Tyler Kim, Dezrianna Chapman, Mahi Gada
