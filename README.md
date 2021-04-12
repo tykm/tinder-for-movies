@@ -1,3 +1,2 @@
 # tinder-for-movies
-Developed by Tyler Kim, 
-hello! it is Dez
+Developed by Tyler Kim, Dezrianna Chapman
