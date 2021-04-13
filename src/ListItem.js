@@ -1,7 +1,10 @@
 import React from 'react';
 
 export function ListItem(props) {
-    return <li>
-            {props.name}
-        </li>;
+    return (
+    <div>
+    <ul>{props.name}</ul>
+    <button>Like</button>
+    <button>Dislike</button>
+    </div>);
 }
