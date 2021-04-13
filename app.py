@@ -3,7 +3,10 @@ from flask import Flask, send_from_directory, json, session
 from flask_socketio import SocketIO
 from flask_cors import CORS
 
-genreVotes = {}
+genreVotes = {'28' : 'Action', '12' : 'Adventure', '16' : 'Animation', '32' : 'Comedy', 
+              '80' : 'Crime', '99' : 'Documentary', '18' : 'Drama', '10751' : 'Family', 
+              '14' : 'Fantasy', '36' : 'History', '27' : 'Horror', '10402' : 'Music', 
+              '9648' : 'Mystery', '10749' : 'Romance', '878' : 'Science Fiction', '53' : 'Thriller'}
 
 app = Flask(__name__, static_folder='./build/static')
 
