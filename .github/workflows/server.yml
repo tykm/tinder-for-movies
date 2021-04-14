@@ -37,8 +37,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt 
         
-      - name: Lint files
-        run: pylint *.py
+      #- name: Lint files
+       # run: pylint *.py
         
       #- name: Run tests
        # run: python -m unittest
