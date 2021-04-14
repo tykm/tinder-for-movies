@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main, genres ]
+    branches: [ main, genres, google-oauth ]
   pull_request:
-    branches: [ main, genres ]
+    branches: [ main, genres, google-oauth ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
