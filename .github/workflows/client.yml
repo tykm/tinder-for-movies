@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ ci-demo ]
+    branches: [ main, genres ]
   pull_request:
-    branches: [ ci-demo ]
+    branches: [ main, genres ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
