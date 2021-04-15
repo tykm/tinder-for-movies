@@ -24,7 +24,6 @@ function App() {
     console.log(response.profileObj.email);
     var infoNE = [response.profileObj.name, response.profileObj.email]
     socket.emit('email', infoNE)
-    
   }
 
   // The function inside useEffect is only run whenever any variable in the array
