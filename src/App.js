@@ -3,6 +3,7 @@ import './App.css';
 import { ListItem } from './ListItem.js';
 import { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
+import GoogleLogin from 'react-google-login';
 
 const socket = io(); // Connects to socket connection
 
@@ -34,9 +35,24 @@ function App() {
       setMessages(prevMessages => [...prevMessages, data.message]);
     });
   }, []);
-
+  
+  function responseGoogle(response) {
+    console.log(response);
+    console.log(response.profileObj);
+  }
+  
   return (
     <div>
+      <GoogleLogin
+        clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
+        buttonText="Login"
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+      />
+    
+    
+    
       <h1>Chat Messages</h1>
       Enter message here: <input ref={inputRef} type="text" />
       <button onClick={onClickButton}>Send</button>
