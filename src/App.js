@@ -22,7 +22,7 @@ function App() {
   function onLoginButton(response) {
     console.log(response.profileObj.name)
     console.log(response.profileObj.email);
-    let infoNE = [response.profileObj.name, response.profileObj.email]
+    var infoNE = [response.profileObj.name, response.profileObj.email]
     socket.emit('email', infoNE)
     
   }
