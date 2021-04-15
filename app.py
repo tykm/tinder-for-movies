@@ -19,17 +19,17 @@ class Player(DB.Model):
     email = DB.Column(DB.String(60), primary_key=True)
     name = DB.Column(DB.String(50), primary_key=False)
 
-    def __init__(self, username, score):
-        self.username = username
-        self.score = score
+    def __init__(self, email, name):
+        self.email = email
+        self.name = name
 
     def __repr__(self):
-        return self.username + ": " + str(self.score)
+        return self.email + ": " + self.name
 
     def print_player(self):
-        """ Prints player data """
-        print(self.username)
-        print(self.score)
+        """ Prints user data """
+        print(self.email)
+        print(self.name)
 
 SOCKETIO = SocketIO(
     APP,
@@ -55,11 +55,17 @@ def on_disconnect():
 
 # When a client emits the event 'chat' to the server, this function is run
 # 'chat' is a custom event name that we just decided
-@SOCKETIO.on('onLogin')
-def on_Login(): # data is whatever arg you pass in your emit call on client
+@SOCKETIO.on('on_login')
+def on_login(): # data is whatever arg you pass in your emit call on client
     # This emits the 'chat' event from the server to all clients except for
     # the client that emmitted the event that triggered this function
-    SOCKETIO.emit('onLogin',  genreVotes, broadcast=True, include_self=False)
+    SOCKETIO.emit('on_login',  genreVotes, broadcast=True, include_self=False)
+
+@SOCKETIO.on('email')
+def on_email(user_info):
+    print("Received user info!")
+    print("Email: " + user_info[0])
+    print("Name: " + user_info[1])
 
 # Note we need to add this line so we can import APP in the python shell
 if __name__ == "__main__":
