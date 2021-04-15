@@ -11,14 +11,12 @@ function App() {
   const [messages, setMessages] = useState([]); // State variable, list of messages
   const inputRef = useRef(null); // Reference to <input> element
 
-  function onClickButton() {
-    if (inputRef != null) {
-      const message = inputRef.current.value;
-      // If your own client sends a message, we add it to the list of messages to 
-      // render it on the UI.
-      setMessages(prevMessages => [...prevMessages, message]);
-      socket.emit('chat', { message: message });
-    }
+  // Upon user login print out user's name and email
+  function onLoginButton(response) {
+    console.log(response.profileObj.name)
+    console.log(response.profileObj.email);
+    
+    
   }
 
   // The function inside useEffect is only run whenever any variable in the array
@@ -27,38 +25,19 @@ function App() {
   useEffect(() => {
     // Listening for a chat event emitted by the server. If received, we
     // run the code in the function that is passed in as the second arg
-    socket.on('chat', (data) => {
-      console.log('Chat event received!');
-      console.log(data);
-      // If the server sends a message (on behalf of another client), then we
-      // add it to the list of messages to render it on the UI.
-      setMessages(prevMessages => [...prevMessages, data.message]);
-    });
+    
   }, []);
   
-  function responseGoogle(response) {
-    console.log(response);
-    console.log(response.profileObj);
-  }
   
   return (
     <div>
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
         buttonText="Login"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
+        onSuccess={onLoginButton}
+        onFailure={onLoginButton}
         cookiePolicy={'single_host_origin'}
       />
-    
-    
-    
-      <h1>Chat Messages</h1>
-      Enter message here: <input ref={inputRef} type="text" />
-      <button onClick={onClickButton}>Send</button>
-      <ul>
-        {messages.map((item, index) => <ListItem key={index} name={item} />)}
-      </ul>
     </div>
   );
 }
