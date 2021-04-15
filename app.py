@@ -14,9 +14,6 @@ genreVotes = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' : ['Animation'
               
 users = []
 
-app = Flask(__name__, static_folder='./build/static')
-
-
 APP = Flask(__name__, static_folder='./build/static')
 CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
 
@@ -92,7 +89,7 @@ def on_Submit(votes):
 if __name__ == "__main__":
     # Note that we don't call app.run anymore. We call socketio.run with app arg
     SOCKETIO.run(
-        app,
+        APP,
         host=os.getenv('IP', '0.0.0.0'),
         port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
     )
