@@ -8,6 +8,7 @@ import GoogleLogin from 'react-google-login';
 const socket = io(); // Connects to socket connection
 const arr = ['','']
 function App() {
+  console.log(process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID)
   const [messages, setMessages] = useState([]); // State variable, list of messages
   const inputRef = useRef(null); // Reference to <input> element
   const [info, setInfo] = useState(arr);
