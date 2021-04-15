@@ -77,12 +77,17 @@ def on_Login(data): # data is whatever arg you pass in your emit call on client
     # the client that emmitted the event that triggered this function
     users.append(data.username)
     SOCKETIO.emit('onLogin',  genresDict, broadcast=True, include_self=False)
+    
+SOCKETIO.on('everyonesIn')
+def startVote(data):
+    SOCKETIO.emit('everyonesIn', data, broadcast=True, include_self=False)
 
 @SOCKETIO.on('onSubmit')
 def on_Submit(votes):
     counter = 0
     for keys in genreVotes:
-        genreVotes[keys] = genreVotes[keys][1] + votes[counter]
+        if votes[counter] == 1:
+            genreVotes[keys] = genreVotes[keys][1] + votes[counter]
     SOCKETIO.emit('onAdminSubmit', genreVotes, broadcast=True, include_self=False)
 
 # Note we need to add this line so we can import app in the python shell
