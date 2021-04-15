@@ -5,9 +5,10 @@ import { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import GoogleLogin from 'react-google-login';
 
-const socket = io(); // Connects to socket connection
+//const socket = io(); // Connects to socket connection
 
 function App() {
+  console.log(process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID)
   const [messages, setMessages] = useState([]); // State variable, list of messages
   const inputRef = useRef(null); // Reference to <input> element
 
@@ -15,8 +16,6 @@ function App() {
   function onLoginButton(response) {
     console.log(response.profileObj.name)
     console.log(response.profileObj.email);
-    
-    
   }
 
   // The function inside useEffect is only run whenever any variable in the array
@@ -27,7 +26,6 @@ function App() {
     // run the code in the function that is passed in as the second arg
     
   }, []);
-  
   
   return (
     <div>

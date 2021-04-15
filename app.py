@@ -2,50 +2,70 @@ import os
 from flask import Flask, send_from_directory, json, session
 from flask_socketio import SocketIO
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 
 genreVotes = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' : ['Animation', 0], '32' : ['Comedy', 0], 
               '80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
               '10749' : ['Romance', 0], '878' : ['Science Fiction', 0]}
 
-app = Flask(__name__, static_folder='./build/static')
+users = {}
 
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
+APP = Flask(__name__, static_folder='./build/static')
+CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
 
-socketio = SocketIO(
-    app,
+DB = SQLAlchemy(APP)
+class Player(DB.Model):
+    """ Player class is an object that represents a player in the DB """
+    email = DB.Column(DB.String(60), primary_key=True)
+    name = DB.Column(DB.String(50), primary_key=False)
+
+    def __init__(self, username, score):
+        self.username = username
+        self.score = score
+
+    def __repr__(self):
+        return self.username + ": " + str(self.score)
+
+    def print_player(self):
+        """ Prints player data """
+        print(self.username)
+        print(self.score)
+
+SOCKETIO = SocketIO(
+    APP,
     cors_allowed_origins="*",
     json=json,
     manage_session=False
 )
 
-@app.route('/', defaults={"filename": "index.html"})
-@app.route('/<path:filename>')
+@APP.route('/', defaults={"filename": "index.html"})
+@APP.route('/<path:filename>')
 def index(filename):
     return send_from_directory('./build', filename)
 
 # When a client connects from this Socket connection, this function is run
-@socketio.on('connect')
+@SOCKETIO.on('connect')
 def on_connect():
     print('User connected!')
 
 # When a client disconnects from this Socket connection, this function is run
-@socketio.on('disconnect')
+@SOCKETIO.on('disconnect')
 def on_disconnect():
     print('User disconnected!')
 
 # When a client emits the event 'chat' to the server, this function is run
 # 'chat' is a custom event name that we just decided
-@socketio.on('onLogin')
+@SOCKETIO.on('onLogin')
 def on_Login(): # data is whatever arg you pass in your emit call on client
     # This emits the 'chat' event from the server to all clients except for
     # the client that emmitted the event that triggered this function
-    socketio.emit('onLogin',  genreVotes, broadcast=True, include_self=False)
+    SOCKETIO.emit('onLogin',  genreVotes, broadcast=True, include_self=False)
 
-# Note we need to add this line so we can import app in the python shell
+# Note we need to add this line so we can import APP in the python shell
 if __name__ == "__main__":
-    # Note that we don't call app.run anymore. We call socketio.run with app arg
-    socketio.run(
-        app,
+    # Note that we don't call APP.run anymore. We call SOCKETIO.run with APP arg
+    SOCKETIO.run(
+        APP,
         host=os.getenv('IP', '0.0.0.0'),
         port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
     )
