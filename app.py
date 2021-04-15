@@ -4,9 +4,7 @@ from flask_socketio import SocketIO
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
-genresDict = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' : ['Animation', 0], '32' : ['Comedy', 0], 
-              '80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
-              '10749' : ['Romance', 0], '878' : ['Science Fiction', 0]}
+genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Drama', 'Horror', 'Mystery', 'Romance', 'Science Fiction']
 
 genreVotes = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' : ['Animation', 0], '32' : ['Comedy', 0], 
               '80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
@@ -62,13 +60,9 @@ def on_email(user_info):
     print("Received user info!")
     print("Email: " + user_info[1])
     print("Name: " + user_info[0])
+    users.append(user_info[1])
+    SOCKETIO.emit('onLogin', users, broadcast=True, include_self=False)
     
-@SOCKETIO.on('onLogin')
-def on_Login(data): # data is whatever arg you pass in your emit call on client
-    # This emits the 'chat' event from the server to all clients except for
-    # the client that emmitted the event that triggered this function
-    users.append(data.username)
-    SOCKETIO.emit('onLogin',  genresDict, broadcast=True, include_self=False)
     
 SOCKETIO.on('everyonesIn')
 def startVote(data):
@@ -81,7 +75,7 @@ def on_Submit(votes):
         counter = counter + 1
         if votes[counter] == 1:
             genreVotes[keys] = genreVotes[keys][1] + votes[counter]
-    SOCKETIO.emit('onAdminSubmit', genreVotes, broadcast=True, include_self=False)
+    SOCKETIO.emit('onAdminSubmit', genreVotes, broadcast=True)
 
 # Note we need to add this line so we can import app in the python shell
 if __name__ == "__main__":
