@@ -8,8 +8,6 @@ genreVotes = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' : ['Animation'
               '80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
               '10749' : ['Romance', 0], '878' : ['Science Fiction', 0]}
 
-app = Flask(__name__, static_folder='./build/static')
-
 users = {}
 
 APP = Flask(__name__, static_folder='./build/static')
@@ -66,14 +64,14 @@ def on_login(): # data is whatever arg you pass in your emit call on client
 @SOCKETIO.on('email')
 def on_email(user_info):
     print("Received user info!")
-    print("Email: " + user_info[0])
-    print("Name: " + user_info[1])
+    print("Email: " + user_info[1])
+    print("Name: " + user_info[0])
 
 # Note we need to add this line so we can import app in the python shell
 if __name__ == "__main__":
     # Note that we don't call app.run anymore. We call socketio.run with app arg
      SOCKETIO.run(
-        app,
+        APP,
         host=os.getenv('IP', '0.0.0.0'),
         port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
     )
