@@ -57,14 +57,6 @@ def on_connect():
 def on_disconnect():
     print('User disconnected!')
 
-# When a client emits the event 'chat' to the server, this function is run
-# 'chat' is a custom event name that we just decided
-@SOCKETIO.on('on_login')
-def on_login(): # data is whatever arg you pass in your emit call on client
-    # This emits the 'chat' event from the server to all clients except for
-    # the client that emmitted the event that triggered this function
-    SOCKETIO.emit('on_login',  genreVotes, broadcast=True, include_self=False)
-
 @SOCKETIO.on('email')
 def on_email(user_info):
     print("Received user info!")
@@ -86,6 +78,7 @@ def startVote(data):
 def on_Submit(votes):
     counter = 0
     for keys in genreVotes:
+        counter = counter + 1
         if votes[counter] == 1:
             genreVotes[keys] = genreVotes[keys][1] + votes[counter]
     SOCKETIO.emit('onAdminSubmit', genreVotes, broadcast=True, include_self=False)
