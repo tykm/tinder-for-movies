@@ -3,21 +3,27 @@ import './App.css';
 import { ListItem } from './ListItem.js';
 import { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
+import GoogleLogin from 'react-google-login';
 
 const socket = io(); // Connects to socket connection
-
+const arr = ['','']
 function App() {
   const [messages, setMessages] = useState([]); // State variable, list of messages
   const inputRef = useRef(null); // Reference to <input> element
-
-  function onClickButton() {
-    if (inputRef != null) {
-      const message = inputRef.current.value;
-      // If your own client sends a message, we add it to the list of messages to 
-      // render it on the UI.
-      setMessages(prevMessages => [...prevMessages, message]);
-      socket.emit('chat', { message: message });
-    }
+  const [info, setInfo] = useState(arr);
+  // Upon user login print out user's name and email
+   useEffect(()=>{
+        socket.on('email',(data)=>{
+            setInfo(data);
+        });
+    },[]);
+  
+  function onLoginButton(response) {
+    console.log(response.profileObj.name)
+    console.log(response.profileObj.email);
+    let infoNE = [response.profileObj.name, response.profileObj.email]
+    socket.emit('email', infoNE)
+    
   }
 
   // The function inside useEffect is only run whenever any variable in the array
@@ -26,23 +32,19 @@ function App() {
   useEffect(() => {
     // Listening for a chat event emitted by the server. If received, we
     // run the code in the function that is passed in as the second arg
-    socket.on('chat', (data) => {
-      console.log('Chat event received!');
-      console.log(data);
-      // If the server sends a message (on behalf of another client), then we
-      // add it to the list of messages to render it on the UI.
-      setMessages(prevMessages => [...prevMessages, data.message]);
-    });
+    
   }, []);
-
+  
+  
   return (
     <div>
-      <h1>Chat Messages</h1>
-      Enter message here: <input ref={inputRef} type="text" />
-      <button onClick={onClickButton}>Send</button>
-      <ul>
-        {messages.map((item, index) => <ListItem key={index} name={item} />)}
-      </ul>
+      <GoogleLogin
+        clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
+        buttonText="Login"
+        onSuccess={onLoginButton}
+        onFailure={onLoginButton}
+        cookiePolicy={'single_host_origin'}
+      />
     </div>
   );
 }
