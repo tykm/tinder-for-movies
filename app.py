@@ -3,9 +3,15 @@ from flask import Flask, send_from_directory, json, session
 from flask_socketio import SocketIO
 from flask_cors import CORS
 
+genresDict = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' : ['Animation', 0], '32' : ['Comedy', 0], 
+              '80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
+              '10749' : ['Romance', 0], '878' : ['Science Fiction', 0]}
+
 genreVotes = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' : ['Animation', 0], '32' : ['Comedy', 0], 
               '80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
               '10749' : ['Romance', 0], '878' : ['Science Fiction', 0]}
+              
+users = []
 
 app = Flask(__name__, static_folder='./build/static')
 
@@ -36,10 +42,18 @@ def on_disconnect():
 # When a client emits the event 'chat' to the server, this function is run
 # 'chat' is a custom event name that we just decided
 @socketio.on('onLogin')
-def on_Login(): # data is whatever arg you pass in your emit call on client
+def on_Login(data): # data is whatever arg you pass in your emit call on client
     # This emits the 'chat' event from the server to all clients except for
     # the client that emmitted the event that triggered this function
-    socketio.emit('onLogin',  genreVotes, broadcast=True, include_self=False)
+    users.append(data.username)
+    socketio.emit('onLogin',  genresDict, broadcast=True, include_self=False)
+
+@socketio.on('onSubmit')
+def on_Submit(votes):
+    counter = 0
+    for keys in genreVotes:
+        genreVotes[keys] = genreVotes[keys][1] + votes[counter]
+    socketio.emit('onAdminSubmit', genreVotes, broadcast=True, include_self=False)
 
 # Note we need to add this line so we can import app in the python shell
 if __name__ == "__main__":
