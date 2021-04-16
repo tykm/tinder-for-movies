@@ -6,6 +6,7 @@ import io from 'socket.io-client';
 import GoogleLogin from 'react-google-login';
 
 const socket = io(); // Connects to socket connection
+
 const arr = ['','']
 function App() {
   const [messages, setMessages] = useState([]); // State variable, list of messages
@@ -21,7 +22,7 @@ function App() {
             setInfo(data);
         });
     },[]);
-  
+
   function onLoginButton(response) {
     try{
       console.log(response.profileObj.name)
@@ -54,7 +55,6 @@ if (success === true){
       />
       </div>
       <div>
-        <button type="button" onClick={() => setLog(!isLogged)}>Login</button>
         {isLogged ? (<Genres />):null}
       </div>
     </div>
