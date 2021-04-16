@@ -34,6 +34,7 @@ function App() {
     }
   }
 if (success === true){
+<<<<<<< HEAD
   /*return(
     <div>
       <Genres />
@@ -41,6 +42,14 @@ if (success === true){
     );
     */
     console.log(success)
+=======
+  console.log("it worked!")
+  //return(
+  //  <div>
+  //    <Genres />
+  //  </div>
+  //  );
+>>>>>>> 6aee3a6053c7d343fd2e72d794c8a1e9e0ce94ed
 }
   // The function inside useEffect is only run whenever any variable in the array
   // (passed as the second arg to useEffect) changes. Since this array is empty
