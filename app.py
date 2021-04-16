@@ -108,7 +108,7 @@ def on_email(user_info):
         add_user(user_info[1], user_info[0])
     
     print(User.query.all())
-    #DB.session.commit()
+    DB.session.commit()
     
 
 # Note we need to add this line so we can import app in the python shell
