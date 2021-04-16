@@ -29,8 +29,4 @@ export function Genres(props) {
         ))}
     </div>
     );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 4faf986dd1666097811a8d95b14eee5aeb399120

@@ -1,10 +1,13 @@
 import os
+import requests
 from flask import Flask, send_from_directory, json, session
 from flask_socketio import SocketIO
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv, find_dotenv
 
-genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Drama', 'Horror', 'Mystery', 'Romance', 'Science Fiction']
+#genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Drama', 'Horror', 'Mystery', 'Romance', 'Science Fiction']
+genres = []
 
 genreVotes = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' : ['Animation', 0], '32' : ['Comedy', 0], 
               '80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
@@ -45,10 +48,19 @@ SOCKETIO = SocketIO(
 def index(filename):
     return send_from_directory('./build', filename)
 
+def getGenres():
+    load_dotenv(find_dotenv())
+    GENRES_URL = 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + os.getenv('APIKEY') + '&language=en-US'
+    genresResponse = requests.get(GENRES_URL)
+    genresResponse = genresResponse.json()
+    for i in range(10):
+        genres.append(genresResponse['genres'][i]['name'])
+
 # When a client connects from this Socket connection, this function is run
 @SOCKETIO.on('connect')
 def on_connect():
     print('User connected!')
+    getGenres()
 
 # When a client disconnects from this Socket connection, this function is run
 @SOCKETIO.on('disconnect')
