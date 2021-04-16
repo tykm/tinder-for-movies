@@ -38,7 +38,7 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install pylint
-          python3 -m pip install --upgrade google-auth
+          python3 -m npm install react-google-login
           python3 -m pip install --requirement requirements.txt
       #- name: Fixing Python file with Pylint
         #run: |
