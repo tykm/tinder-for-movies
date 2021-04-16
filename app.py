@@ -1,9 +1,11 @@
+'''Main Function creates and initializes all the necessary vars'''
 import os
 from flask import Flask, send_from_directory, json, session
 from flask_socketio import SocketIO
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
+<<<<<<< HEAD
 genreVotes = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' : ['Animation', 0], '32' : ['Comedy', 0], 
               '80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
               '10749' : ['Romance', 0], '878' : ['Science Fiction', 0]}
@@ -36,6 +38,12 @@ DB.create_all()
 DB.session.commit()
 
 
+=======
+APP = Flask(__name__, static_folder='./build/static')
+
+CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
+
+>>>>>>> 5617fa8169159d75b7212f4aee918003d47a0a2c
 SOCKETIO = SocketIO(
     APP,
     cors_allowed_origins="*",
@@ -46,20 +54,24 @@ SOCKETIO = SocketIO(
 @APP.route('/', defaults={"filename": "index.html"})
 @APP.route('/<path:filename>')
 def index(filename):
+    '''Index File'''
     return send_from_directory('./build', filename)
 
 # When a client connects from this Socket connection, this function is run
 @SOCKETIO.on('connect')
 def on_connect():
+    '''when connecting to client'''
     print('User connected!')
 
 # When a client disconnects from this Socket connection, this function is run
 @SOCKETIO.on('disconnect')
 def on_disconnect():
+    '''when diconnecting from client'''
     print('User disconnected!')
 
 # When a client emits the event 'chat' to the server, this function is run
 # 'chat' is a custom event name that we just decided
+<<<<<<< HEAD
 @SOCKETIO.on('on_login')
 def on_login(): # data is whatever arg you pass in your emit call on client
     # This emits the 'chat' event from the server to all clients except for
@@ -119,3 +131,19 @@ if __name__ == "__main__":
         host=os.getenv('IP', '0.0.0.0'),
         port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
     )
+=======
+@SOCKETIO.on('chat')
+def on_chat(data): # data is whatever arg you pass in your emit call on client
+    '''onChat'''
+    print(str(data))
+    # This emits the 'chat' event from the server to all clients except for
+    # the client that emmitted the event that triggered this function
+    SOCKETIO.emit('chat', data, broadcast=True, include_self=False)
+
+# Note that we don't call APP.run anymore. We call SOCKETIO.run with APP arg
+SOCKETIO.run(
+    APP,
+    host=os.getenv('IP', '0.0.0.0'),
+    port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
+)
+>>>>>>> 5617fa8169159d75b7212f4aee918003d47a0a2c
