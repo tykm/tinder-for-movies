@@ -28,7 +28,8 @@ function App() {
   function onLoginButton(response) {
     try{
       console.log(response.profileObj.name)
-      console.log(response.profileObj.email);
+      console.log(response.profileObj.email)
+      console.log(info)
       let infoNE = [response.profileObj.name, response.profileObj.email]
       socket.emit('email', infoNE)
       setSucc(true)
@@ -38,11 +39,13 @@ function App() {
     }
   }
 if (success === true){
-  return(
+  /*return(
     <div>
       <Genres users={users}/>
     </div>
     );
+    */
+    console.log(success)
 }
 
   return (
