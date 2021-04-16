@@ -1,14 +1,14 @@
 import os
+import requests
 from flask import Flask, send_from_directory, json, session
 from flask_socketio import SocketIO
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv, find_dotenv
 
-genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Drama', 'Horror', 'Mystery', 'Romance', 'Science Fiction']
+genres = []
 
-genreVotes = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' : ['Animation', 0], '32' : ['Comedy', 0], 
-              '80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
-              '10749' : ['Romance', 0], '878' : ['Science Fiction', 0]}
+genreVotes = {}
               
 users = []
 
@@ -53,6 +53,7 @@ def index(filename):
 # When a client connects from this Socket connection, this function is run
 @SOCKETIO.on('connect')
 def on_connect():
+    getGenres()
     print('User connected!')
 
 # When a client disconnects from this Socket connection, this function is run
@@ -120,6 +121,10 @@ def on_email(user_info):
 @SOCKETIO.on('everyonesIn')
 def startVote(data):
     SOCKETIO.emit('everyonesIn', data, broadcast=True)
+    
+@SOCKETIO.on('genres')
+def sendGenres(data):
+    SOCKETIO.emit('genres', genres, broadcast=True)
 
 @SOCKETIO.on('onSubmit')
 def on_Submit(votes):
@@ -130,6 +135,16 @@ def on_Submit(votes):
             genreVotes[keys] = genreVotes[keys][1] + votes[counter]
     SOCKETIO.emit('onAdminSubmit', genreVotes, broadcast=True)
    
+   
+def getGenres():
+    load_dotenv(find_dotenv())
+    GENRES_URL = 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + os.getenv('APIKEY') + '&language=en-US'
+    genresResponse = requests.get(GENRES_URL)
+    genresResponse = genresResponse.json()
+    for i in range(10):
+        genres.append(genresResponse['genres'][i]['name'])
+        genreVotes[genresResponse['genres'][i]['name']] = [0]
+        genreVotes[genresResponse['genres'][i]['name']].append(genresResponse['genres'][i]['id'])
     
 
 # Note we need to add this line so we can import app in the python shell
