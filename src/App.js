@@ -4,12 +4,11 @@ import { Genres } from './Genres.js';
 import { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import GoogleLogin from 'react-google-login';
-
 const socket = io(); // Connects to socket connection
 
 const arr = ['','']
 function App() {
-  const [messages, setMessages] = useState([]); // State variable, list of messages
+  const [users, setUsers] = useState([]); // State variable, list of messages
   const inputRef = useRef(null); // Reference to <input> element
   const [success, setSucc] = useState(false);
   const [info, setInfo] = useState(arr);
@@ -20,6 +19,10 @@ function App() {
         socket.on('email',(data)=>{
             console.log(data)
             setInfo(data);
+        });
+        socket.on('onLogin',(data)=>{
+            console.log(data)
+            setUsers(data);
         });
     },[]);
 
@@ -38,7 +41,7 @@ function App() {
 if (success === true){
   return(
     <div>
-      <Genres />
+      <Genres users={users}/>
     </div>
     );
 }
@@ -55,7 +58,7 @@ if (success === true){
       />
       </div>
       <div>
-        {isLogged ? (<Genres />):null}
+        {isLogged ? (<Genres users={users}/>):null}
       </div>
     </div>
   );

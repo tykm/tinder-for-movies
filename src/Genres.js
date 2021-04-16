@@ -13,7 +13,7 @@ export function Genres(props) {
             console.log(isLike);
             }
             console.log(newGenres);
-       // socket.emit('genres', {genre: newGenres, index}); 
+           // socket.emit('genres', {genre: newGenres}); 
     }
   
     return (
@@ -29,4 +29,8 @@ export function Genres(props) {
         ))}
     </div>
     );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4faf986dd1666097811a8d95b14eee5aeb399120
