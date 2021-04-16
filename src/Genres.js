@@ -1,10 +1,9 @@
 import { ListItem } from './ListItem.js';
 import React, { useState, useEffect } from 'react';
 import socket from './App.js'
-export function Genres(props) {
+export function Genres() {
     const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
     const genreList = ['1', '2','3','4','5','6','7', '8','9', '10'];
-    
     function Genres(index, isLike) {
         const newGenres = [...genres];
         if (newGenres[index] === null) {
@@ -15,10 +14,8 @@ export function Genres(props) {
             console.log(newGenres);
            // socket.emit('genres', {genre: newGenres}); 
     }
-  
     return (
     <div>
-        <button>Everyone's In</button>
         <center>Vote on Genres</center>
         {genreList.map((g, index)=>(
         <div>

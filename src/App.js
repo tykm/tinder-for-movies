@@ -13,17 +13,22 @@ function App() {
   const [success, setSucc] = useState(false);
   const [info, setInfo] = useState(arr);
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
-  // Upon user login print out user's name and email
-
-   useEffect(()=>{
-        socket.on('email',(data)=>{
-            console.log(data)
-            setInfo(data);
-        });
-        socket.on('onLogin',(data)=>{
-            console.log(data)
-            setUsers(data);
-        });
+  const [currUser, setCurrUser]=useState('');
+  
+  useEffect(()=>{
+    socket.on('email',(data)=>{
+      console.log(data);
+      setInfo(data);
+    });
+    socket.on('onLogin',(data)=>{
+      console.log("INLOGIN");
+      console.log(data);
+      setUsers(data);
+    });
+    socket.on('everyonesIn',(data)=>{
+      console.log(data);
+      setLog(data);
+    });
     },[]);
 
   function onLoginButton(response) {
@@ -31,6 +36,7 @@ function App() {
       console.log(response.profileObj.name)
       console.log(response.profileObj.email);
       let infoNE = [response.profileObj.name, response.profileObj.email]
+      setCurrUser(infoNE[1]);
       socket.emit('email', infoNE)
       setSucc(true)
     }
@@ -39,11 +45,17 @@ function App() {
     }
   }
 if (success === true){
-  return(
-    <div>
-      <Genres users={users}/>
-    </div>
-    );
+  console.log(currUser);
+  if(users[0] == currUser){
+    return(<button onClick={genrePage}>Everyone's In</button>);}
+    return (<div>Waiting for Admin to start voting</div>);}
+
+function genrePage(){
+  socket.emit('everyonesIn', true);
+  console.log(isLogged);
+  if(isLogged){
+    return  (<div><Genres /> </div>);
+  }
 }
 
   return (
@@ -56,9 +68,6 @@ if (success === true){
         onFailure={onLoginButton}
         cookiePolicy={'single_host_origin'}
       />
-      </div>
-      <div>
-        {isLogged ? (<Genres users={users}/>):null}
       </div>
     </div>
   );
