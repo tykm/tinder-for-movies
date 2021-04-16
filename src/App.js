@@ -16,11 +16,12 @@ function App() {
 
    useEffect(()=>{
         socket.on('email',(data)=>{
-            console.log(data)
+            console.log(data);
             setInfo(data);
         });
         socket.on('onLogin',(data)=>{
-            console.log(data)
+            console.log("onLogin")
+            console.log(data);
             setUsers(data);
         });
     },[]);
@@ -39,13 +40,12 @@ function App() {
     }
   }
 if (success === true){
-  /*return(
+  console.log(success);
+  return(
     <div>
       <Genres users={users}/>
     </div>
     );
-    */
-    console.log(success)
 }
 
   return (

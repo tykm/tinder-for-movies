@@ -42,10 +42,6 @@ DB.create_all()
 DB.session.commit()
 
  
-APP = Flask(__name__, static_folder='./build/static')
-
-CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
- 
 SOCKETIO = SocketIO(
     APP,
     cors_allowed_origins="*",
@@ -132,9 +128,8 @@ def on_email(user_info):
     
     print(User.query.all())
     DB.session.commit()
-    
     users.append(user_info[1])
-    SOCKETIO.emit('onLogin', users, broadcast=True, include_self=False)
+    SOCKETIO.emit('onLogin', users, broadcast=True)
 
 SOCKETIO.on('everyonesIn')
 def startVote(data):
