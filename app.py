@@ -1,46 +1,51 @@
+'''Main Function creates and initializes all the necessary vars'''
 import os
 from flask import Flask, send_from_directory, json, session
 from flask_socketio import SocketIO
 from flask_cors import CORS
 
-app = Flask(__name__, static_folder='./build/static')
+APP = Flask(__name__, static_folder='./build/static')
 
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
+CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
 
-socketio = SocketIO(
-    app,
+SOCKETIO = SocketIO(
+    APP,
     cors_allowed_origins="*",
     json=json,
     manage_session=False
 )
 
-@app.route('/', defaults={"filename": "index.html"})
-@app.route('/<path:filename>')
+@APP.route('/', defaults={"filename": "index.html"})
+@APP.route('/<path:filename>')
 def index(filename):
+    '''Index File'''
     return send_from_directory('./build', filename)
 
 # When a client connects from this Socket connection, this function is run
-@socketio.on('connect')
+@SOCKETIO.on('connect')
 def on_connect():
+    '''when connecting to client'''
     print('User connected!')
 
 # When a client disconnects from this Socket connection, this function is run
-@socketio.on('disconnect')
+@SOCKETIO.on('disconnect')
 def on_disconnect():
+    '''when diconnecting from client'''
     print('User disconnected!')
 
 # When a client emits the event 'chat' to the server, this function is run
 # 'chat' is a custom event name that we just decided
-@socketio.on('chat')
+@SOCKETIO.on('chat')
 def on_chat(data): # data is whatever arg you pass in your emit call on client
+    '''onChat'''
     print(str(data))
     # This emits the 'chat' event from the server to all clients except for
     # the client that emmitted the event that triggered this function
-    socketio.emit('chat',  data, broadcast=True, include_self=False)
+    SOCKETIO.emit('chat', data, broadcast=True, include_self=False)
 
-# Note that we don't call app.run anymore. We call socketio.run with app arg
-socketio.run(
-    app,
+# Note that we don't call APP.run anymore. We call SOCKETIO.run with APP arg
+SOCKETIO.run(
+    APP,
     host=os.getenv('IP', '0.0.0.0'),
     port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
 )
