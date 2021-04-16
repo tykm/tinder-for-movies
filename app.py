@@ -1,19 +1,15 @@
 import os
-import requests
 from flask import Flask, send_from_directory, json, session
 from flask_socketio import SocketIO
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from dotenv import load_dotenv, find_dotenv
 
-genres = []
+genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Drama', 'Horror', 'Mystery', 'Romance', 'Science Fiction']
 
-# genreVotes = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' :
-#['Animation', 0], '32' : ['Comedy', 0],
-#'80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
-#'10749' : ['Romance', 0], '878' : ['Science Fiction', 0]}
-#workflowcheck
-genreVotes = {}
+genreVotes = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' : ['Animation', 0], '32' : ['Comedy', 0], 
+              '80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
+              '10749' : ['Romance', 0], '878' : ['Science Fiction', 0]}
+              
 users = []
 
 APP = Flask(__name__, static_folder='./build/static')
@@ -54,21 +50,10 @@ SOCKETIO = SocketIO(
 def index(filename):
     return send_from_directory('./build', filename)
 
-def getGenres():
-    load_dotenv(find_dotenv())
-    GENRES_URL = 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + os.getenv('APIKEY') + '&language=en-US'
-    genresResponse = requests.get(GENRES_URL)
-    genresResponse = genresResponse.json()
-    for i in range(10):
-        genres.append(genresResponse['genres'][i]['name'])
-        genreVotes[genresResponse['genres'][i]['name']] = [0]
-        genreVotes[genresResponse['genres'][i]['name']].append(genresResponse['genres'][i]['id'])
-
 # When a client connects from this Socket connection, this function is run
 @SOCKETIO.on('connect')
 def on_connect():
     print('User connected!')
-    getGenres()
 
 # When a client disconnects from this Socket connection, this function is run
 @SOCKETIO.on('disconnect')
@@ -130,10 +115,11 @@ def on_email(user_info):
     DB.session.commit()
     users.append(user_info[1])
     SOCKETIO.emit('onLogin', users, broadcast=True)
-
-SOCKETIO.on('everyonesIn')
+    
+    
+@SOCKETIO.on('everyonesIn')
 def startVote(data):
-    SOCKETIO.emit('everyonesIn', genres, broadcast=True, include_self=False)
+    SOCKETIO.emit('everyonesIn', data, broadcast=True)
 
 @SOCKETIO.on('onSubmit')
 def on_Submit(votes):

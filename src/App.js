@@ -12,18 +12,22 @@ function App() {
   const [success, setSucc] = useState(false);
   const [info, setInfo] = useState(arr);
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
-  // Upon user login print out user's name and email
-
-   useEffect(()=>{
-        socket.on('email',(data)=>{
-            console.log(data);
-            setInfo(data);
-        });
-        socket.on('onLogin',(data)=>{
-            console.log("onLogin")
-            console.log(data);
-            setUsers(data);
-        });
+  const [currUser, setCurrUser]=useState('');
+  
+  useEffect(()=>{
+    socket.on('email',(data)=>{
+      console.log(data);
+      setInfo(data);
+    });
+    socket.on('onLogin',(data)=>{
+      console.log("INLOGIN");
+      console.log(data);
+      setUsers(data);
+    });
+    socket.on('everyonesIn',(data)=>{
+      console.log(data);
+      setLog(data);
+    });
     },[]);
 
   function onLoginButton(response) {
@@ -32,6 +36,7 @@ function App() {
       console.log(response.profileObj.email)
       console.log(info)
       let infoNE = [response.profileObj.name, response.profileObj.email]
+      setCurrUser(infoNE[1]);
       socket.emit('email', infoNE)
       setSucc(true)
     }
@@ -40,12 +45,26 @@ function App() {
     }
   }
 if (success === true){
-  console.log(success);
-  return(
-    <div>
-      <Genres users={users}/>
-    </div>
-    );
+  console.log(currUser);
+  if(users[0] == currUser && !isLogged){
+    return(
+      <div>
+      {isLogged ? <Genres /> : 
+      <button onClick= {()=>{socket.emit('everyonesIn', true);}}>Everyone's In</button> 
+      }
+    </div>)}
+    else if (users[0] != currUser && !isLogged){
+      return (<div>Waiting for Admin to start voting</div>);
+    }
+    else if (isLogged){
+      return(<div> <Genres /> </div>)
+    }
+  
+}
+
+function genrePage(){
+  socket.emit('everyonesIn', true);
+  console.log(isLogged);
 }
 
   return (
@@ -59,9 +78,7 @@ if (success === true){
         cookiePolicy={'single_host_origin'}
       />
       </div>
-      <div>
-        {isLogged ? (<Genres users={users}/>):null}
-      </div>
+    {isLogged ? <Genres /> : null}
     </div>
   );
 }
