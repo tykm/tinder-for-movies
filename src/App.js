@@ -1,15 +1,15 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
-import { ListItem } from './ListItem.js';
-import { useState, useRef, useEffect } from 'react';
+//import { ListItem } from './ListItem.js';
+import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import GoogleLogin from 'react-google-login';
 
 const socket = io(); // Connects to socket connection
 const arr = ['','']
 function App() {
-  const [messages, setMessages] = useState([]); // State variable, list of messages
-  const inputRef = useRef(null); // Reference to <input> element
+  //const [messages, setMessages] = useState([]); // State variable, list of messages
+  //const inputRef = useRef(null); // Reference to <input> element
   const [success, setSucc] = useState(false);
   const [info, setInfo] = useState(arr);
   // Upon user login print out user's name and email
@@ -24,7 +24,8 @@ function App() {
   function onLoginButton(response) {
     try{
       console.log(response.profileObj.name)
-      console.log(response.profileObj.email);
+      console.log(response.profileObj.email)
+      console.log(info)
       let infoNE = [response.profileObj.name, response.profileObj.email]
       socket.emit('email', infoNE)
       setSucc(true)
@@ -34,12 +35,13 @@ function App() {
     }
   }
 if (success === true){
-  console.log("it worked!")
-  //return(
-  //  <div>
-  //    <Genres />
-  //  </div>
-  //  );
+  /*return(
+    <div>
+      <Genres />
+    </div>
+    );
+    */
+    console.log(success)
 }
   // The function inside useEffect is only run whenever any variable in the array
   // (passed as the second arg to useEffect) changes. Since this array is empty
