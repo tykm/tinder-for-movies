@@ -64,9 +64,9 @@ def on_email(user_info):
     SOCKETIO.emit('onLogin', users, broadcast=True)
     
     
-SOCKETIO.on('everyonesIn')
+@SOCKETIO.on('everyonesIn')
 def startVote(data):
-    SOCKETIO.emit('everyonesIn', data, broadcast=True, include_self=False)
+    SOCKETIO.emit('everyonesIn', data, broadcast=True)
 
 @SOCKETIO.on('onSubmit')
 def on_Submit(votes):

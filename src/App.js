@@ -46,16 +46,25 @@ function App() {
   }
 if (success === true){
   console.log(currUser);
-  if(users[0] == currUser){
-    return(<button onClick={genrePage}>Everyone's In</button>);}
-    return (<div>Waiting for Admin to start voting</div>);}
+  if(users[0] == currUser && !isLogged){
+    return(
+      <div>
+      {isLogged ? <Genres /> : 
+      <button onClick= {()=>{socket.emit('everyonesIn', true);}}>Everyone's In</button> 
+      }
+    </div>)}
+    else if (users[0] != currUser && !isLogged){
+      return (<div>Waiting for Admin to start voting</div>);
+    }
+    else if (isLogged){
+      return(<div> <Genres /> </div>)
+    }
+  
+}
 
 function genrePage(){
   socket.emit('everyonesIn', true);
   console.log(isLogged);
-  if(isLogged){
-    return  (<div><Genres /> </div>);
-  }
 }
 
   return (
@@ -69,6 +78,7 @@ function genrePage(){
         cookiePolicy={'single_host_origin'}
       />
       </div>
+    {isLogged ? <Genres /> : null}
     </div>
   );
 }
