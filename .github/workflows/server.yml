@@ -37,6 +37,7 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
+          python3 -m pip install npm
           python3 -m pip install pylint
           python3 -m npm install react-google-login
           python3 -m pip install --requirement requirements.txt
