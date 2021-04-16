@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { Genres } from './Genres.js';
 import { useState, useRef, useEffect } from 'react';
