@@ -34,11 +34,12 @@ function App() {
     }
   }
 if (success === true){
-  return(
-    <div>
-      <Genres />
-    </div>
-    );
+  console.log("it worked!")
+  //return(
+  //  <div>
+  //    <Genres />
+  //  </div>
+  //  );
 }
   // The function inside useEffect is only run whenever any variable in the array
   // (passed as the second arg to useEffect) changes. Since this array is empty

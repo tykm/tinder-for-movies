@@ -14,8 +14,8 @@ APP = Flask(__name__, static_folder='./build/static')
 CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
 
 DB = SQLAlchemy(APP)
-class Player(DB.Model):
-    """ Player class is an object that represents a player in the DB """
+class User(DB.Model):
+    """ User class is an object that represents a user in the DB """
     email = DB.Column(DB.String(60), primary_key=True)
     name = DB.Column(DB.String(50), primary_key=False)
 
@@ -30,6 +30,11 @@ class Player(DB.Model):
         """ Prints user data """
         print(self.email)
         print(self.name)
+
+
+DB.create_all()
+DB.session.commit()
+
 
 SOCKETIO = SocketIO(
     APP,
@@ -61,11 +66,50 @@ def on_login(): # data is whatever arg you pass in your emit call on client
     # the client that emmitted the event that triggered this function
     SOCKETIO.emit('on_login',  genreVotes, broadcast=True, include_self=False)
 
+
+def add_user(email, name):
+    """ Helper function to add player """
+    new_user = User(email, name)
+    DB.session.add(new_user)
+    DB.session.commit()
+    print("New user added to DB")
+
+
+def find_emails(all_users):
+    """ Helper function to filter for emails """
+    emails = []    
+    for user in all_users:
+        emails.append(user.email)
+    return emails
+
+
+def get_users():
+    """ Helper function to find current user emails """
+    all_users = User.query.all()
+    emails = find_emails(all_users)
+    return emails
+
+
 @SOCKETIO.on('email')
 def on_email(user_info):
+    """ Add user to db upon successful google oauth """
+    # Parse sent data
+    email = user_info[1]
+    name = user_info[0]
+    
+    # Debug print statement
     print("Received user info!")
-    print("Email: " + user_info[1])
-    print("Name: " + user_info[0])
+    print("Email: " + email)
+    print("Name: " + name)
+    
+    # Check if user not already in DB then add user to DB
+    users = get_users()
+    if email not in users:
+        add_user(user_info[1], user_info[0])
+    
+    print(User.query.all())
+    #DB.session.commit()
+    
 
 # Note we need to add this line so we can import app in the python shell
 if __name__ == "__main__":
