@@ -6,13 +6,13 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
 
-#genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Drama', 'Horror', 'Mystery', 'Romance', 'Science Fiction']
 genres = []
 
-# genreVotes = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' : ['Animation', 0], '32' : ['Comedy', 0], 
-#               '80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
-#               '10749' : ['Romance', 0], '878' : ['Science Fiction', 0]}
-              
+# genreVotes = {'28' : ['Action', 0], '12' : ['Adventure', 0], '16' :
+#['Animation', 0], '32' : ['Comedy', 0],
+#'80' : ['Crime', 0], '18' : ['Drama', 0], '27' : ['Horror', 0], '9648' : ['Mystery', 0],
+#'10749' : ['Romance', 0], '878' : ['Science Fiction', 0]}
+
 genreVotes = {}
 users = []
 
@@ -77,8 +77,7 @@ def on_email(user_info):
     print("Name: " + user_info[0])
     users.append(user_info[1])
     SOCKETIO.emit('onLogin', users, broadcast=True, include_self=False)
-    
-    
+
 SOCKETIO.on('everyonesIn')
 def startVote(data):
     SOCKETIO.emit('everyonesIn', genres, broadcast=True, include_self=False)
@@ -100,3 +99,4 @@ if __name__ == "__main__":
         host=os.getenv('IP', '0.0.0.0'),
         port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
     )
+    
