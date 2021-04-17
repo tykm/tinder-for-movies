@@ -35,11 +35,6 @@ class User(DB.Model):
 
 DB.create_all()
 DB.session.commit()
-
- 
-APP = Flask(__name__, static_folder='./build/static')
-
-CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
  
 SOCKETIO = SocketIO(
     APP,
