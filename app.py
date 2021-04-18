@@ -56,6 +56,7 @@ def index(filename):
 def on_connect():
     getGenres()
     print(genreVotes)
+    print(genres)
     print('User connected!')
     SOCKETIO.emit('listOfGenres', genres, broadcast=True)
 
