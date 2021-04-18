@@ -57,6 +57,7 @@ def on_connect():
     getGenres()
     print(genreVotes)
     print('User connected!')
+    SOCKETIO.emit('listOfGenres', genres, broadcast=True)
 
 # When a client disconnects from this Socket connection, this function is run
 @SOCKETIO.on('disconnect')
@@ -136,17 +137,8 @@ def on_Submit(votes):
             genreVotes[keys][0] = genreVotes[keys][0] + 1
         counter = counter + 1
     print(genreVotes)
- 
-@SOCKETIO.on('onAdminSubmit')
-def on_Admin_Submit(votes):
-    counter = 0
-    for keys in genreVotes:
-        if votes[counter] == '1' and votes[counter] != None:
-            genreVotes[keys][0] = genreVotes[keys][0] + 1
-        counter = counter + 1
-    print(genreVotes)
     SOCKETIO.emit('onAdminSubmit', genreVotes, broadcast=True)
-   
+
 def getGenres():
     load_dotenv(find_dotenv())
     GENRES_URL = 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + os.getenv('APIKEY') + '&language=en-US'
