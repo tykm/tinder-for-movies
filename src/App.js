@@ -3,7 +3,7 @@ import { Genres } from './Genres.js';
 import { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import GoogleLogin from 'react-google-login';
-const socket = io(); // Connects to socket connection
+export const socket = io(); // Connects to socket connection
 
 const arr = ['','']
 function App() {
@@ -13,6 +13,8 @@ function App() {
   const [info, setInfo] = useState(arr);
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
   const [currUser, setCurrUser]=useState('');
+  const [startTime, setTime] = useState(60);
+  //const [timesUp, setTimesUp] = useState(false);
   
   useEffect(()=>{
     socket.on('email',(data)=>{
@@ -25,6 +27,9 @@ function App() {
       setUsers(data);
     });
     socket.on('everyonesIn',(data)=>{
+      const resetInterval = setInterval(() => {
+        setTime((prevTime) => prevTime-1);
+      },1000);
       console.log(data);
       setLog(data);
     });
@@ -45,21 +50,17 @@ function App() {
     }
   }
 if (success === true){
-  console.log(currUser);
   if(users[0] == currUser && !isLogged){
     return(
       <div>
-      {isLogged ? <Genres /> : 
-      <button onClick= {()=>{socket.emit('everyonesIn', true);}}>Everyone's In</button> 
+      {!isLogged ? 
+        <button onClick= {()=>{socket.emit('everyonesIn', true);}}>Everyone's In</button> 
+        : null
       }
     </div>)}
     else if (users[0] != currUser && !isLogged){
       return (<div>Waiting for Admin to start voting</div>);
     }
-    else if (isLogged){
-      return(<div> <Genres /> </div>)
-    }
-  
 }
 
 function genrePage(){
@@ -69,7 +70,10 @@ function genrePage(){
 
   return (
     <div>
-    <div>
+    {isLogged ? <div>
+                    {startTime}
+                    <Genres startTime = {startTime} />
+                </div>: 
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
         buttonText="Login"
@@ -77,8 +81,7 @@ function genrePage(){
         onFailure={onLoginButton}
         cookiePolicy={'single_host_origin'}
       />
-      </div>
-    {isLogged ? <Genres /> : null}
+    }
     </div>
   );
 }

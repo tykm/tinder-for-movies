@@ -12,6 +12,7 @@ genreVotes = {}
               
 users = []
 
+
 APP = Flask(__name__, static_folder='./build/static')
 CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
 
@@ -54,6 +55,7 @@ def index(filename):
 @SOCKETIO.on('connect')
 def on_connect():
     getGenres()
+    print(genreVotes)
     print('User connected!')
 
 # When a client disconnects from this Socket connection, this function is run
@@ -130,11 +132,20 @@ def sendGenres(data):
 def on_Submit(votes):
     counter = 0
     for keys in genreVotes:
+        if votes[counter] == '1' and votes[counter] != None:
+            genreVotes[keys][0] = genreVotes[keys][0] + 1
         counter = counter + 1
-        if votes[counter] == 1:
-            genreVotes[keys] = genreVotes[keys][1] + votes[counter]
+    print(genreVotes)
+ 
+@SOCKETIO.on('onAdminSubmit')
+def on_Admin_Submit(votes):
+    counter = 0
+    for keys in genreVotes:
+        if votes[counter] == '1' and votes[counter] != None:
+            genreVotes[keys][0] = genreVotes[keys][0] + 1
+        counter = counter + 1
+    print(genreVotes)
     SOCKETIO.emit('onAdminSubmit', genreVotes, broadcast=True)
-   
    
 def getGenres():
     load_dotenv(find_dotenv())
