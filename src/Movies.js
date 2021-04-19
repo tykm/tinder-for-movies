@@ -18,12 +18,14 @@ export function Movies({startTime}) {
         socket.emit('onAdminSubmit', movies);
         console.log('subbmitted votes on timer=0');
     }
-    useEffect(()=>{
-    socket.on('listOfGenres',(data)=>{
-      console.log(data);
-      setMovieList(data);
+     useEffect(()=>{
+    socket.on('genres',(data)=>{
+        if (startTime == 0){
+            setMoviePage(true);
+            socket.emit('onAdminSubmit', movies);
+            console.log('subbmitted votes on timer=0')
+    }
     });
-    
     },[]);
     return (
     <div>

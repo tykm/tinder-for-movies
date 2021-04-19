@@ -135,6 +135,7 @@ def on_Submit(votes):
             genreVotes[keys][0] = genreVotes[keys][0] + 1
         counter = counter + 1
     print(genreVotes)
+    print(winningGenre(genreVotes))
     SOCKETIO.emit('onAdminSubmit', genreVotes, broadcast=True)
 
 def getGenres():
@@ -146,7 +147,15 @@ def getGenres():
         genreVotes[genresResponse['genres'][i]['name']] = [0]
         genreVotes[genresResponse['genres'][i]['name']].append(genresResponse['genres'][i]['id'])
     
-
+def winningGenre(genreVotes):
+    minimum = 0
+    winner = ''
+    for keys in genreVotes:
+        if genreVotes[keys][0] > minimum:
+            minimum = genreVotes[keys][0]
+            winner = genreVotes[keys][1]
+    return winner
+    
 # Note we need to add this line so we can import app in the python shell
 if __name__ == "__main__":
     # Note that we don't call app.run anymore. We call socketio.run with app arg

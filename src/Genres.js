@@ -17,7 +17,7 @@ export function Genres({startTime , genreList}) {
     }
     useEffect(()=>{
     socket.on('genres',(data)=>{
-        if (startTime === 0){
+        if (startTime == 0){
             setGenrePage(true);
             socket.emit('onAdminSubmit', genres);
             console.log('subbmitted votes on timer=0')
