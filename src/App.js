@@ -13,8 +13,8 @@ function App() {
   const [info, setInfo] = useState(arr);
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
   const [currUser, setCurrUser]=useState('');
-  const [startTime, setTime] = useState(10);
   const [genreList, setGenreList] = useState(['', '', '', '', '', '', '', '', '', '']); 
+  let resetInterval;
   //const [timesUp, setTimesUp] = useState(false);
   useEffect(()=>{
     socket.on('email',(data)=>{
@@ -27,9 +27,6 @@ function App() {
       setUsers(data);
     });
     socket.on('everyonesIn',(data)=>{
-      const resetInterval = setInterval(() => {
-        setTime((prevTime) => prevTime-1);
-      },1000);
       console.log(data);
       setLog(data);
     });
@@ -76,7 +73,7 @@ function genrePage(){
   return (
     <div>
     {isLogged ? <div>
-                    <Genres startTime = {startTime} genreList = {genreList}/>
+                    <Genres genreList = {genreList}/>
                 </div>: 
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
