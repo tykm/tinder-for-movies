@@ -180,6 +180,7 @@ def on_Submit_Movie_Votes(votes):
     winner = []
     winner.append(movie_winner())
     winner.append(moviesVotes[winner[0]][0])
+    winner.append(moviesVotes[winner[0]][1])
     print(winner)
     SOCKETIO.emit('movieWinner', winner, broadcast=True)
     
@@ -204,6 +205,7 @@ def getMovies():
         movies.append(movieResponse['results'][i]['original_title'])
         moviesVotes[movieResponse['results'][i]['original_title']] = []
         moviesVotes[movieResponse['results'][i]['original_title']].append(0)
+        moviesVotes[movieResponse['results'][i]['original_title']].append(movieResponse['results'][i]['vote_average'])
         
     return movies
     
