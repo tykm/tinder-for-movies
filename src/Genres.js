@@ -1,9 +1,11 @@
 import { ListItem } from './ListItem.js';
 import React, { useState, useEffect } from 'react';
-import { socket } from './App.js'
+import { socket } from './App.js';
+import { Movies} from './Movies.js';
 export function Genres({startTime}) {
     const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
-    const genreList = ['1', '2','3','4','5','6','7', '8','9', '10'];
+    const [genreList, setGenreList] = useState(['', '', '', '', '', '', '', '', '', '']); 
+    const [isGenrePage, setGenrePage] = useState(false);
     function Genres(index, isLike) {
         const newGenres = [...genres];
         if (newGenres[index] === null) {
@@ -17,9 +19,17 @@ export function Genres({startTime}) {
         socket.emit('onAdminSubmit', genres);
         console.log('subbmitted votes on timer=0')
     }
+    useEffect(()=>{
+    socket.on('listOfGenres',(data)=>{
+      console.log(data);
+      setGenreList(data);
+    });
     
+    },[]);
     return (
     <div>
+    {isGenrePage ? <div><Movies /></div>:
+        <div>
         <center>Vote on Genres</center>
         {genreList.map((g, index)=>(
         <div>
@@ -29,8 +39,10 @@ export function Genres({startTime}) {
         </div>
         ))}
         <div>
-            <button onClick={() => {socket.emit('onSubmit', genres);}}>Submit</button>
+            <button onClick={() => {socket.emit('onSubmit', genres); setGenrePage(true);}}>Submit</button>
         </div>
+        </div>
+    }
     </div>
     );
 }

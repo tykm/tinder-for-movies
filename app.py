@@ -38,6 +38,7 @@ class User(DB.Model):
 DB.create_all()
 DB.session.commit()
 
+ 
 SOCKETIO = SocketIO(
     APP,
     cors_allowed_origins="*",
@@ -55,6 +56,7 @@ def index(filename):
 def on_connect():
     getGenres()
     print(genreVotes)
+    print(genres)
     print('User connected!')
     SOCKETIO.emit('listOfGenres', genres, broadcast=True)
 
