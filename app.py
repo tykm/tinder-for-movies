@@ -56,10 +56,6 @@ def index(filename):
 def on_connect():
     getGenres()
     print(genreVotes)
-    genres = []
-    for keys in genreVotes:
-        genres.append(keys)
-    print ('List of Genres: ', genres)
     print('User connected!')
     SOCKETIO.emit('listOfGenres', genres, broadcast=True)
 
@@ -131,6 +127,9 @@ def startVote(data):
     
 @SOCKETIO.on('genres')
 def sendGenres(data):
+    genres = []
+    for keys in genreVotes:
+        genres.append(keys)
     SOCKETIO.emit('genres', genres, broadcast=True)
 
 @SOCKETIO.on('onSubmit')
