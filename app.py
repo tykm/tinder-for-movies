@@ -7,7 +7,6 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
 
 genreVotes = {}
-              
 users = []
 
 APP = Flask(__name__, static_folder='./build/static')
@@ -52,7 +51,6 @@ def index(filename):
 @SOCKETIO.on('connect')
 def on_connect():
     getGenres()
-    print(genreVotes)
     print('User connected!')
 
 # When a client disconnects from this Socket connection, this function is run
@@ -120,13 +118,13 @@ def on_email(user_info):
 @SOCKETIO.on('everyonesIn')
 def startVote(data):
     SOCKETIO.emit('everyonesIn', data, broadcast=True)
-    
-    
+
 @SOCKETIO.on('genres')
 def sendGenres():
     genres = []
     for keys in genreVotes:
         genres.append(keys)
+    print(genres)
     SOCKETIO.emit('genres', genres, broadcast=True)
 
 @SOCKETIO.on('onSubmit')
@@ -137,6 +135,7 @@ def on_Submit(votes):
             genreVotes[keys][0] = genreVotes[keys][0] + 1
         counter = counter + 1
     print(genreVotes)
+    print(winningGenre(genreVotes))
     SOCKETIO.emit('onAdminSubmit', genreVotes, broadcast=True)
 
 def getGenres():
@@ -148,7 +147,15 @@ def getGenres():
         genreVotes[genresResponse['genres'][i]['name']] = [0]
         genreVotes[genresResponse['genres'][i]['name']].append(genresResponse['genres'][i]['id'])
     
-
+def winningGenre(genreVotes):
+    minimum = 0
+    winner = ''
+    for keys in genreVotes:
+        if genreVotes[keys][0] > minimum:
+            minimum = genreVotes[keys][0]
+            winner = genreVotes[keys][1]
+    return winner
+    
 # Note we need to add this line so we can import app in the python shell
 if __name__ == "__main__":
     # Note that we don't call app.run anymore. We call socketio.run with app arg
@@ -157,4 +164,3 @@ if __name__ == "__main__":
         host=os.getenv('IP', '0.0.0.0'),
         port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
     )
-    

@@ -20,15 +20,15 @@ export function Movies() {
         socket.emit('onAdminSubmit', movies);
         console.log('subbmitted votes on timer=0');
     }
-    useEffect(()=>{
-    socket.on('listOfGenres',(data)=>{
-      console.log(data);
-      setMovieList(data);
-      setInterval(() => {
-        setTime((prevTime) => prevTime-1);
-      },1000);
+
+     useEffect(()=>{
+    socket.on('genres',(data)=>{
+        if (startTime == 0){
+            setMoviePage(true);
+            socket.emit('onAdminSubmit', movies);
+            console.log('subbmitted votes on timer=0')
+    }
     });
-    
     },[]);
     return (
     <div>
