@@ -38,7 +38,6 @@ class User(DB.Model):
 DB.create_all()
 DB.session.commit()
 
- 
 SOCKETIO = SocketIO(
     APP,
     cors_allowed_origins="*",
