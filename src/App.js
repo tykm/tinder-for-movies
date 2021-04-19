@@ -13,9 +13,9 @@ function App() {
   const [info, setInfo] = useState(arr);
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
   const [currUser, setCurrUser]=useState('');
-  const [startTime, setTime] = useState(60);
+  const [startTime, setTime] = useState(10);
+  const [genreList, setGenreList] = useState(['', '', '', '', '', '', '', '', '', '']); 
   //const [timesUp, setTimesUp] = useState(false);
-  
   useEffect(()=>{
     socket.on('email',(data)=>{
       console.log(data);
@@ -32,6 +32,10 @@ function App() {
       },1000);
       console.log(data);
       setLog(data);
+    });
+    socket.on('genres',(data)=>{
+        setGenreList(data);
+        console.log(genreList);
     });
     },[]);
 
@@ -54,7 +58,7 @@ if (success === true){
     return(
       <div>
       {!isLogged ? 
-        <button onClick= {()=>{socket.emit('everyonesIn', true);}}>Everyone's In</button> 
+        <button onClick= {()=>{genrePage()}}>Everyone's In</button> 
         : null
       }
     </div>)}
@@ -65,14 +69,14 @@ if (success === true){
 
 function genrePage(){
   socket.emit('everyonesIn', true);
+  socket.emit('genres');
   console.log(isLogged);
 }
 
   return (
     <div>
     {isLogged ? <div>
-                    {startTime}
-                    <Genres startTime = {startTime} />
+                    <Genres startTime = {startTime} genreList = {genreList}/>
                 </div>: 
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}

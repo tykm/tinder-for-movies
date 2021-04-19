@@ -121,8 +121,9 @@ def on_email(user_info):
 def startVote(data):
     SOCKETIO.emit('everyonesIn', data, broadcast=True)
     
+    
 @SOCKETIO.on('genres')
-def sendGenres(data):
+def sendGenres():
     genres = []
     for keys in genreVotes:
         genres.append(keys)
