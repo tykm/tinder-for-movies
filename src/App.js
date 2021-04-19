@@ -51,8 +51,7 @@ if (success === true){
     // run the code in the function that is passed in as the second arg
     
   }, []);
-  
-  
+ 
   return (
     <div>
       <GoogleLogin
