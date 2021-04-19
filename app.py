@@ -170,7 +170,6 @@ def on_sendMovies():
 def on_Submit_Movie_Votes(votes):
     counter = 0
     print (votes, 'IM HEREEEEEEE')
-    print (moviesVotes)
     for keys in moviesVotes:
         if votes[counter] == '1' and votes[counter] != None:
             moviesVotes[keys][0] = moviesVotes[keys][0] + 1
