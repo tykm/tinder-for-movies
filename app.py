@@ -177,7 +177,8 @@ def on_Submit_Movie_Votes(votes):
             print(moviesVotes[keys][0])
         counter = counter + 1
     print(moviesVotes)
-    print(movie_winner(), 'winnerrrrrr')
+    winner = movie_winner()
+    SOCKETIO.emit('movieWinner', winner, broadcast=True)
     
 def movie_winner():
     minimum = 0
