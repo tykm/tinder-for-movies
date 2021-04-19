@@ -6,12 +6,9 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
 
-
-
 genreVotes = {}
               
 users = []
-
 
 APP = Flask(__name__, static_folder='./build/static')
 CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
@@ -57,7 +54,6 @@ def on_connect():
     getGenres()
     print(genreVotes)
     print('User connected!')
-    SOCKETIO.emit('listOfGenres', genres, broadcast=True)
 
 # When a client disconnects from this Socket connection, this function is run
 @SOCKETIO.on('disconnect')
