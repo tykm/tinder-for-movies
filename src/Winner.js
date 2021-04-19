@@ -12,7 +12,7 @@ export function Winner() {
     // let changes while const will not be reassigned
     const movieL = info[0]
     const voteL = info[2]
-    const pic = "\'"+info[3]+"\'"
+    const pic =  info[3]
     let pos = 0 //The position of the movie with the highest rating; will be needed for the next sprint
     // { props.array } for the arrays and a useEffect to receive API information from the back-end
     // probably need to resize the image and create a stylesheet
