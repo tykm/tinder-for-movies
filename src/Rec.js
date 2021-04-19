@@ -11,7 +11,7 @@ export function Receive(){
     return (
         <div>
             <p> Movie name here... {movieL[pos]}</p>
-            <img src="www.defareallink.com" />
+            <img src="www.defareallink.com" alt="Movie Poster" />
             <p> 
                 User rating: {voteL[pos]}<br/>
                 Movie Description <br/>
