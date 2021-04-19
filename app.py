@@ -5,6 +5,7 @@ from flask_socketio import SocketIO
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
+import json
 
 genreVotes = {}
 users = []
@@ -135,7 +136,7 @@ def on_Submit(votes):
             genreVotes[keys][0] = genreVotes[keys][0] + 1
         counter = counter + 1
     print(genreVotes)
-    print(winningGenre(genreVotes))
+    getMovies()
     SOCKETIO.emit('onAdminSubmit', genreVotes, broadcast=True)
 
 def getGenres():
@@ -155,6 +156,15 @@ def winningGenre(genreVotes):
             minimum = genreVotes[keys][0]
             winner = genreVotes[keys][1]
     return winner
+    
+def getMovies():
+    load_dotenv(find_dotenv())
+    winner = winningGenre(genreVotes)
+    MOVIES_URL = 'https://api.themoviedb.org/3/discover/movie?api_key=' + os.getenv('APIKEY') + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=' + str(winner)
+    movieResponse = requests.get(MOVIES_URL)
+    movieResponse = movieResponse.json()
+    print(movieResponse)
+    print(json.dumps(movieResponse, indent=3))
     
 # Note we need to add this line so we can import app in the python shell
 if __name__ == "__main__":
