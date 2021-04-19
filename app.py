@@ -171,6 +171,8 @@ def on_Submit_Movie_Votes(votes):
     for keys in moviesVotes:
         if votes[counter] == '1' and votes[counter] != None:
             moviesVotes[keys][0] = moviesVotes[keys][0] + 1
+            print(moviesVotes[keys])
+            print(moviesVotes[keys][0])
         counter = counter + 1
     print(moviesVotes)
     print(movie_winner(), 'winnerrrrrr')

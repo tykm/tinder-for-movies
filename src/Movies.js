@@ -11,7 +11,6 @@ export function Movies() {
     expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 10);
     const { seconds, isRunning } = useTimer({ expiryTimestamp, autoStart: true , 
         onExpire: () => {
-            socket.emit('moviesList');
             setTimerEnd(true);
             console.log(movies, 'Before timerEnd')
             socket.emit('onSubmitMovies', movies);
