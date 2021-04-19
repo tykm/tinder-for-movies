@@ -6,7 +6,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
 
-genres = []
+
 
 genreVotes = {}
               
@@ -56,7 +56,10 @@ def index(filename):
 def on_connect():
     getGenres()
     print(genreVotes)
-    print(genres)
+    genres = []
+    for keys in genreVotes:
+        genres.append(keys)
+    print ('List of Genres: ', genres)
     print('User connected!')
     SOCKETIO.emit('listOfGenres', genres, broadcast=True)
 
@@ -146,7 +149,6 @@ def getGenres():
     genresResponse = requests.get(GENRES_URL)
     genresResponse = genresResponse.json()
     for i in range(10):
-        genres.append(genresResponse['genres'][i]['name'])
         genreVotes[genresResponse['genres'][i]['name']] = [0]
         genreVotes[genresResponse['genres'][i]['name']].append(genresResponse['genres'][i]['id'])
     
