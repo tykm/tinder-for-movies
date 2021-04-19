@@ -1,3 +1,4 @@
+'''Main Function creates and initializes all the necessary vars'''
 import os
 import requests
 from flask import Flask, send_from_directory, json, session
@@ -34,7 +35,6 @@ class User(DB.Model):
 
 DB.create_all()
 DB.session.commit()
-
  
 SOCKETIO = SocketIO(
     APP,
@@ -46,17 +46,20 @@ SOCKETIO = SocketIO(
 @APP.route('/', defaults={"filename": "index.html"})
 @APP.route('/<path:filename>')
 def index(filename):
+    '''Index File'''
     return send_from_directory('./build', filename)
 
 # When a client connects from this Socket connection, this function is run
 @SOCKETIO.on('connect')
 def on_connect():
     getGenres()
+ 
     print('User connected!')
 
 # When a client disconnects from this Socket connection, this function is run
 @SOCKETIO.on('disconnect')
 def on_disconnect():
+    '''when diconnecting from client'''
     print('User disconnected!')
 
 
@@ -209,3 +212,4 @@ if __name__ == "__main__":
         host=os.getenv('IP', '0.0.0.0'),
         port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
     )
+ 
