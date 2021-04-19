@@ -181,6 +181,7 @@ def on_Submit_Movie_Votes(votes):
     winner.append(movie_winner())
     winner.append(moviesVotes[winner[0]][0])
     winner.append(moviesVotes[winner[0]][1])
+    winner.append(moviesVotes[winner[0]][2])
     print(winner)
     SOCKETIO.emit('movieWinner', winner, broadcast=True)
     
@@ -206,6 +207,7 @@ def getMovies():
         moviesVotes[movieResponse['results'][i]['original_title']] = []
         moviesVotes[movieResponse['results'][i]['original_title']].append(0)
         moviesVotes[movieResponse['results'][i]['original_title']].append(movieResponse['results'][i]['vote_average'])
+        moviesVotes[movieResponse['results'][i]['original_title']].append('https://image.tmdb.org/t/p/w500/' + movieResponse['results'][i]['poster_path'])
         
     return movies
     
