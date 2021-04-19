@@ -7,7 +7,6 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
 
 genreVotes = {}
-              
 users = []
 
 APP = Flask(__name__, static_folder='./build/static')
@@ -52,7 +51,6 @@ def index(filename):
 @SOCKETIO.on('connect')
 def on_connect():
     getGenres()
-    print(genreVotes)
     print('User connected!')
 
 # When a client disconnects from this Socket connection, this function is run
@@ -120,12 +118,13 @@ def on_email(user_info):
 @SOCKETIO.on('everyonesIn')
 def startVote(data):
     SOCKETIO.emit('everyonesIn', data, broadcast=True)
-    
+
 @SOCKETIO.on('genres')
-def sendGenres(data):
+def sendGenres():
     genres = []
     for keys in genreVotes:
         genres.append(keys)
+    print(genres)
     SOCKETIO.emit('genres', genres, broadcast=True)
 
 @SOCKETIO.on('onSubmit')
@@ -156,4 +155,3 @@ if __name__ == "__main__":
         host=os.getenv('IP', '0.0.0.0'),
         port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
     )
-    
