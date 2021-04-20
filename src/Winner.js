@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { socket } from './App.js';
+import React, { useState, useEffect } from "react";
+import { socket } from "./App.js";
 export function Winner() {
+
     const [info,setInfo] = useState([]);
     useEffect(()=>{
         socket.on('movieWinner',(data)=>{
@@ -31,3 +32,4 @@ export function Winner() {
     
 }
 export default Winner;
+

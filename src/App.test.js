@@ -27,3 +27,4 @@ test("check if waiting page appears after Movie page", () => {
   expect(submitButtonElement).not.toBeInTheDocument();
   expect(waitingMessage).toBeInTheDocument();
 });
+
