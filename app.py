@@ -137,6 +137,15 @@ def send_genres():
     print(genres)
     SOCKETIO.emit('genres', genres, broadcast=True)
 
+def send_genres_test(genrevotes):
+    '''send list of genres'''
+    genres = []
+    genrev = {'results' : []}
+    for keys in genrevotes:
+        genres.append(keys)
+    genrev['results'] = genres
+    return genrev
+
 @SOCKETIO.on('onSubmit')
 def on_submit(votes):
     '''when votes for genres are submitted'''
@@ -176,6 +185,11 @@ def on_send_movies():
     movies = get_movies()
     print(movies)
     SOCKETIO.emit('moviesList', movies, broadcast=True)
+
+def on_send_movies_test(mlist):
+    '''send list of movies'''
+    movies = mlist
+    return movies
 
 @SOCKETIO.on('onSubmitMovies')
 def on_submit_movie_votes(votes):
