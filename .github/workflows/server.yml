@@ -40,7 +40,7 @@ jobs:
           python3 -m pip install pylint
       - name: Fixing Python file with Pylint
         run: |
-          python3 -m pylint -d E1101, W0621, C0103, W1508, W0611, W0612 $(find ./ -type f | grep '.py$' | xargs)
+          python3 -m pylint -d E1101, W0621, C0103, W1508, W0611, W0612, test1.py, test2.py $(find ./ -type f | grep '.py$' | xargs)
 
       #- name: Run tests
       # run: python -m unittest

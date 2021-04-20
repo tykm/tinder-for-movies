@@ -17,7 +17,7 @@ class UpdateUserTestCase(unittest.TestCase):
     def setUp(self):
         self.success_test_params = [{
             USERS_INPUT: {
-               'movies' : ['Godzilla VS. Kong']
+                'movies' : ['Godzilla VS. Kong']
             },
             EXPECTED_OUTPUT: {
                 'movies' : ['Godzilla VS. Kong']
