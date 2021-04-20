@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { socket } from "./App.js";
 import { Movies } from "./Movies.js";
 import { useTimer } from "react-timer-hook";
