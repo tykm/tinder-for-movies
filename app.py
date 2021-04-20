@@ -161,6 +161,7 @@ def on_submit(votes):
         if votes[counter] == '1' and votes[counter] is not None:
             GENREVOTES[keys][0] = GENREVOTES[keys][0] + 1
         counter = counter + 1
+    print(GENREVOTES)
     print(winning_genre(GENREVOTES))
     SOCKETIO.emit('onAdminSubmit', GENREVOTES, broadcast=True)
 
@@ -238,6 +239,7 @@ def get_movies():
     '''get list of movies from api'''
     load_dotenv(find_dotenv())
     winner = winning_genre(GENREVOTES)
+    print('winner when getting movies', winner)
     movies_url = 'https://api.themoviedb.org/3/discover/movie?api_key='
     movies_url = movies_url + os.getenv('APIKEY')
     movies_url = movies_url + '&language=en-US&sort_by=popularity.desc&include_adult=false'
