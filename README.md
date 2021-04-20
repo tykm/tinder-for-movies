@@ -58,7 +58,7 @@ CLI Command: `git clone https://github.com/tykm/tinder-for-movies/`
 1. `pylint app.py`
 2. `npx eslint src/*.js`
 
-* E1101 because it gives the error of Instance of 'SQLAlchemy' has no 'Column' member (no-member) and we need to have the db setup the way we have it
+* E1101 because it gives the error of Instance of 'SQLAlchemy' has no 'Column' member (no-member) and we need to have the db setup the way we have it.
 * W0621 Redefining name 'USERS' from outer scope (line 13) (redefined-outer-name) we need to use that var in a function no other way as we update that var
 * C0103 Variable name "USERS" doesn't conform to snake_case naming style (invalid-name) it is a global var that we use in a function
 * W1508 os.getenv default type is builtins.int. Expected str or None. (invalid-envvar-default) had to use os.getenv for apikeys
