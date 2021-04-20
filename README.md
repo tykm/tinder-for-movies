@@ -9,9 +9,9 @@ CLI Command: `git clone https://github.com/tykm/tinder-for-movies/`
 <br /> If you cd into the repository you'll see all the files
 
 ## APIs
+
 1. Sign up for a developer account for the Google OAuth API [https://developers.google.com/](https://developers.google.com/)
 2. Sign up for a developer account for The Movie Database API [https://developers.themoviedb.org/3/getting-started/introduction](https://developers.themoviedb.org/3/getting-started/introduction)
-
 
 ## Install Requirements (if not already installed)
 
@@ -51,6 +51,7 @@ CLI Command: `git clone https://github.com/tykm/tinder-for-movies/`
 9. Copy paste that value (looks like 'postgress://...')
 10. Open your .env file and set `DATABASE_URL` variable: `touch .env && echo "DATABASE_URL='copy-paste-database-url-here'" > .env`
 11. Push to Heroku: `git push heroku main`
+<<<<<<< HEAD
  
 ##Linting
 
@@ -88,3 +89,5 @@ This might include adding a list of their names or showing who may have voted fo
 
 
 
+=======
+>>>>>>> f16a76aaeefc30a6534e722c98e59dd69a800795

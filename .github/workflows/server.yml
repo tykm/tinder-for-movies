@@ -2,17 +2,17 @@
 
 name: Python Server CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the ci-demo branch
   push:
-    branches: [ main, genres, google-oauth ]
+    branches: [main, genres, google-oauth]
   pull_request:
-    branches: [ main, genres, google-oauth ]
+    branches: [main, genres, google-oauth]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-       
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -33,14 +33,14 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
-          
+
       - name: Install dependencies
         run: |
           python3 -m pip install --requirement requirements.txt
           python3 -m pip install pylint
       - name: Fixing Python file with Pylint
         run: |
-          python3 -m pylint -d E1101,C0413,W1508,R0903,W0603,W0611,W0612,W0621,C0103,W1508,E0401 $(find ./ -type f | grep '.py$' | xargs)
-        
+          python3 -m pylint -d E1101, W0621, C0103, W1508, W0611, W0612, E0401, C0413, W0611, R0801 $(find ./ -type f | grep '.py$' | xargs)
+
       #- name: Run tests
-       # run: python -m unittest
+      # run: python -m unittest
