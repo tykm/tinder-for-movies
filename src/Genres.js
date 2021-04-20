@@ -1,4 +1,3 @@
-import { ListItem } from './ListItem.js';
 import React, { useState, useEffect } from 'react';
 import { socket } from './App.js';
 import { Movies} from './Movies.js';

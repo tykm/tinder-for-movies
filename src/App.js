@@ -1,20 +1,18 @@
 import './App.css';
 import { Genres } from './Genres.js';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import GoogleLogin from 'react-google-login';
 export const socket = io(); // Connects to socket connection
 
-const arr = ['','']
+const arr = ['',''];
 function App() {
   const [users, setUsers] = useState([]); // State variable, list of messages
-  const inputRef = useRef(null); // Reference to <input> element
   const [success, setSucc] = useState(false);
   const [info, setInfo] = useState(arr);
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
   const [currUser, setCurrUser]=useState('');
   const [genreList, setGenreList] = useState(['', '', '', '', '', '', '', '', '', '']); 
-  let resetInterval;
   //const [timesUp, setTimesUp] = useState(false);
   useEffect(()=>{
     socket.on('email',(data)=>{
@@ -38,20 +36,20 @@ function App() {
 
   function onLoginButton(response) {
     try{
-      console.log(response.profileObj.name)
-      console.log(response.profileObj.email)
-      console.log(info)
-      let infoNE = [response.profileObj.name, response.profileObj.email]
+      console.log(response.profileObj.name);
+      console.log(response.profileObj.email);
+      console.log(info);
+      let infoNE = [response.profileObj.name, response.profileObj.email];
       setCurrUser(infoNE[1]);
-      socket.emit('email', infoNE)
-      setSucc(true)
+      socket.emit('email', infoNE);
+      setSucc(true);
     }
     catch(err){
-      window.alert('Login Failed. Please Try Again')
+      window.alert('Login Failed. Please Try Again');
     }
   }
 if (success === true){
-  if(users[0] == currUser && !isLogged){
+  if(users[0] === currUser && !isLogged){
     return(
       <div>
       {!isLogged ? 
@@ -59,7 +57,7 @@ if (success === true){
         : null
       }
     </div>)}
-    else if (users[0] != currUser && !isLogged){
+    else if (users[0] !== currUser && !isLogged){
       return (<div>Waiting for Admin to start voting</div>);
     }
 }
