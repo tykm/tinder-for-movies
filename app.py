@@ -185,19 +185,10 @@ def on_submit_movie_votes(votes):
     print(MOVIESVOTES)
     winner = []
     winner.append(movie_winner())
-<<<<<<< HEAD
     winner.append(MOVIESVOTES[winner[0]][0])
     winner.append(MOVIESVOTES[winner[0]][1])
     winner.append(MOVIESVOTES[winner[0]][2])
-=======
-    winner.append(moviesVotes[winner[0]][0])
-    winner.append(moviesVotes[winner[0]][1])
-    winner.append(moviesVotes[winner[0]][2])
-<<<<<<< HEAD
-=======
-    winner.append(moviesVotes[winner[0]][3])
->>>>>>> 68a499c5c33fab698a24b5a4c26e2be1094cb791
->>>>>>> 441f1550f253c4f8d3a6674f95eaba01b72f3d19
+    winner.append(MOVIESVOTES[winner[0]][3])
     print(winner)
     SOCKETIO.emit('movieWinner', winner, broadcast=True)
 
