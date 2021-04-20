@@ -55,7 +55,6 @@ CLI Command: `git clone https://github.com/tykm/tinder-for-movies/`
 9. Copy paste that value (looks like 'postgress://...')
 10. Open your .env file and set `DATABASE_URL` variable: `touch .env && echo "DATABASE_URL='copy-paste-database-url-here'" > .env`
 11. Push to Heroku: `git push heroku main`
-<<<<<<< HEAD
  
 ##Linting
 
