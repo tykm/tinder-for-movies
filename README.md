@@ -84,10 +84,3 @@ Currently another thing we should fix is the way we send and receive information
 Overall the best way to improve the app would be to make it have more flesshed out functionality, however, for what our goal is the only way to do that would just be to make it so that users are more aware of each other.
 This might include adding a list of their names or showing who may have voted for what or even which users voted for the movie that won.
 
-
-
-
-
-
-=======
->>>>>>> f16a76aaeefc30a6534e722c98e59dd69a800795
