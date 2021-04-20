@@ -9,9 +9,9 @@ CLI Command: `git clone https://github.com/tykm/tinder-for-movies/`
 <br /> If you cd into the repository you'll see all the files
 
 ## APIs
+
 1. Sign up for a developer account for the Google OAuth API [https://developers.google.com/](https://developers.google.com/)
 2. Sign up for a developer account for The Movie Database API [https://developers.themoviedb.org/3/getting-started/introduction](https://developers.themoviedb.org/3/getting-started/introduction)
-
 
 ## Install Requirements (if not already installed)
 
