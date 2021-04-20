@@ -193,6 +193,7 @@ def on_submit_movie_votes(votes):
     winner.append(MOVIESVOTES[winner[0]][0])
     winner.append(MOVIESVOTES[winner[0]][1])
     winner.append(MOVIESVOTES[winner[0]][2])
+    winner.append(MOVIESVOTES[winner[0]][3])
     print(winner)
     SOCKETIO.emit('movieWinner', winner, broadcast=True)
 
@@ -226,7 +227,8 @@ def get_movies():
             movie_response['results'][i]['vote_average'])
         MOVIESVOTES[movie_response['results'][i]['original_title']].append(
             'https://image.tmdb.org/t/p/w500/' + movie_response['results'][i]['poster_path'])
-
+        MOVIESVOTES[movie_response['results'][i]['original_title']].append(
+            movie_response['results'][i]['overview'])
     return movies
 
 # Note we need to add this line so we can import app in the python shell
