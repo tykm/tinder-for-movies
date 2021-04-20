@@ -3,6 +3,10 @@
 Developed by Tyler Kim, Dezrianna Chapman, Mahi Gada, Darshil Patel
 Preview Application: [https://tinder-for-movies.herokuapp.com/](https://tinder-for-movies.herokuapp.com/) 
 
+When testing the app Naman or TA's please use the following credentials as the first users login:
+Email: `tinderformovies1.0@gmail.com`
+Password: `movies12!@`
+
 ## Clone the repo
 
 CLI Command: `git clone https://github.com/tykm/tinder-for-movies/`
