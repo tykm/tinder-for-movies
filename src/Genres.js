@@ -8,7 +8,7 @@ export function Genres({startTime , genreList, resetInterval}) {
     const [isGenrePage, setGenrePage] = useState(false);
     const [timerEnd, setTimerEnd] = useState(false);
     const expiryTimestamp = new Date();
-    expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 60);
+    expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 10);
     const { seconds, isRunning } = useTimer({ expiryTimestamp, autoStart: true , 
         onExpire: () => {
             socket.emit('moviesList');
