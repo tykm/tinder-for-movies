@@ -14,6 +14,11 @@ MOVIESVOTES = {}
 APP = Flask(__name__, static_folder='./build/static')
 CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
 
+# Point SQLAlchemy to heroku DB
+APP.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+# Bypass warning
+APP.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 DB = SQLAlchemy(APP)
 class User(DB.Model):
     """ User class is an object that represents a user in the DB """

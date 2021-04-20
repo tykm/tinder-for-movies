@@ -3,6 +3,7 @@ Flask-SocketIO
 Flask-Cors
 Flask-SQLAlchemy
 psycopg2-binary
+psycopg2
 python-dotenv
 Flask-Migrate
 pylint
