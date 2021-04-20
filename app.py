@@ -90,6 +90,7 @@ def add_user(email, name):
     DB.session.add(new_user)
     DB.session.commit()
     print("New user added to DB")
+    return new_user
 
 
 def find_emails(all_users):
