@@ -7,6 +7,8 @@ When testing the app Naman or TA's please use the following credentials as the f
 Email: `tinderformovies1.0@gmail.com`
 Password: `movies12!@`
 
+- The reason you have to use admin to log in as the first user is because we need presisting DB now and in the future when we add multiple rooms the admin will have created the room so they will be able to reserve admin rights. It is more for sprint 2 but we wanted to have the core functionalities done for sprint 1 so we decided to do it this way.
+
 ## Clone the repo
 
 CLI Command: `git clone https://github.com/tykm/tinder-for-movies/`
