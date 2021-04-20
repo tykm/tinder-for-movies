@@ -38,5 +38,12 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8081"
+   "name": "tinder-for-movies",
+  "description": "Movie Recommendations",
+  "version": "1.0.0",
+  "engines": {
+    "npm": "6.14.10",
+    "node": "10.23.1"
+  },
+  "proxy": "http://localhost:8081/"
 }
