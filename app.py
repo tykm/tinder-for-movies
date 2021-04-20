@@ -222,7 +222,8 @@ def get_movies():
             movie_response['results'][i]['vote_average'])
         MOVIESVOTES[movie_response['results'][i]['original_title']].append(
             'https://image.tmdb.org/t/p/w500/' + movie_response['results'][i]['poster_path'])
-        MOVIESVOTES[movie_response['results'][i]['original_title']].append(movie_response['results'][i]['overview'])
+        MOVIESVOTES[movie_response['results'][i]['original_title']].append(
+            movie_response['results'][i]['overview'])
     return movies
 
 # Note we need to add this line so we can import app in the python shell
