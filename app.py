@@ -21,6 +21,8 @@ APP.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 APP.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 DB = SQLAlchemy(APP)
+
+
 class User(DB.Model):
     """ User class is an object that represents a user in the DB """
     email = DB.Column(DB.String(60), primary_key=True)
@@ -42,12 +44,11 @@ class User(DB.Model):
 DB.create_all()
 DB.session.commit()
 
-SOCKETIO = SocketIO(
-    APP,
-    cors_allowed_origins="*",
-    json=json,
-    manage_session=False
-)
+SOCKETIO = SocketIO(APP,
+                    cors_allowed_origins="*",
+                    json=json,
+                    manage_session=False)
+
 
 @APP.route('/', defaults={"filename": "index.html"})
 @APP.route('/<path:filename>')
@@ -55,12 +56,14 @@ def index(filename):
     '''Index File'''
     return send_from_directory('./build', filename)
 
+
 # When a client connects from this Socket connection, this function is run
 @SOCKETIO.on('connect')
 def on_connect():
     '''on_connect'''
     get_genres()
     print('User connected!')
+
 
 # When a client disconnects from this Socket connection, this function is run
 @SOCKETIO.on('disconnect')
@@ -72,8 +75,9 @@ def on_disconnect():
 # When a client emits the event 'chat' to the server, this function is run
 # 'chat' is a custom event name that we just decided
 
+
 @SOCKETIO.on('on_login')
-def on_login(): # data is whatever arg you pass in your emit call on client
+def on_login():  # data is whatever arg you pass in your emit call on client
     '''on login'''
     # This emits the 'chat' event from the server to all clients except for
     # the client that emmitted the event that triggered this function
@@ -128,6 +132,7 @@ def start_vote(data):
     '''emit for everyone's in button'''
     SOCKETIO.emit('everyonesIn', data, broadcast=True)
 
+
 @SOCKETIO.on('genres')
 def send_genres():
     '''send list of genres'''
@@ -136,6 +141,7 @@ def send_genres():
         genres.append(keys)
     print(genres)
     SOCKETIO.emit('genres', genres, broadcast=True)
+
 
 @SOCKETIO.on('onSubmit')
 def on_submit(votes):
@@ -158,7 +164,9 @@ def get_genres():
     genres_response = genres_response.json()
     for i in range(10):
         GENREVOTES[genres_response['genres'][i]['name']] = [0]
-        GENREVOTES[genres_response['genres'][i]['name']].append(genres_response['genres'][i]['id'])
+        GENREVOTES[genres_response['genres'][i]['name']].append(
+            genres_response['genres'][i]['id'])
+
 
 def winning_genre(GENREVOTES):
     '''get winner genre'''
@@ -170,12 +178,14 @@ def winning_genre(GENREVOTES):
             winner = GENREVOTES[keys][1]
     return winner
 
+
 @SOCKETIO.on('moviesList')
 def on_send_movies():
     '''send list of movies'''
     movies = get_movies()
     print(movies)
     SOCKETIO.emit('moviesList', movies, broadcast=True)
+
 
 @SOCKETIO.on('onSubmitMovies')
 def on_submit_movie_votes(votes):
@@ -198,6 +208,7 @@ def on_submit_movie_votes(votes):
     print(winner)
     SOCKETIO.emit('movieWinner', winner, broadcast=True)
 
+
 def movie_winner():
     '''get movie winner'''
     minimum = 0
@@ -208,6 +219,7 @@ def movie_winner():
             winner = keys
     return winner
 
+
 def get_movies():
     '''get list of movies from api'''
     load_dotenv(find_dotenv())
@@ -215,7 +227,8 @@ def get_movies():
     movies_url = 'https://api.themoviedb.org/3/discover/movie?api_key='
     movies_url = movies_url + os.getenv('APIKEY')
     movies_url = movies_url + '&language=en-US&sort_by=popularity.desc&include_adult=false'
-    movies_url = movies_url + '&include_video=false&page=1&with_genres=' + str(winner)
+    movies_url = movies_url + '&include_video=false&page=1&with_genres=' + str(
+        winner)
     movie_response = requests.get(movies_url)
     movie_response = movie_response.json()
     movies = []
@@ -227,10 +240,12 @@ def get_movies():
         MOVIESVOTES[movie_response['results'][i]['original_title']].append(
             movie_response['results'][i]['vote_average'])
         MOVIESVOTES[movie_response['results'][i]['original_title']].append(
-            'https://image.tmdb.org/t/p/w500/' + movie_response['results'][i]['poster_path'])
+            'https://image.tmdb.org/t/p/w500/' +
+            movie_response['results'][i]['poster_path'])
         MOVIESVOTES[movie_response['results'][i]['original_title']].append(
             movie_response['results'][i]['overview'])
     return movies
+
 
 # Note we need to add this line so we can import app in the python shell
 if __name__ == "__main__":
