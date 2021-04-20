@@ -160,7 +160,7 @@ def on_submit(votes):
         if votes[counter] == '1' and votes[counter] is not None:
             GENREVOTES[keys][0] = GENREVOTES[keys][0] + 1
         counter = counter + 1
-    print(GENREVOTES)
+    print(winning_genre(GENREVOTES))
     SOCKETIO.emit('onAdminSubmit', GENREVOTES, broadcast=True)
 
 
@@ -205,16 +205,15 @@ def on_send_movies_test(mlist):
 def on_submit_movie_votes(votes):
     '''calculate movie votes'''
     counter = 0
-    print(votes, 'IM HEREEEEEEE')
     for keys in MOVIESVOTES:
         if votes[counter] == '1' and votes[counter] is not None:
             MOVIESVOTES[keys][0] = MOVIESVOTES[keys][0] + 1
             print(MOVIESVOTES[keys])
             print(MOVIESVOTES[keys][0])
         counter = counter + 1
-    print(MOVIESVOTES)
     winner = []
     winner.append(movie_winner())
+    print(movie_winner())
     winner.append(MOVIESVOTES[winner[0]][0])
     winner.append(MOVIESVOTES[winner[0]][1])
     winner.append(MOVIESVOTES[winner[0]][2])
@@ -253,9 +252,10 @@ def get_movies():
         MOVIESVOTES[movie_response['results'][i]['original_title']].append(0)
         MOVIESVOTES[movie_response['results'][i]['original_title']].append(
             movie_response['results'][i]['vote_average'])
-        MOVIESVOTES[movie_response['results'][i]['original_title']].append(
-            'https://image.tmdb.org/t/p/w500/' +
-            movie_response['results'][i]['poster_path'])
+        if movie_response['results'][i]['poster_path'] is not None:
+            MOVIESVOTES[movie_response['results'][i]['original_title']].append(
+                'https://image.tmdb.org/t/p/w500/' +
+                movie_response['results'][i]['poster_path'])
         MOVIESVOTES[movie_response['results'][i]['original_title']].append(
             movie_response['results'][i]['overview'])
     return movies
