@@ -6,6 +6,7 @@
 .pnp.js
 
 # testing
+/__pycache__
 /coverage
 
 # production
