@@ -30,3 +30,4 @@ export function Winner() {
     );
     
 }
+export default Winner;
