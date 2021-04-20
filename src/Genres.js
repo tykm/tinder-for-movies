@@ -52,3 +52,4 @@ export function Genres({startTime , genreList, resetInterval}) {
     </div>
     );
 }
+export default Genres;
