@@ -45,5 +45,6 @@ jobs:
 
       - name: Run tests
         run: |
-          cd tests/mocked
-          python3 -m unit_tests.py
+          cd tests/unmocked
+          python3 -m test1.py
+          python3 -m test2.py
