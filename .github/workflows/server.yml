@@ -45,6 +45,6 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m unittest discover tests/mocked
+          python -m unittest discover tests/unmocked
         #python -m unittest discover -s tests/mocked -p '*_tests.py'
 #        python -m unittest discover -s tests/unmocked -p 'test*.py'
