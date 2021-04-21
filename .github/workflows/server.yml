@@ -45,6 +45,5 @@ jobs:
 
       - name: Run tests
         run: |
-          cd tests/unmocked
-          python3 -m test1.py
-          python3 -m test2.py
+          python -m unittest discover -s tests/unmocked -p 'test*.py'
+          python -m unittest discover -s tests/mocked -p '*_tests.py'
