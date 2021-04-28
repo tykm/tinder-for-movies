@@ -8,7 +8,7 @@ export function Movies() {
   const [isMoviePage, setMoviePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 45);
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 15);
   const { seconds, isRunning } = useTimer({
     expiryTimestamp,
     autoStart: true,
@@ -69,8 +69,6 @@ export function Movies() {
           <div>
             <button
               onClick={() => {
-                socket.emit("onSubmitMovies", movies);
-                console.log(movies);
                 setMoviePage(true);
               }}
             >

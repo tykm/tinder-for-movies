@@ -8,7 +8,7 @@ export function Genres({ startTime, genreList, resetInterval }) {
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 45);
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 15);
   const { seconds, isRunning } = useTimer({
     expiryTimestamp,
     autoStart: true,
@@ -16,7 +16,9 @@ export function Genres({ startTime, genreList, resetInterval }) {
       socket.emit("moviesList");
       setTimerEnd(true);
       console.log("setting timer end to true");
-      socket.emit("onSubmit", genres);
+      if (!isGenrePage) {
+        socket.emit("onSubmit", genres);
+      }
     },
   });
 
