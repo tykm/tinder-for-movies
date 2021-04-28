@@ -12,6 +12,7 @@ export function App() {
   const [info, setInfo] = useState(arr);
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
   const [currUser, setCurrUser] = useState("");
+  const [admin, setAdmin] = useState("")
   const [genreList, setGenreList] = useState([
     "",
     "",
@@ -33,6 +34,8 @@ export function App() {
     socket.on("onLogin", (data) => {
       console.log("INLOGIN");
       console.log(data);
+      setAdmin(data[0]);
+      console.log(data[0], 'This is the admin');
       setUsers(data);
     });
     socket.on("everyonesIn", (data) => {
@@ -88,7 +91,7 @@ export function App() {
     <div>
       {isLogged ? (
         <div>
-          <Genres genreList={genreList} />
+          <Genres genreList={genreList} admin={admin} />
         </div>
       ) : (
         <GoogleLogin
