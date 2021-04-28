@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { socket } from "./App.js";
 import { Winner } from "./Winner.js";
 import { useTimer } from "react-timer-hook";
-export function Movies() {
+export function Movies({genreList}) {
   const [movies, setMovies] = useState(Array(10).fill(null)); // sets board to empty array
   const [movieList, setMovieList] = useState(Array(10).fill(null));
   const [isMoviePage, setMoviePage] = useState(false);
@@ -39,7 +39,7 @@ export function Movies() {
       {timerEnd ? (
         <div>
           {" "}
-          <Winner />{" "}
+          <Winner genreList={genreList}/>{" "}
         </div>
       ) : isMoviePage ? (
         <div>Waiting for others to finish!</div>

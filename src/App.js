@@ -6,7 +6,7 @@ import GoogleLogin from "react-google-login";
 export const socket = io(); // Connects to socket connection
 
 const arr = ["", ""];
-function App() {
+export function App() {
   const [users, setUsers] = useState([]); // State variable, list of messages
   const [success, setSucc] = useState(false);
   const [info, setInfo] = useState(arr);

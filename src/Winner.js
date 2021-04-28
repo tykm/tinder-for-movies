@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { socket } from "./App.js";
-export function Winner() {
+import { socket, App, genreList } from "./App.js";
+import { Genres } from "./Genres.js";
 
+export function Winner({genreList}) {
+    const [leaves,setLeave] = useState(false);
+    const [reges, setRegen] = useState(false);
     const [info,setInfo] = useState([]);
     useEffect(()=>{
         socket.on('movieWinner',(data)=>{
@@ -17,7 +20,13 @@ export function Winner() {
     let pos = 0; //The position of the movie with the highest rating; will be needed for the next sprint
     // { props.array } for the arrays and a useEffect to receive API information from the back-end
     // probably need to resize the image and create a stylesheet
-    return (
+ function leave(){
+     setLeave(true)
+ }
+ function regen(){
+     setRegen(true)
+ }
+ const page=(
         <div>
             <p> Movie name here... {movieL}</p>
             <img src={pic} alt="Movie Poster" />
@@ -27,8 +36,27 @@ export function Winner() {
                 Movie Description: <br/>
                 {info[4]} <br/>
             </p>
+             <input type='button' value="Return to Login" onClick={leave}/>
+             <input type='button' value="Return to Genres Page" onClick={regen}/>
         </div>
-    );
+    )
+    if(leaves === false && reges === false){
+        return page;
+    }
+    else if (leaves === true){
+        return(
+            <div>
+                <App />
+            </div>
+            );
+    }
+    else if (reges === true){
+        return(
+            <div>
+                <Genres genreList={genreList}/>
+            </div>
+            );
+    }
     
 }
 export default Winner;

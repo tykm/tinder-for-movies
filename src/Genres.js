@@ -37,7 +37,7 @@ export function Genres({ startTime, genreList, resetInterval }) {
       {timerEnd ? (
         <div>
           {" "}
-          <Movies />{" "}
+          <Movies genreList={genreList}/>{" "}
         </div>
       ) : isGenrePage ? (
         <div>Waiting for Others to Finish!</div>
