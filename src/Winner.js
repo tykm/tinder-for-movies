@@ -3,6 +3,7 @@ import { socket } from "./App.js";
 export function Winner() {
 
     const [info,setInfo] = useState([]);
+    const [decline, isDecline] = useState(0);
     useEffect(()=>{
         socket.on('movieWinner',(data)=>{
             setInfo(data);
@@ -12,6 +13,7 @@ export function Winner() {
   // will need props to get information from the other component
     // let changes while const will not be reassigned
     const movieL = info[0];
+    const userL = info[1];
     const voteL = info[2];
     const pic =  info[3];
     let pos = 0; //The position of the movie with the highest rating; will be needed for the next sprint
@@ -22,7 +24,7 @@ export function Winner() {
             <p> Movie name here... {movieL}</p>
             <img src={pic} alt="Movie Poster" />
             <p> 
-                User likes: {info[1]}<br/>
+                User likes: {userL}<br/>
                 User rating: {voteL}<br/>
                 Movie Description: <br/>
                 {info[4]} <br/>
