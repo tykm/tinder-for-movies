@@ -136,9 +136,9 @@ def start_vote(data):
 
 @SOCKETIO.on('restartGame')
 def reset_genre_votes():
+    '''resetting the genrevotes dictionary for future use'''
     for keys in GENREVOTES:
         GENREVOTES[keys][0] = 0
-        
 
 @SOCKETIO.on('genres')
 def send_genres():
