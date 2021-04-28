@@ -218,7 +218,7 @@ def on_submit_movie_votes(votes):
     tempList = movie_winner()
     print(tempList, 'This is the winner')
     print(MOVIESVOTES, 'Dict for movievotes')
-    for i in range (3):
+    for i in range(3):
         winner.append(tempList[i])
         winner.append(MOVIESVOTES[str(tempList[i])][0])
         winner.append(MOVIESVOTES[str(tempList[i])][1])
