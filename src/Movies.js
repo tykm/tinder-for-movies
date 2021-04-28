@@ -8,7 +8,7 @@ export function Movies({genreList}) {
   const [isMoviePage, setMoviePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 15);
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 5);
   const { seconds, isRunning } = useTimer({
     expiryTimestamp,
     autoStart: true,

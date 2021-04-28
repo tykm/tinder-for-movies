@@ -6,6 +6,7 @@ from flask_socketio import SocketIO
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
+from collections import Counter
 
 load_dotenv(find_dotenv())
 
@@ -214,12 +215,15 @@ def on_submit_movie_votes(votes):
             print(MOVIESVOTES[keys][0])
         counter = counter + 1
     winner = []
-    winner.append(movie_winner())
-    print(movie_winner(), 'This is the winner')
-    winner.append(MOVIESVOTES[winner[0]][0])
-    winner.append(MOVIESVOTES[winner[0]][1])
-    winner.append(MOVIESVOTES[winner[0]][2])
-    winner.append(MOVIESVOTES[winner[0]][3])
+    tempList = movie_winner()
+    print(tempList, 'This is the winner')
+    print(MOVIESVOTES, 'Dict for movievotes')
+    for i in range (3):
+        winner.append(tempList[i])
+        winner.append(MOVIESVOTES[str(tempList[i])][0])
+        winner.append(MOVIESVOTES[str(tempList[i])][1])
+        winner.append(MOVIESVOTES[str(tempList[i])][2])
+        winner.append(MOVIESVOTES[str(tempList[i])][3])
     print(winner, 'This is printing the winner')
     SOCKETIO.emit('movieWinner', winner, broadcast=True)
 
@@ -227,11 +231,20 @@ def on_submit_movie_votes(votes):
 def movie_winner():
     '''get movie winner'''
     minimum = 0
-    winner = ''
+    winner = []
+    tempDict = {}
     for keys in MOVIESVOTES:
-        if MOVIESVOTES[keys][0] > minimum:
-            minimum = MOVIESVOTES[keys][0]
-            winner = keys
+        tempDict[keys] = MOVIESVOTES[keys][0]
+    #     if MOVIESVOTES[keys][0] > minimum:
+    #         minimum = MOVIESVOTES[keys][0]
+    #         winner = keys
+    print(tempDict, "Use this for decline")
+    k = Counter(tempDict)
+    topThree = k.most_common(3)
+    for keys in topThree:
+        print(keys[0])
+        winner.append(str(keys[0]))
+    print(winner, "Top Three movies")
     return winner
 
 
