@@ -134,6 +134,11 @@ def start_vote(data):
     '''emit for everyone's in button'''
     SOCKETIO.emit('everyonesIn', data, broadcast=True)
 
+@SOCKETIO.on('restartGame')
+def reset_genre_votes():
+    for keys in GENREVOTES:
+        GENREVOTES[keys][0] = 0
+        
 
 @SOCKETIO.on('genres')
 def send_genres():

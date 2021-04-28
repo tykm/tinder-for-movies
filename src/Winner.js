@@ -39,7 +39,7 @@ export function Winner({genreList}) {
                 {info[4]} <br/>
             </p>
              <input type='button' value="Return to Login" onClick={leave}/>
-             <input type='button' value="Return to Genres Page" onClick={regen}/>
+             <input type='button' value="Return to Genres Page" onClick={()=>{regen(); socket.emit('restartGame');}}/>
         </div>
     )
     if(leaves === false && reges === false){
