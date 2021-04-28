@@ -261,7 +261,8 @@ def get_movies():
                 movie_response['results'][i]['poster_path'])
         MOVIESVOTES[movie_response['results'][i]['original_title']].append(
             movie_response['results'][i]['overview'])
-        #MOVIESVOTES holds {"Title" : [userVotes, rating, posterpath, description]} for all movies in genre
+        #MOVIESVOTES holds {"Title" : [userVotes, rating, posterpath, description]}
+        #for all movies in genre
         #movies holds the  titles of the movies in a list
     return movies
 
