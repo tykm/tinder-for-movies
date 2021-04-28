@@ -1,12 +1,12 @@
 '''Main Function creates and initializes all the necessary vars'''
 import os
+from collections import Counter
 import requests
 from flask import Flask, send_from_directory, json, session
 from flask_socketio import SocketIO
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
-from collections import Counter
 
 load_dotenv(find_dotenv())
 
