@@ -287,6 +287,7 @@ def get_movies():
 
 @SOCKETIO.on('onDecline')
 def on_decline(data):
+    '''Decline Button Emit'''
     print(data)
     SOCKETIO.emit('onDecline', data, broadcast=True)
 
