@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { socket, App, genreList } from "./App.js";
 import { Genres } from "./Genres.js";
-<<<<<<< HEAD
 //THERE ARE 4 WARNINGS FOR WINNER.JS, IDK WHAT HAPPENS IF YOU DELETE THEM
-export function Winner({genreList}) {
-=======
-
 export function Winner({genreList, admin, currUser}) {
->>>>>>> 744d2dc0d5584ff7d063af4f0ba85081c68c20be
     const [leaves,setLeave] = useState(false);
     const [reges, setRegen] = useState(false);
     const [info,setInfo] = useState([]);
@@ -58,7 +53,7 @@ export function Winner({genreList, admin, currUser}) {
  }
  const page=(
         <div>
-            <p> Movie name here... {movieL}</p>
+            <p>{movieL}</p>
             <img src={pic} alt="Movie Poster" />
             <p> 
                 User likes: {userL}<br/>
