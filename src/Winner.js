@@ -51,6 +51,8 @@ export function Winner({genreList, admin, currUser}) {
  function regen(){
      setRegen(true)
  }
+ console.log(currUser, "this is the currUser")
+ console.log(admin, "this is the admin")
  const page=(
         <div>
             <p>{movieL}</p>
@@ -63,7 +65,7 @@ export function Winner({genreList, admin, currUser}) {
             </p>
              <input type='button' value="Return to Login" onClick={leave}/>
              <input type='button' value="Return to Genres Page" onClick={()=>{regen(); socket.emit('restartGame');}}/>
-            {currUser === admin && decline < 2 ? 
+            {currUser === admin[0] && decline < 2 ? 
                 <input type='button' value="Decline" onClick={() => {isDecline(prev=>prev+1); 
                     console.log(decline, "Decline was Clicked");
                     socket.emit('onDecline', decline)
@@ -88,7 +90,7 @@ export function Winner({genreList, admin, currUser}) {
     else if (reges === true){
         return(
             <div>
-                <Genres genreList={genreList}/>
+                <Genres genreList={genreList} admin={admin} currUser={currUser}/>
             </div>
             );
     }
