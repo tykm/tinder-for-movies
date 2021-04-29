@@ -285,6 +285,11 @@ def get_movies():
     return movies
 
 
+@SOCKETIO.on('onDecline')
+def on_decline(data):
+    print(data)
+    SOCKETIO.emit('onDecline', data, broadcast=True)
+
 # Note we need to add this line so we can import app in the python shell
 if __name__ == "__main__":
     # Note that we don't call app.run anymore. We call socketio.run with app arg

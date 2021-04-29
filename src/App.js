@@ -91,7 +91,7 @@ export function App() {
     <div>
       {isLogged ? (
         <div>
-          <Genres genreList={genreList} admin={admin} />
+          <Genres genreList={genreList} admin={admin} currUser={currUser} />
         </div>
       ) : (
         <GoogleLogin

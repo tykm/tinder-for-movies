@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { socket, App, genreList } from "./App.js";
 import { Genres } from "./Genres.js";
 
-export function Winner({genreList, admin}) {
+export function Winner({genreList, admin, currUser}) {
     const [leaves,setLeave] = useState(false);
     const [reges, setRegen] = useState(false);
     const [info,setInfo] = useState([]);
@@ -13,6 +13,10 @@ export function Winner({genreList, admin}) {
             setInfo(data);
             console.log(data);
         });
+        socket.on('onDecline',(data)=>{
+            isDecline(data + 1);
+            console.log(isDecline);
+        })
     },[]);
     //[name, number of like, rating, picture, dezcription]
   // will need props to get information from the other component
@@ -59,9 +63,11 @@ export function Winner({genreList, admin}) {
             </p>
              <input type='button' value="Return to Login" onClick={leave}/>
              <input type='button' value="Return to Genres Page" onClick={()=>{regen(); socket.emit('restartGame');}}/>
-            {admin !== '' && decline < 2 ? 
+            {currUser === admin && decline < 2 ? 
                 <input type='button' value="Decline" onClick={() => {isDecline(prev=>prev+1); 
-                    console.log(decline, "Decline was Clicked")}}
+                    console.log(decline, "Decline was Clicked");
+                    socket.emit('onDecline', decline)
+                }}
                 /> 
             : 
                 null
