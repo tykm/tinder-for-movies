@@ -3,7 +3,7 @@ import { socket } from "./App.js";
 import { Movies } from "./Movies.js";
 import { useTimer } from "react-timer-hook";
 
-export function Genres({ startTime, genreList, resetInterval }) {
+export function Genres({ startTime, genreList, resetInterval, admin, currUser }) {
   const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
@@ -37,7 +37,7 @@ export function Genres({ startTime, genreList, resetInterval }) {
       {timerEnd ? (
         <div>
           {" "}
-          <Movies genreList={genreList}/>{" "}
+          <Movies genreList={genreList} admin={admin} currUser={currUser}/>{" "}
         </div>
       ) : isGenrePage ? (
         <div>Waiting for Others to Finish!</div>
