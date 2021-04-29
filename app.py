@@ -110,6 +110,7 @@ def get_users():
 
 
 def get_names():
+    '''getting names of the users'''
     names = []
     for user in User.query.all():
         names.append(user.name)
