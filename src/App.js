@@ -14,6 +14,7 @@ export function App() {
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
   const [currUser, setCurrUser] = useState("");
   const [admin, setAdmin] = useState("")
+  const [about, setAbout]=useState(false)
   const [genreList, setGenreList] = useState([
     "",
     "",
@@ -104,14 +105,14 @@ export function App() {
 
   return (
     <div>
-     <p>
-      Hello
-      </p>
+    <center>
+    <h1>Tinder for Movies</h1></center>
       {isLogged ? (
         <div>
           <Genres genreList={genreList} admin={admin} currUser={currUser} />
         </div>
       ) : (
+        <center>
         <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
           buttonText="Login"
@@ -119,8 +120,14 @@ export function App() {
           onFailure={onLoginButton}
           cookiePolicy={"single_host_origin"}
         />
+        <br/><br/>
+        <button className = "aboutButton" onClick={() => {
+                setAbout(!about);
+              }}>About</button>
+        {about ? (<div><h2>Functionality</h2><h2>Why it Matters</h2><h2> Developed By</h2>
+        <p>Tyler Kim<br/>Darshil Patel<br/>Mahi Gada<br/>Dezrianna Chapman</p></div>) : null}
+         </center>
       )}
-     
     </div>
   );
 }
