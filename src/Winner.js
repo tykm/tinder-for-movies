@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { socket, App, genreList } from "./App.js";
+import { socket, App} from "./App.js";
 import { Genres } from "./Genres.js";
 //THERE ARE 4 WARNINGS FOR WINNER.JS, IDK WHAT HAPPENS IF YOU DELETE THEM
 export function Winner({genreList, admin, currUser}) {
@@ -42,7 +42,7 @@ export function Winner({genreList, admin, currUser}) {
         pic =  info[13];
         desc = info[14]
     }
-    let pos = 0; //The position of the movie with the highest rating; will be needed for the next sprint
+    //let pos = 0; //The position of the movie with the highest rating; will be needed for the next sprint
     // { props.array } for the arrays and a useEffect to receive API information from the back-end
     // probably need to resize the image and create a stylesheet
  function leave(){

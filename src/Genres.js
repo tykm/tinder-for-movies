@@ -9,7 +9,7 @@ export function Genres({ startTime, genreList, resetInterval, admin, currUser })
   const [timerEnd, setTimerEnd] = useState(false);
   const expiryTimestamp = new Date();
   expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 5);
-  const { seconds, isRunning } = useTimer({
+  const { seconds } = useTimer({
     expiryTimestamp,
     autoStart: true,
     onExpire: () => {

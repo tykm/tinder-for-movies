@@ -7,6 +7,9 @@ export const socket = io(); // Connects to socket connection
 
 const arr = ["", ""];
 export function App() {
+  const [land,setLand] = useState(<div>
+      Landing page infromation will go here.
+    </div>);
   const [users, setUsers] = useState([]); // State variable, list of messages
   const [names, setNames] = useState([]);
   const [success, setSucc] = useState(false);
@@ -54,6 +57,7 @@ export function App() {
       console.log(response.profileObj.name);
       console.log(response.profileObj.email);
       console.log(info);
+      setLand(<div></div>)
       let infoNE = [response.profileObj.name, response.profileObj.email];
       setCurrUser(infoNE[1]);
       socket.emit("email", infoNE);
@@ -100,13 +104,12 @@ export function App() {
     socket.emit("everyonesIn", true);
     socket.emit("genres");
     console.log(isLogged);
+   
   }
 
   return (
     <div>
-     <p>
-      Hello
-      </p>
+    {land}
       {isLogged ? (
         <div>
           <Genres genreList={genreList} admin={admin} currUser={currUser} />
