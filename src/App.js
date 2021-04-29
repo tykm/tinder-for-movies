@@ -71,6 +71,7 @@ export function App() {
               Everyone's In
             </button>
           ) : null}
+           
         </div>
       );
     } else if (users[0] !== currUser && !isLogged) {
@@ -86,6 +87,9 @@ export function App() {
 
   return (
     <div>
+     <p>
+      Hello
+      </p>
       {isLogged ? (
         <div>
           <Genres genreList={genreList} />
@@ -99,6 +103,7 @@ export function App() {
           cookiePolicy={"single_host_origin"}
         />
       )}
+     
     </div>
   );
 }

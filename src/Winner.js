@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { socket, App, genreList } from "./App.js";
 import { Genres } from "./Genres.js";
-
+//THERE ARE 4 WARNINGS FOR WINNER.JS, IDK WHAT HAPPENS IF YOU DELETE THEM
 export function Winner({genreList}) {
     const [leaves,setLeave] = useState(false);
     const [reges, setRegen] = useState(false);
