@@ -109,6 +109,12 @@ def get_users():
     return emails
 
 
+def get_names():
+    names = []
+    for user in User.query.all():
+        names.append(user.name)
+    return names
+
 @SOCKETIO.on('email')
 def on_email(user_info):
     """ Add user to db upon successful google oauth """
@@ -121,12 +127,14 @@ def on_email(user_info):
     print("Name: " + user_info[0])
     # Check if user not already in DB then add user to DB
     USERS = get_users()
+    names = get_names()
     if email not in USERS:
         add_user(user_info[1], user_info[0])
     print(User.query.all())
     DB.session.commit()
     USERS.append(user_info[1])
-    SOCKETIO.emit('onLogin', USERS, broadcast=True)
+    data = [USERS, names]
+    SOCKETIO.emit('onLogin', data, broadcast=True)
 
 
 @SOCKETIO.on('everyonesIn')

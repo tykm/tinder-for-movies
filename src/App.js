@@ -8,6 +8,7 @@ export const socket = io(); // Connects to socket connection
 const arr = ["", ""];
 export function App() {
   const [users, setUsers] = useState([]); // State variable, list of messages
+  const [names, setNames] = useState([]);
   const [success, setSucc] = useState(false);
   const [info, setInfo] = useState(arr);
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
@@ -33,7 +34,8 @@ export function App() {
     socket.on("onLogin", (data) => {
       console.log("INLOGIN");
       console.log(data);
-      setUsers(data);
+      setUsers(data[0]);
+      setNames(data[1]);
     });
     socket.on("everyonesIn", (data) => {
       console.log(data);
@@ -63,6 +65,11 @@ export function App() {
       return (
         <div>
           {!isLogged ? (
+            <div>
+              {names.map((name) => (
+              <div className="name">{name}</div>
+              ))}
+            
             <button
               onClick={() => {
                 genrePage();
@@ -70,11 +77,19 @@ export function App() {
             >
               Everyone's In
             </button>
+            </div>
           ) : null}
         </div>
       );
     } else if (users[0] !== currUser && !isLogged) {
-      return <div>Waiting for Admin to start voting</div>;
+      return (
+        <div>
+          {names.map((name) => (
+            <div className="name">{name}</div>
+          ))}
+          <div>Waiting for Admin to start voting</div>
+        </div>
+        );
     }
   }
 
