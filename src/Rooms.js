@@ -37,7 +37,6 @@ export function Rooms({ currUser, email }) {
                 <button className = "aboutButton" onClick={() => { createRoom(roomName.current.value);}}> Create Room </button>
                 <br />
                 <br />
-               
                 <button className = "aboutButton" onClick={() => { joinRoom(roomName.current.value);}}> Join Room </button>
                 </center>
             </div>

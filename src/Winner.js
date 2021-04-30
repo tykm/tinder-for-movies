@@ -75,7 +75,7 @@ export function Winner({genreList, admin, currUser, room}) {
             : 
                 null
             }
-        </center>=[]
+        </center>
         </div>
             
     )

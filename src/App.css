@@ -78,14 +78,15 @@ p{
   color: #694A61;
 }
 .room{
-    border: 2px solid #456879;
+    border: 0.25em solid #9b5134;
     border-radius: 10px;
     height: 22px;
     width: 230px;
 }
 
 input{
-  font: 16px "Trebuchet MS", sans-serif;
+  font: 1em "Trebuchet MS", sans-serif;
+  color: #9b5134;
   outline: 0;
   font-weight: 300;
 }

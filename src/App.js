@@ -8,8 +8,8 @@ export const socket = io(); // Connects to socket connection
 export function App() {
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
   const [currUser, setCurrUser] = useState("");
-  const [email, setEmail] = useState("")
-  const [about, setAbout]=useState(false)
+  const [email, setEmail] = useState("");
+  const [about, setAbout]=useState(false);
 
   function onLoginButton(response) {
     try {
@@ -24,18 +24,14 @@ export function App() {
       window.alert("Login Failed. Please Try Again");
     }
   }
-
   return (
-    <div>
-    
+    <div><center><h1>Tinder for Movies</h1></center>
       {isLogged ? (
         <div>
-          <center><h1>Tinder for Movies</h1></center>
           <Rooms currUser={currUser} email={email}/>
         </div>
       ) : (
         <center>
-    <h1>Tinder for Movies</h1>
         <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
           buttonText="Login"
@@ -51,7 +47,6 @@ export function App() {
         <p>Tyler Kim<br/>Darshil Patel<br/>Mahi Gada<br/>Dezrianna Chapman</p></div>) : null}
          </center>
       )}
-
     </div>
   );
 }
