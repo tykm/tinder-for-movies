@@ -3,7 +3,7 @@ import { socket } from "./App.js";
 import { Movies } from "./Movies.js";
 import { useTimer } from "react-timer-hook";
 
-export function Genres({ startTime, genreList, resetInterval, admin, currUser }) {
+export function Genres({ genreList, admin, currUser }) {
   const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);

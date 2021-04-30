@@ -1,5 +1,7 @@
 import "./App.css";
 import { Genres } from "./Genres.js";
+import { Rooms } from "./Rooms.js";
+import Everyone from "./Everyone.js";
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import GoogleLogin from "react-google-login";
@@ -62,46 +64,6 @@ export function App() {
       window.alert("Login Failed. Please Try Again");
     }
   }
-  if (success === true) {
-    if (users[0] === currUser && !isLogged) {
-      return (
-        <div>
-          {!isLogged ? (
-            <div>
-              {names.map((name) => (
-              <div className="name">{name}</div>
-              ))}
-            
-            <button
-              onClick={() => {
-                genrePage();
-              }}
-            >
-              Everyone's In
-            </button>
-            </div>
-          ) : null}
-           
-        </div>
-      );
-    } else if (users[0] !== currUser && !isLogged) {
-      return (
-        <div>
-          {names.map((name) => (
-            <div className="name">{name}</div>
-          ))}
-          <div>Waiting for Admin to start voting</div>
-        </div>
-        );
-    }
-  }
-
-  function genrePage() {
-    socket.emit("everyonesIn", true);
-    socket.emit("genres");
-    console.log(isLogged);
-  }
-
   return (
     <div>
      <p>
@@ -109,7 +71,7 @@ export function App() {
       </p>
       {isLogged ? (
         <div>
-          <Genres genreList={genreList} admin={admin} currUser={currUser} />
+          <Everyone genreList={genreList} admin={admin} currUser={currUser} success={success} users={users} isLogged={isLogged} names={names}/>
         </div>
       ) : (
         <GoogleLogin

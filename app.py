@@ -3,7 +3,7 @@ import os
 from collections import Counter
 import requests
 from flask import Flask, send_from_directory, json, session
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, join_room
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
@@ -13,6 +13,7 @@ load_dotenv(find_dotenv())
 GENREVOTES = {}
 USERS = []
 MOVIESVOTES = {}
+ROOMS = {}
 APP = Flask(__name__, static_folder='./build/static')
 CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
 
@@ -84,6 +85,17 @@ def on_login():  # data is whatever arg you pass in your emit call on client
     # the client that emmitted the event that triggered this function
     SOCKETIO.emit('on_login', GENREVOTES, broadcast=True, include_self=False)
 
+@SOCKETIO.on('onCreateRoom')
+def create_room(data):
+    if data["rName"] not in ROOMS:
+        ROOMS[data["rName"]].append(data["currUser"])
+        join_room(data["rName"])
+        
+@SOCKETIO.on('onJoinRoom')
+def joining_room(data):
+    if data["rName"] in ROOMS:
+        ROOMS[data["rName"]].append(data["currUser"])
+        join_room(data["rName"])
 
 def add_user(email, name):
     """ Helper function to add player """
