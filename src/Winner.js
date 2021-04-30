@@ -53,7 +53,8 @@ export function Winner({genreList, admin, currUser}) {
  }
  const page=(
         <div>
-            <p>{movieL}</p>
+        <center>
+            <h2>Winning Movie: {movieL}</h2>
             <img src={pic} alt="Movie Poster" />
             <p> 
                 User likes: {userL}<br/>
@@ -72,6 +73,7 @@ export function Winner({genreList, admin, currUser}) {
             : 
                 null
             }
+        </center>=[]
         </div>
             
     )
