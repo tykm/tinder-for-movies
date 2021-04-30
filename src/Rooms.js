@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { socket } from "./App.js";
 import Everyone from "./Everyone.js";
-
+import "./App.css";
 
 export function Rooms({ currUser, email }) {
     const roomName = useRef(null);
@@ -30,9 +30,16 @@ export function Rooms({ currUser, email }) {
             {entered ? <Everyone currUser={currUser} email={email} room={room} />
             :
             <div>
-                <input ref={roomName} type="text"/>
-                <button onClick={() => { createRoom(roomName.current.value);}}> Create Room </button>
-                <button onClick={() => { joinRoom(roomName.current.value);}}> Join Room </button>
+                <center>
+                 <input className = "room" ref={roomName} type="text"/>
+                <br />
+                <br />
+                <button className = "aboutButton" onClick={() => { createRoom(roomName.current.value);}}> Create Room </button>
+                <br />
+                <br />
+               
+                <button className = "aboutButton" onClick={() => { joinRoom(roomName.current.value);}}> Join Room </button>
+                </center>
             </div>
             }
         </div>

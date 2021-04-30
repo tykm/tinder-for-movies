@@ -77,3 +77,15 @@ p{
   font-family: "Trebuchet MS", sans-serif;
   color: #694A61;
 }
+.room{
+    border: 2px solid #456879;
+    border-radius: 10px;
+    height: 22px;
+    width: 230px;
+}
+
+input{
+  font: 16px "Trebuchet MS", sans-serif;
+  outline: 0;
+  font-weight: 300;
+}
