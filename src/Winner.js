@@ -16,11 +16,11 @@ export function Winner({genreList, admin, currUser}) {
         socket.on('onDecline',(data)=>{
             isDecline(data + 1);
             console.log(isDecline);
-        })
+        });
         socket.on('restart',(data)=>{
             setRegen(data);
             console.log(setRegen);
-        })
+        });
     },[]);
     //[name, number of like, rating, picture, dezcription]
   // will need props to get information from the other component
