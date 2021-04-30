@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { socket, App} from "./App.js";
+import { socket, App, genreList } from "./App.js";
 import { Genres } from "./Genres.js";
-//THERE ARE 4 WARNINGS FOR WINNER.JS, IDK WHAT HAPPENS IF YOU DELETE THEM
+
 export function Winner({genreList, admin, currUser}) {
     const [leaves,setLeave] = useState(false);
     const [reges, setRegen] = useState(false);
@@ -42,7 +42,7 @@ export function Winner({genreList, admin, currUser}) {
         pic =  info[13];
         desc = info[14]
     }
-    //let pos = 0; //The position of the movie with the highest rating; will be needed for the next sprint
+    let pos = 0; //The position of the movie with the highest rating; will be needed for the next sprint
     // { props.array } for the arrays and a useEffect to receive API information from the back-end
     // probably need to resize the image and create a stylesheet
  function leave(){
@@ -53,7 +53,7 @@ export function Winner({genreList, admin, currUser}) {
  }
  const page=(
         <div>
-            <p>{movieL}</p>
+            <p> {movieL}</p>
             <img src={pic} alt="Movie Poster" />
             <p> 
                 User likes: {userL}<br/>
@@ -62,13 +62,18 @@ export function Winner({genreList, admin, currUser}) {
                 {desc} <br/>
             </p>
              <input type='button' value="Return to Login" onClick={leave}/>
-             <input type='button' value="Return to Genres Page" onClick={()=>{regen(); socket.emit('restartGame');}}/>
+         
             {currUser === admin && decline < 2 ? 
                 <input type='button' value="Decline" onClick={() => {isDecline(prev=>prev+1); 
                     console.log(decline, "Decline was Clicked");
                     socket.emit('onDecline', decline)
                 }}
                 /> 
+            : 
+                null
+            }
+              {currUser === admin  ? 
+                <input type='button' value="Restart" onClick={()=>{regen(); socket.emit('restartGame');}}/>
             : 
                 null
             }
