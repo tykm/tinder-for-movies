@@ -67,32 +67,37 @@ export function App() {
     if (users[0] === currUser && !isLogged) {
       return (
         <div>
+        <div><center>
+    <h1>Tinder for Movies</h1></center></div>
           {!isLogged ? (
             <div>
+            <center><h2>Users Logged In:</h2>
               {names.map((name) => (
               <div className="name">{name}</div>
               ))}
-            
-            <button
+            <br/>
+            <button className="everyoneButton"
               onClick={() => {
                 genrePage();
               }}
             >
               Everyone's In
-            </button>
+            </button></center>
             </div>
           ) : null}
-           
         </div>
       );
     } else if (users[0] !== currUser && !isLogged) {
       return (
-        <div>
+        <div><div><center>
+    <h1>Tinder for Movies</h1><h2>Users Logged In:</h2>
           {names.map((name) => (
             <div className="name">{name}</div>
           ))}
-          <div>Waiting for Admin to start voting</div>
-        </div>
+          <br/>
+          <div className="name"><b>Waiting for Admin to Begin Voting!</b></div>
+          </center>
+        </div></div>
         );
     }
   }

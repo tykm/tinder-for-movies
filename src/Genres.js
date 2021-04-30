@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { socket } from "./App.js";
 import { Movies } from "./Movies.js";
 import { useTimer } from "react-timer-hook";
-
+import "./Genres.css";
 export function Genres({ startTime, genreList, resetInterval, admin, currUser }) {
   const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 5);
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 300);
   const { seconds, isRunning } = useTimer({
     expiryTimestamp,
     autoStart: true,
@@ -40,40 +40,40 @@ export function Genres({ startTime, genreList, resetInterval, admin, currUser })
           <Movies genreList={genreList} admin={admin} currUser={currUser}/>{" "}
         </div>
       ) : isGenrePage ? (
-        <div>Waiting for Others to Finish!</div>
+        <div><center><h3>Waiting for Others to Finish!</h3></center></div>
       ) : (
         <div>
-          <center>Vote on Genres</center>
-          {seconds}
+          <center><h2>Vote on Genres</h2>
+          <p>Time Left to Vote: <b>{seconds}</b> seconds</p>
           {genreList.map((g, index) => (
             <div>
-              <ul>Genre {g}</ul>
-              <button
-                onClick={() => {
+              <ul>{g}</ul>
+              <button className="choiceButton" onClick={() => {
                   Genres(index, true);
-                }}
-              >
+                }}>
                 Like
               </button>
-              <button
-                onClick={() => {
+              {" "}
+              <button className="choiceButton" onClick={() => {
                   Genres(index, false);
-                }}
-              >
+                }}>
                 Dislike
-              </button>
+                </button>
+    
             </div>
           ))}
           <div>
-            <button
+          <br/>
+            <button className="choiceButton"
               onClick={() => {
                 socket.emit("onSubmit", genres);
                 setGenrePage(true);
               }}
-            >
+            > 
               Submit
             </button>
           </div>
+          </center>
         </div>
       )}
     </div>

@@ -1,0 +1,27 @@
+h2{
+  color: #523b58;
+  font-family: "Trebuchet MS", sans-serif;
+}
+p{
+  color: #694A61;
+  font-family: "Trebuchet MS", sans-serif;
+}
+.choiceButton{
+  background-color: white;
+  font-family: "Trebuchet MS", sans-serif;
+  color: #9b5134;
+  border: 0;
+  outline: 0;
+  border-radius: 0.7rem;
+  font-size: 1em;
+  width: 10%;
+}
+ul{
+  padding:0;
+  color: #694A61;
+  font-family: "Trebuchet MS", sans-serif;
+}
+h3{
+  color: #523b58;
+  font-family: "Trebuchet MS", sans-serif;
+}

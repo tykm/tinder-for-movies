@@ -63,3 +63,17 @@ p{
   color: #694A61;
   font-family: "Trebuchet MS", sans-serif;
 }
+.everyoneButton {
+  background-color: white;
+  font-family: "Trebuchet MS", sans-serif;
+  color: #9b5134;
+  border: 0;
+  outline: 0;
+  border-radius: 0.7rem;
+  font-size: 1em;
+  width: 13%;
+}
+.name{
+  font-family: "Trebuchet MS", sans-serif;
+  color: #694A61;
+}
