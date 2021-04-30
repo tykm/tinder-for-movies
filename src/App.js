@@ -1,111 +1,28 @@
 import "./App.css";
-import { Genres } from "./Genres.js";
-import { useState, useEffect } from "react";
+import { Rooms } from "./Rooms.js";
+import { useState } from "react";
 import io from "socket.io-client";
 import GoogleLogin from "react-google-login";
 export const socket = io(); // Connects to socket connection
 
-const arr = ["", ""];
 export function App() {
-  const [users, setUsers] = useState([]); // State variable, list of messages
-  const [names, setNames] = useState([]);
-  const [success, setSucc] = useState(false);
-  const [info, setInfo] = useState(arr);
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
   const [currUser, setCurrUser] = useState("");
-  const [admin, setAdmin] = useState("")
+  const [email, setEmail] = useState("")
   const [about, setAbout]=useState(false)
-  const [genreList, setGenreList] = useState([
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-  ]);
-  //const [timesUp, setTimesUp] = useState(false);
-  useEffect(() => {
-    socket.on("email", (data) => {
-      console.log(data);
-      setInfo(data);
-    });
-    socket.on("onLogin", (data) => {
-      console.log("INLOGIN");
-      console.log(data);
-      setAdmin(data[0]);
-      setUsers(data[0]);
-      setNames(data[1]);
-    });
-    socket.on("everyonesIn", (data) => {
-      console.log(data);
-      setLog(data);
-    });
-    socket.on("genres", (data) => {
-      setGenreList(data);
-      console.log(genreList);
-    });
-  }, []);
 
   function onLoginButton(response) {
     try {
       console.log(response.profileObj.name);
       console.log(response.profileObj.email);
-      console.log(info);
       let infoNE = [response.profileObj.name, response.profileObj.email];
-      setCurrUser(infoNE[1]);
+      setCurrUser(infoNE[0]);
+      setEmail(infoNE[1])
       socket.emit("email", infoNE);
-      setSucc(true);
+      setLog(true);
     } catch (err) {
       window.alert("Login Failed. Please Try Again");
     }
-  }
-  if (success === true) {
-    if (users[0] === currUser && !isLogged) {
-      return (
-        <div>
-        <div><center>
-    <h1>Tinder for Movies</h1></center></div>
-          {!isLogged ? (
-            <div>
-            <center><h2>Users Logged In:</h2>
-              {names.map((name) => (
-              <div className="name">{name}</div>
-              ))}
-            <br/>
-            <button className="everyoneButton"
-              onClick={() => {
-                genrePage();
-              }}
-            >
-              Everyone's In
-            </button></center>
-            </div>
-          ) : null}
-        </div>
-      );
-    } else if (users[0] !== currUser && !isLogged) {
-      return (
-        <div><div><center>
-    <h1>Tinder for Movies</h1><h2>Users Logged In:</h2>
-          {names.map((name) => (
-            <div className="name">{name}</div>
-          ))}
-          <br/>
-          <div className="name"><b>Waiting for Admin to Begin Voting!</b></div>
-          </center>
-        </div></div>
-        );
-    }
-  }
-
-  function genrePage() {
-    socket.emit("everyonesIn", true);
-    socket.emit("genres");
-    console.log(isLogged);
   }
 
   return (
@@ -114,7 +31,7 @@ export function App() {
     <h1>Tinder for Movies</h1></center>
       {isLogged ? (
         <div>
-          <Genres genreList={genreList} admin={admin} currUser={currUser} />
+          <Rooms currUser={currUser} email={email}/>
         </div>
       ) : (
         <center>
@@ -133,6 +50,7 @@ export function App() {
         <p>Tyler Kim<br/>Darshil Patel<br/>Mahi Gada<br/>Dezrianna Chapman</p></div>) : null}
          </center>
       )}
+
     </div>
   );
 }
