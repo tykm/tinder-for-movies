@@ -17,6 +17,10 @@ export function Winner({genreList, admin, currUser}) {
             isDecline(data + 1);
             console.log(isDecline);
         })
+        socket.on('restart',(data)=>{
+            setRegen(data);
+            console.log(setRegen);
+        })
     },[]);
     //[name, number of like, rating, picture, dezcription]
   // will need props to get information from the other component
@@ -26,33 +30,31 @@ export function Winner({genreList, admin, currUser}) {
         userL = info[1];
         voteL = info[2];
         pic =  info[3];
-        desc = info[4]
+        desc = info[4];
     }
     else if(decline === 1){
         movieL = info[5];
         userL = info[6];
         voteL = info[7];
         pic =  info[8];
-        desc = info[9]
+        desc = info[9];
     }
     else if(decline === 2){
         movieL = info[10];
         userL = info[11];
         voteL = info[12];
         pic =  info[13];
-        desc = info[14]
+        desc = info[14];
     }
-    let pos = 0; //The position of the movie with the highest rating; will be needed for the next sprint
-    // { props.array } for the arrays and a useEffect to receive API information from the back-end
-    // probably need to resize the image and create a stylesheet
+   
  function leave(){
-     setLeave(true)
+     setLeave(true);
  }
  function regen(){
-     setRegen(true)
+     setRegen(true);
  }
- console.log(currUser, "this is the currUser")
- console.log(admin, "this is the admin")
+ console.log(currUser, "this is the currUser");
+ console.log(admin, "this is the admin");
  const page=(
         <div>
             <p>{movieL}</p>
@@ -64,23 +66,23 @@ export function Winner({genreList, admin, currUser}) {
                 {desc} <br/>
             </p>
              <input type='button' value="Return to Login" onClick={leave}/>
-            {currUser === admin && decline < 2 ? 
+            {currUser === admin[0] && decline < 2 ? 
                 <input type='button' value="Decline" onClick={() => {isDecline(prev=>prev+1); 
                     console.log(decline, "Decline was Clicked");
-                    socket.emit('onDecline', decline)
+                    socket.emit('onDecline', decline);
                 }}
                 /> 
             : 
                 null
             }
-                    {currUser === admin  ? 
-                <input type='button' value="Restart" onClick={()=>{regen(); socket.emit('restartGame');}}/>
+                    {currUser === admin[0]  ? 
+                <input type='button' value="Restart" onClick={()=>{regen(); socket.emit('restartGame'); socket.emit('restart', true)}}/>
             : 
                 null
             }
         </div>
             
-    )
+    );
     if(leaves === false && reges === false){
         return page;
     }
