@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { socket, App, genreList } from "./App.js";
 import { Genres } from "./Genres.js";
-
+//THERE ARE 4 WARNINGS FOR WINNER.JS, IDK WHAT HAPPENS IF YOU DELETE THEM
 export function Winner({genreList, admin, currUser}) {
     const [leaves,setLeave] = useState(false);
     const [reges, setRegen] = useState(false);
@@ -51,9 +51,11 @@ export function Winner({genreList, admin, currUser}) {
  function regen(){
      setRegen(true)
  }
+ console.log(currUser, "this is the currUser")
+ console.log(admin, "this is the admin")
  const page=(
         <div>
-            <p> Movie name here... {movieL}</p>
+            <p>{movieL}</p>
             <img src={pic} alt="Movie Poster" />
             <p> 
                 User likes: {userL}<br/>
@@ -92,7 +94,7 @@ export function Winner({genreList, admin, currUser}) {
     else if (reges === true){
         return(
             <div>
-                <Genres genreList={genreList}/>
+                <Genres genreList={genreList} admin={admin} currUser={currUser}/>
             </div>
             );
     }
