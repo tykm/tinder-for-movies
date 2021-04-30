@@ -8,7 +8,7 @@ export function Genres({ startTime, genreList, resetInterval, admin, currUser })
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 300);
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 20);
   const { seconds, isRunning } = useTimer({
     expiryTimestamp,
     autoStart: true,
@@ -59,7 +59,6 @@ export function Genres({ startTime, genreList, resetInterval, admin, currUser })
                 }}>
                 Dislike
                 </button>
-    
             </div>
           ))}
           <div>
