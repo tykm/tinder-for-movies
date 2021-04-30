@@ -63,7 +63,7 @@ export function Winner({genreList, admin, currUser}) {
             </p>
              <input type='button' value="Return to Login" onClick={leave}/>
          
-            {currUser === admin && decline < 2 ? 
+            {currUser === admin[0] && decline < 2 ? 
                 <input type='button' value="Decline" onClick={() => {isDecline(prev=>prev+1); 
                     console.log(decline, "Decline was Clicked");
                     socket.emit('onDecline', decline)
@@ -72,7 +72,7 @@ export function Winner({genreList, admin, currUser}) {
             : 
                 null
             }
-              {currUser === admin  ? 
+              {currUser === admin[0]  ? 
                 <input type='button' value="Restart" onClick={()=>{regen(); socket.emit('restartGame');}}/>
             : 
                 null
