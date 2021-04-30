@@ -16,7 +16,12 @@ export function Winner({genreList, admin, currUser, room}) {
         socket.on('onDecline',(data)=>{
             isDecline(data + 1);
             console.log(isDecline);
-        })
+        });
+        socket.on('restartGame', (data)=>{
+            console.log("Admin forced restart!");
+            console.log(data);
+            setRegen(true);
+        });
     },[]);
     //[name, number of like, rating, picture, dezcription]
   // will need props to get information from the other component
