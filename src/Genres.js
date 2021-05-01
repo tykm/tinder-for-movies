@@ -2,23 +2,23 @@ import React, { useState } from "react";
 import { socket } from "./App.js";
 import { Movies } from "./Movies.js";
 import { useTimer } from "react-timer-hook";
-
-export function Genres({ startTime, genreList, resetInterval, admin, currUser }) {
+import "./Genres.css";
+export function Genres({ genreList, admin, currUser, room }) {
   const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 5);
-  const { seconds } = useTimer({
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 15);
+  const { seconds, isRunning } = useTimer({
     expiryTimestamp,
     autoStart: true,
     onExpire: () => {
-      socket.emit("moviesList");
       setTimerEnd(true);
       console.log("setting timer end to true");
       if (!isGenrePage) {
-        socket.emit("onSubmit", genres);
+        socket.emit("onSubmit", {genres, room});
       }
+      socket.emit("moviesList", room);
     },
   });
 
@@ -37,43 +37,42 @@ export function Genres({ startTime, genreList, resetInterval, admin, currUser })
       {timerEnd ? (
         <div>
           {" "}
-          <Movies genreList={genreList} admin={admin} currUser={currUser}/>{" "}
+          <Movies genreList={genreList} admin={admin} currUser={currUser} room={room}/>{" "}
         </div>
       ) : isGenrePage ? (
-        <div>Waiting for Others to Finish!</div>
+        <div><center><h3>Waiting for Others to Finish!</h3></center></div>
       ) : (
         <div>
-          <center>Vote on Genres</center>
-          {seconds}
+          <center><h2>Vote on Genres</h2>
+          <p>Time Left to Vote: <b>{seconds}</b> seconds</p>
           {genreList.map((g, index) => (
             <div>
-              <ul>Genre {g}</ul>
-              <button
-                onClick={() => {
+              <ul>{g}</ul>
+              <button className="choiceButton" onClick={() => {
                   Genres(index, true);
-                }}
-              >
+                }}>
                 Like
               </button>
-              <button
-                onClick={() => {
+              {" "}
+              <button className="choiceButton" onClick={() => {
                   Genres(index, false);
-                }}
-              >
+                }}>
                 Dislike
-              </button>
+                </button>
             </div>
           ))}
           <div>
-            <button
+          <br/>
+            <button className="choiceButton"
               onClick={() => {
-                socket.emit("onSubmit", genres);
+                socket.emit("onSubmit", {genres, room});
                 setGenrePage(true);
               }}
-            >
+            > 
               Submit
             </button>
           </div>
+          </center>
         </div>
       )}
     </div>

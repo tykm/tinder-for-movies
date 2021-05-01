@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { socket, App} from "./App.js";
 import { Genres } from "./Genres.js";
 //THERE ARE 4 WARNINGS FOR WINNER.JS, IDK WHAT HAPPENS IF YOU DELETE THEM
-export function Winner({genreList, admin, currUser}) {
+export function Winner({genreList, admin, currUser, room}) {
     const [leaves,setLeave] = useState(false);
     const [reges, setRegen] = useState(false);
     const [info,setInfo] = useState([]);
@@ -51,9 +51,12 @@ export function Winner({genreList, admin, currUser}) {
  function regen(){
      setRegen(true)
  }
+ console.log(currUser, "this is the currUser")
+ console.log(admin, "this is the admin")
  const page=(
         <div>
-            <p>{movieL}</p>
+        <center>
+            <h2>Winning Movie: {movieL}</h2>
             <img src={pic} alt="Movie Poster" />
             <p> 
                 User likes: {userL}<br/>
@@ -62,16 +65,17 @@ export function Winner({genreList, admin, currUser}) {
                 {desc} <br/>
             </p>
              <input type='button' value="Return to Login" onClick={leave}/>
-             <input type='button' value="Return to Genres Page" onClick={()=>{regen(); socket.emit('restartGame');}}/>
+             <input type='button' value="Return to Genres Page" onClick={()=>{regen(); socket.emit('restartGame',room);}}/>
             {currUser === admin && decline < 2 ? 
                 <input type='button' value="Decline" onClick={() => {isDecline(prev=>prev+1); 
                     console.log(decline, "Decline was Clicked");
-                    socket.emit('onDecline', decline)
+                    socket.emit('onDecline', {decline, room})
                 }}
                 /> 
             : 
                 null
             }
+        </center>
         </div>
             
     )
@@ -88,7 +92,7 @@ export function Winner({genreList, admin, currUser}) {
     else if (reges === true){
         return(
             <div>
-                <Genres genreList={genreList}/>
+                <Genres genreList={genreList} admin={admin} currUser={currUser}/>
             </div>
             );
     }

@@ -3,7 +3,7 @@ import os
 from collections import Counter
 import requests
 from flask import Flask, send_from_directory, json, session
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, join_room
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
@@ -13,6 +13,8 @@ load_dotenv(find_dotenv())
 GENREVOTES = {}
 USERS = []
 MOVIESVOTES = {}
+ROOMS = {}
+#{room1 : {listOfUsers : [], GenreVotes : {}, MovieVotes:{}}
 APP = Flask(__name__, static_folder='./build/static')
 CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
 
@@ -62,7 +64,6 @@ def index(filename):
 @SOCKETIO.on('connect')
 def on_connect():
     '''on_connect'''
-    get_genres()
     print('User connected!')
 
 
@@ -84,6 +85,23 @@ def on_login():  # data is whatever arg you pass in your emit call on client
     # the client that emmitted the event that triggered this function
     SOCKETIO.emit('on_login', GENREVOTES, broadcast=True, include_self=False)
 
+@SOCKETIO.on('onCreateRoom')
+def create_room(data):
+    if data["rName"] not in ROOMS:
+        ROOMS[data["rName"]] = {'activeUsers' : [], 'genreVotes' : {}, 'movieVotes' : {}}
+        ROOMS[data["rName"]]['activeUsers'].append(data["currUser"])
+        join_room(data["rName"])
+        get_genres(data["rName"])
+        print(ROOMS[data["rName"]]['genreVotes'])
+    SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=True, room=data['rName'])
+
+@SOCKETIO.on('onJoinRoom')
+def joining_room(data):
+    if data["rName"] in ROOMS:
+        ROOMS[data["rName"]]['activeUsers'].append(data["currUser"])
+        join_room(data["rName"])
+
+    SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=True, room=data['rName'])
 
 def add_user(email, name):
     """ Helper function to add player """
@@ -110,6 +128,7 @@ def get_users():
 
 
 def get_names():
+    '''getting names of the users'''
     names = []
     for user in User.query.all():
         names.append(user.name)
@@ -140,22 +159,22 @@ def on_email(user_info):
 @SOCKETIO.on('everyonesIn')
 def start_vote(data):
     '''emit for everyone's in button'''
-    SOCKETIO.emit('everyonesIn', data, broadcast=True)
+    SOCKETIO.emit('everyonesIn', data['true'], broadcast=True, room=data['room'])
 
 @SOCKETIO.on('restartGame')
-def reset_genre_votes():
+def reset_genre_votes(data):
     '''resetting the genrevotes dictionary for future use'''
-    for keys in GENREVOTES:
-        GENREVOTES[keys][0] = 0
+    for keys in ROOMS[data]['genreVotes']:
+        ROOMS[data]['genreVotes'][keys][0] = 0
 
 @SOCKETIO.on('genres')
-def send_genres():
+def send_genres(data):
     '''send list of genres'''
     genres = []
-    for keys in GENREVOTES:
+    for keys in ROOMS[data]['genreVotes']:
         genres.append(keys)
-    print(genres)
-    SOCKETIO.emit('genres', genres, broadcast=True)
+    #print(genres)
+    SOCKETIO.emit('genres', genres, broadcast=True, room=data)
 
 def send_genres_test(genrevotes):
     '''send list of genres'''
@@ -168,19 +187,21 @@ def send_genres_test(genrevotes):
 
 
 @SOCKETIO.on('onSubmit')
-def on_submit(votes):
+def on_submit(data):
     '''when votes for genres are submitted'''
     counter = 0
-    for keys in GENREVOTES:
+    votes = data["genres"]
+    for keys in ROOMS[data["room"]]['genreVotes']:
         if votes[counter] == '1' and votes[counter] is not None:
-            GENREVOTES[keys][0] = GENREVOTES[keys][0] + 1
+            ROOMS[data["room"]]['genreVotes'][keys][0] = ROOMS[data["room"]]['genreVotes'][keys][0] + 1
         counter = counter + 1
-    print(GENREVOTES)
-    print(winning_genre(GENREVOTES))
-    SOCKETIO.emit('onAdminSubmit', GENREVOTES, broadcast=True)
+    #print(ROOMS[data["room"]]['genreVotes'])
+    print(data["room"], 'line199')
+    print(winning_genre(ROOMS[data["room"]]['genreVotes']), 'The winning genres line 200')
+    SOCKETIO.emit('onAdminSubmit', ROOMS[data["room"]]['genreVotes'], broadcast=True, room=data["room"])
 
 
-def get_genres():
+def get_genres(room):
     '''get list of genres from api'''
     load_dotenv(find_dotenv())
     genres_url = 'https://api.themoviedb.org/3/genre/movie/list?api_key='
@@ -188,28 +209,29 @@ def get_genres():
     genres_response = requests.get(genres_url)
     genres_response = genres_response.json()
     for i in range(10):
-        GENREVOTES[genres_response['genres'][i]['name']] = [0]
-        GENREVOTES[genres_response['genres'][i]['name']].append(
+        ROOMS[room]['genreVotes'][genres_response['genres'][i]['name']] = [0]
+        ROOMS[room]['genreVotes'][genres_response['genres'][i]['name']].append(
             genres_response['genres'][i]['id'])
 
 
-def winning_genre(GENREVOTES):
+def winning_genre(genreVotes):
     '''get winner genre'''
     minimum = 0
     winner = ''
-    for keys in GENREVOTES:
-        if GENREVOTES[keys][0] > minimum:
-            minimum = GENREVOTES[keys][0]
-            winner = GENREVOTES[keys][1]
+    for keys in genreVotes:
+        if genreVotes[keys][0] > minimum:
+            minimum = genreVotes[keys][0]
+            winner = genreVotes[keys][1]
     return winner
 
 
 @SOCKETIO.on('moviesList')
-def on_send_movies():
+def on_send_movies(data):
     '''send list of movies'''
-    movies = get_movies()
-    print(movies)
-    SOCKETIO.emit('moviesList', movies, broadcast=True)
+    print(data, ROOMS[data]['genreVotes'], 'line 230')
+    movies = get_movies(data)
+    #print(movies)
+    SOCKETIO.emit('moviesList', movies, broadcast=True, room=data)
 
 def on_send_movies_test(mlist):
     '''send list of movies'''
@@ -218,53 +240,55 @@ def on_send_movies_test(mlist):
 
 
 @SOCKETIO.on('onSubmitMovies')
-def on_submit_movie_votes(votes):
+def on_submit_movie_votes(data):
     '''calculate movie votes'''
     counter = 0
-    for keys in MOVIESVOTES:
+    votes=data["movies"]
+    for keys in ROOMS[data['room']]['movieVotes']:
         if votes[counter] == '1' and votes[counter] is not None:
-            MOVIESVOTES[keys][0] = MOVIESVOTES[keys][0] + 1
-            print(MOVIESVOTES[keys])
-            print(MOVIESVOTES[keys][0])
+            ROOMS[data['room']]['movieVotes'][keys][0] = ROOMS[data['room']]['movieVotes'][keys][0] + 1
+            #print(ROOMS[data['room']]['movieVotes'][keys])
+            #print(ROOMS[data['room']]['movieVotes'][keys][0])
         counter = counter + 1
     winner = []
-    tempList = movie_winner()
-    print(tempList, 'This is the winner')
-    print(MOVIESVOTES, 'Dict for movievotes')
+    tempList = movie_winner(data["room"])
+    #print(tempList, 'This is the winner')
+    #print(ROOMS[data['room']]['movieVotes'], 'Dict for movievotes')
     for i in range(3):
         winner.append(tempList[i])
-        winner.append(MOVIESVOTES[str(tempList[i])][0])
-        winner.append(MOVIESVOTES[str(tempList[i])][1])
-        winner.append(MOVIESVOTES[str(tempList[i])][2])
-        winner.append(MOVIESVOTES[str(tempList[i])][3])
-    print(winner, 'This is printing the winner')
-    SOCKETIO.emit('movieWinner', winner, broadcast=True)
+        winner.append(ROOMS[data['room']]['movieVotes'][str(tempList[i])][0])
+        winner.append(ROOMS[data['room']]['movieVotes'][str(tempList[i])][1])
+        winner.append(ROOMS[data['room']]['movieVotes'][str(tempList[i])][2])
+        winner.append(ROOMS[data['room']]['movieVotes'][str(tempList[i])][3])
+    #print(winner, 'This is printing the winner')
+    SOCKETIO.emit('movieWinner', winner, broadcast=True, room=data["room"])
 
 
-def movie_winner():
+def movie_winner(data):
     '''get movie winner'''
     minimum = 0
     winner = []
     tempDict = {}
-    for keys in MOVIESVOTES:
-        tempDict[keys] = MOVIESVOTES[keys][0]
+    for keys in ROOMS[data]["movieVotes"]:
+        tempDict[keys] = ROOMS[data]["movieVotes"][keys][0]
     #     if MOVIESVOTES[keys][0] > minimum:
     #         minimum = MOVIESVOTES[keys][0]
     #         winner = keys
-    print(tempDict, "Use this for decline")
+    #print(tempDict, "Use this for decline")
     k = Counter(tempDict)
     topThree = k.most_common(3)
     for keys in topThree:
-        print(keys[0])
+        #print(keys[0])
         winner.append(str(keys[0]))
-    print(winner, "Top Three movies")
+    #print(winner, "Top Three movies")
     return winner
 
 
-def get_movies():
+def get_movies(data):
     '''get list of movies from api'''
     load_dotenv(find_dotenv())
-    winner = winning_genre(GENREVOTES)
+    print(ROOMS[data]['genreVotes'])
+    winner = winning_genre(ROOMS[data]['genreVotes'])
     print('winner when getting movies', winner)
     movies_url = 'https://api.themoviedb.org/3/discover/movie?api_key='
     movies_url = movies_url + os.getenv('APIKEY')
@@ -274,18 +298,18 @@ def get_movies():
     movie_response = requests.get(movies_url)
     movie_response = movie_response.json()
     movies = []
-    MOVIESVOTES.clear()
+    ROOMS[data]["movieVotes"].clear()
     for i in range(10):
         movies.append(movie_response['results'][i]['original_title'])
-        MOVIESVOTES[movie_response['results'][i]['original_title']] = []
-        MOVIESVOTES[movie_response['results'][i]['original_title']].append(0)
-        MOVIESVOTES[movie_response['results'][i]['original_title']].append(
+        ROOMS[data]["movieVotes"][movie_response['results'][i]['original_title']] = []
+        ROOMS[data]["movieVotes"][movie_response['results'][i]['original_title']].append(0)
+        ROOMS[data]["movieVotes"][movie_response['results'][i]['original_title']].append(
             movie_response['results'][i]['vote_average'])
         if movie_response['results'][i]['poster_path'] is not None:
-            MOVIESVOTES[movie_response['results'][i]['original_title']].append(
+            ROOMS[data]["movieVotes"][movie_response['results'][i]['original_title']].append(
                 'https://image.tmdb.org/t/p/w500/' +
                 movie_response['results'][i]['poster_path'])
-        MOVIESVOTES[movie_response['results'][i]['original_title']].append(
+        ROOMS[data]["movieVotes"][movie_response['results'][i]['original_title']].append(
             movie_response['results'][i]['overview'])
         #MOVIESVOTES holds {"Title" : [userVotes, rating, posterpath, description]}
         #for all movies in genre
@@ -296,8 +320,8 @@ def get_movies():
 @SOCKETIO.on('onDecline')
 def on_decline(data):
     '''Decline Button Emit'''
-    print(data)
-    SOCKETIO.emit('onDecline', data, broadcast=True)
+    print(data["decline"])
+    SOCKETIO.emit('onDecline', data["decline"], broadcast=True, room=data["room"])
 
 # Note we need to add this line so we can import app in the python shell
 if __name__ == "__main__":

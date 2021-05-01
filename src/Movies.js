@@ -2,20 +2,21 @@ import React, { useState, useEffect } from "react";
 import { socket } from "./App.js";
 import { Winner } from "./Winner.js";
 import { useTimer } from "react-timer-hook";
-export function Movies({genreList, admin, currUser}) {
+import "./Genres.css";
+export function Movies({genreList, admin, currUser, room}) {
   const [movies, setMovies] = useState(Array(10).fill(null)); // sets board to empty array
   const [movieList, setMovieList] = useState(Array(10).fill(null));
   const [isMoviePage, setMoviePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 5);
-  const { seconds } = useTimer({
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 15);
+  const { seconds, isRunning } = useTimer({
     expiryTimestamp,
     autoStart: true,
     onExpire: () => {
       setTimerEnd(true);
       console.log(movies, "Before timerEnd");
-      socket.emit("onSubmitMovies", movies);
+      socket.emit("onSubmitMovies", {movies, room});
     },
   });
   function Movies(index, isLike) {
@@ -39,25 +40,26 @@ export function Movies({genreList, admin, currUser}) {
       {timerEnd ? (
         <div>
           {" "}
-          <Winner genreList={genreList} admin={admin} currUser={currUser}/>{" "}
+          <Winner genreList={genreList} admin={admin} currUser={currUser} room={room}/>{" "}
         </div>
       ) : isMoviePage ? (
-        <div>Waiting for others to finish!</div>
+         <div><center><h3>Waiting for Others to Finish!</h3></center></div>
       ) : (
         <div>
-          {seconds}
-          <center>Vote on Movies</center>
+          <center><h2>Vote on Movies</h2>
+          <p>Time Left to Vote: <b>{seconds}</b> seconds</p>
           {movieList.map((m, index) => (
             <div>
-              <ul>Movie {m}</ul>
-              <button
+              <ul> {m}</ul>
+              <button className="choiceButton"
                 onClick={() => {
                   Movies(index, true);
                 }}
               >
                 Like
               </button>
-              <button
+              {" "}
+              <button className="choiceButton"
                 onClick={() => {
                   Movies(index, false);
                 }}
@@ -67,7 +69,8 @@ export function Movies({genreList, admin, currUser}) {
             </div>
           ))}
           <div>
-            <button
+          <br/>
+            <button className="choiceButton"
               onClick={() => {
                 setMoviePage(true);
               }}
@@ -75,6 +78,7 @@ export function Movies({genreList, admin, currUser}) {
               Submit
             </button>
           </div>
+         </center>
         </div>
       )}
     </div>
