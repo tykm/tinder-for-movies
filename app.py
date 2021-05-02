@@ -3,7 +3,7 @@ import os
 from collections import Counter
 import requests
 from flask import Flask, send_from_directory, json, session
-from flask_socketio import SocketIO, join_room
+from flask_socketio import SocketIO, join_room, rooms
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
@@ -93,15 +93,24 @@ def create_room(data):
         join_room(data["rName"])
         get_genres(data["rName"])
         print(ROOMS[data["rName"]]['genreVotes'])
-    SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=True, room=data['rName'])
+        SOCKETIO.emit('couldNotCreate',{"room" : data["rName"]}, broadcast=False, room=data['rName'])
+        SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=False, room=data['rName'])
+    else:
+        print(rooms())
+        SOCKETIO.emit('couldNotCreate', 'Room Already Exists Please Join Room or Create a New Room', room=rooms()[0])
+    
 
 @SOCKETIO.on('onJoinRoom')
 def joining_room(data):
     if data["rName"] in ROOMS:
         ROOMS[data["rName"]]['activeUsers'].append(data["currUser"])
         join_room(data["rName"])
-
-    SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=True, room=data['rName'])
+        SOCKETIO.emit('couldNotCreate', {"room" : data["rName"]}, broadcast=False, room=data['rName'])
+        SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=False, room=data['rName'])
+    else:
+        print(rooms())
+        SOCKETIO.emit('couldNotCreate', 'Room Does Not Exist Please Create Room', room=rooms()[0])
+    
 
 def add_user(email, name):
     """ Helper function to add player """
