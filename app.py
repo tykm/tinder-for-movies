@@ -103,7 +103,8 @@ def create_room(data):
 @SOCKETIO.on('onJoinRoom')
 def joining_room(data):
     if data["rName"] in ROOMS:
-        ROOMS[data["rName"]]['activeUsers'].append(data["currUser"])
+        if data["currUser"] not in ROOMS[data["rName"]]['activeUsers']:
+            ROOMS[data["rName"]]['activeUsers'].append(data["currUser"])
         join_room(data["rName"])
         SOCKETIO.emit('couldNotCreate', {"room" : data["rName"]}, broadcast=False, room=data['rName'])
         SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=False, room=data['rName'])
