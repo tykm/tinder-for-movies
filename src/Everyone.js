@@ -33,8 +33,8 @@ function Everyone({ currUser, email, room }){
             console.log(genreList);
         });
         socket.on('onRoom', (data)=>{
-            setName(data)
-            console.log(data)
+            setName(data[0])
+            console.log(data[0])
         })
     }, [])
 

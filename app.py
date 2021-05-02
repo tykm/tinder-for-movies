@@ -87,21 +87,27 @@ def on_login():  # data is whatever arg you pass in your emit call on client
 
 @SOCKETIO.on('onCreateRoom')
 def create_room(data):
+    inRoom = False
     if data["rName"] not in ROOMS:
         ROOMS[data["rName"]] = {'activeUsers' : [], 'genreVotes' : {}, 'movieVotes' : {}}
         ROOMS[data["rName"]]['activeUsers'].append(data["currUser"])
         join_room(data["rName"])
         get_genres(data["rName"])
         print(ROOMS[data["rName"]]['genreVotes'])
-    SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=True, room=data['rName'])
+        inRoom = True
+        #SOCKETIO.emit('inRoom', False, broadcast=False, include_self=True)
+    SOCKETIO.emit('onRoom', [ROOMS[data["rName"]]['activeUsers'], inRoom], broadcast=False, room=data['rName'])
 
 @SOCKETIO.on('onJoinRoom')
 def joining_room(data):
+    inRoom = False
     if data["rName"] in ROOMS:
         ROOMS[data["rName"]]['activeUsers'].append(data["currUser"])
         join_room(data["rName"])
+        #.emit('roomNotExists', False, broadcast=False, include_self=True)
+        inRoom = True
 
-    SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=True, room=data['rName'])
+    SOCKETIO.emit('onRoom', [ROOMS[data["rName"]]['activeUsers'], inRoom], broadcast=False, room=data['rName'])
 
 def add_user(email, name):
     """ Helper function to add player """
