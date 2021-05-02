@@ -87,30 +87,33 @@ def on_login():  # data is whatever arg you pass in your emit call on client
 
 @SOCKETIO.on('onCreateRoom')
 def create_room(data):
+    '''Creating room'''
     if data["rName"] not in ROOMS:
         ROOMS[data["rName"]] = {'activeUsers' : [], 'genreVotes' : {}, 'movieVotes' : {}}
         ROOMS[data["rName"]]['activeUsers'].append(data["currUser"])
         join_room(data["rName"])
         get_genres(data["rName"])
         print(ROOMS[data["rName"]]['genreVotes'])
-        SOCKETIO.emit('couldNotCreate',{"room" : data["rName"]}, broadcast=False, room=data['rName'])
+        SOCKETIO.emit('couldNotCreate', {"room" : data["rName"]}, broadcast=False, room=data['rName'])
         SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=False, room=data['rName'])
     else:
         print(rooms())
         SOCKETIO.emit('couldNotCreate', 'Room Already Exists Please Join Room or Create a New Room', room=rooms()[0])
-    
+
 
 @SOCKETIO.on('onJoinRoom')
 def joining_room(data):
+    '''Joining room'''
     if data["rName"] in ROOMS:
-        ROOMS[data["rName"]]['activeUsers'].append(data["currUser"])
+        if data["currUser"] not in ROOMS[data["rName"]]['activeUsers']:
+            ROOMS[data["rName"]]['activeUsers'].append(data["currUser"])
         join_room(data["rName"])
         SOCKETIO.emit('couldNotCreate', {"room" : data["rName"]}, broadcast=False, room=data['rName'])
         SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=False, room=data['rName'])
     else:
         print(rooms())
         SOCKETIO.emit('couldNotCreate', 'Room Does Not Exist Please Create Room', room=rooms()[0])
-    
+
 
 def add_user(email, name):
     """ Helper function to add player """
@@ -252,7 +255,7 @@ def on_send_movies_test(mlist):
 def on_submit_movie_votes(data):
     '''calculate movie votes'''
     counter = 0
-    votes=data["movies"]
+    votes = data["movies"]
     for keys in ROOMS[data['room']]['movieVotes']:
         if votes[counter] == '1' and votes[counter] is not None:
             ROOMS[data['room']]['movieVotes'][keys][0] = ROOMS[data['room']]['movieVotes'][keys][0] + 1
@@ -318,8 +321,7 @@ def get_movies(data):
             ROOMS[data]["movieVotes"][movie_response['results'][i]['original_title']].append(
                 'https://image.tmdb.org/t/p/w500/' +
                 movie_response['results'][i]['poster_path'])
-        ROOMS[data]["movieVotes"][movie_response['results'][i]['original_title']].append(
-            movie_response['results'][i]['overview'])
+        ROOMS[data]["movieVotes"][movie_response['results'][i]['original_title']].append(movie_response['results'][i]['overview'])
         #MOVIESVOTES holds {"Title" : [userVotes, rating, posterpath, description]}
         #for all movies in genre
         #movies holds the  titles of the movies in a list
