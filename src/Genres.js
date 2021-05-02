@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { socket } from "./App.js";
 import { Movies } from "./Movies.js";
+import { Radio } from "./Radio.js";
 import { useTimer } from "react-timer-hook";
 import "./Genres.css";
 export function Genres({ genreList, admin, currUser, room }) {
   const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
+  
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 15);
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 60);
   const { seconds, isRunning } = useTimer({
     expiryTimestamp,
     autoStart: true,
@@ -27,7 +29,14 @@ export function Genres({ genreList, admin, currUser, room }) {
     if (newGenres[index] === null) {
       newGenres[index] = isLike ? "1" : "0";
       setGenres(newGenres);
-      console.log(isLike);
+    }
+    else if (newGenres[index] === "1" && !isLike){
+      newGenres[index] = "0"
+      setGenres(newGenres);
+    }
+    else if (newGenres[index] === "0" && isLike){
+      newGenres[index] = "1"
+      setGenres(newGenres);
     }
     console.log(newGenres);
   }
@@ -47,18 +56,7 @@ export function Genres({ genreList, admin, currUser, room }) {
           <p>Time Left to Vote: <b>{seconds}</b> seconds</p>
           {genreList.map((g, index) => (
             <div>
-              <ul>{g}</ul>
-              <button className="choiceButton" onClick={() => {
-                  Genres(index, true);
-                }}>
-                Like
-              </button>
-              {" "}
-              <button className="choiceButton" onClick={() => {
-                  Genres(index, false);
-                }}>
-                Dislike
-                </button>
+              <ul> {g}</ul> <Radio  Genres={Genres} index = {index} />
             </div>
           ))}
           <div>

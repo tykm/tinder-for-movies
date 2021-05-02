@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { socket } from "./App.js";
 import { Winner } from "./Winner.js";
 import { useTimer } from "react-timer-hook";
+import { Radio } from "./Radio.js";
 import "./Genres.css";
 export function Movies({genreList, admin, currUser, room}) {
   const [movies, setMovies] = useState(Array(10).fill(null)); // sets board to empty array
@@ -50,22 +51,8 @@ export function Movies({genreList, admin, currUser, room}) {
           <p>Time Left to Vote: <b>{seconds}</b> seconds</p>
           {movieList.map((m, index) => (
             <div>
-              <ul> {m}</ul>
-              <button className="choiceButton"
-                onClick={() => {
-                  Movies(index, true);
-                }}
-              >
-                Like
-              </button>
-              {" "}
-              <button className="choiceButton"
-                onClick={() => {
-                  Movies(index, false);
-                }}
-              >
-                Dislike
-              </button>
+              <ul> {m} </ul>
+              <Radio  Genres={Movies} index = {index} />
             </div>
           ))}
           <div>
