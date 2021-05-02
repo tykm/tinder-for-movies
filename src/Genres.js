@@ -8,7 +8,7 @@ export function Genres({ genreList, admin, currUser, room }) {
   const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
-  const [radio, setRadio] = useState("Like");
+  
   const expiryTimestamp = new Date();
   expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 60);
   const { seconds, isRunning } = useTimer({
@@ -54,8 +54,7 @@ export function Genres({ genreList, admin, currUser, room }) {
           {seconds}
           {genreList.map((g, index) => (
             <div>
-            {genres[index]!=null ? <p>{genres[index]}</p>:null}
-              <ul> {g}</ul> <Radio radio={radio} Genres={Genres} setRadio={setRadio} index = {index} />
+              <ul> {g}</ul> <Radio  Genres={Genres} index = {index} />
             </div>
           ))}
           <div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { socket } from "./App.js";
-export function Radio({ radio,Genres, setRadio, index }) {
+export function Radio({ Genres, index }) {
+    const [radio, setRadio] = useState("");
     return(
         <div><form>
               <label>Like</label>
