@@ -25,3 +25,30 @@ h3{
   color: #523b58;
   font-family: "Trebuchet MS", sans-serif;
 }
+label{
+  font-family: "Trebuchet MS", sans-serif;
+  color: #694A61;
+}
+
+input[type="radio"] {
+
+  width: 1em;
+  height: 1em;
+  background-color: #694A61;
+  
+}
+input[type="radio"].rad:checked {
+  background-color: #694A61;
+  color: #694A61;
+}
+
+input[type="radio"]:hover,
+input[type="radio"]:focus {
+  color: #694A61;
+}
+
+input[type="radio"]:active {
+  background-color: white;
+  color: #694A61;
+  outline: 1px solid #694A61;
+}

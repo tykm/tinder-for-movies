@@ -10,7 +10,7 @@ export function Genres({ genreList, admin, currUser, room }) {
   const [timerEnd, setTimerEnd] = useState(false);
   
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 60);
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 10);
   const { seconds, isRunning } = useTimer({
     expiryTimestamp,
     autoStart: true,
@@ -56,7 +56,7 @@ export function Genres({ genreList, admin, currUser, room }) {
           <p>Time Left to Vote: <b>{seconds}</b> seconds</p>
           {genreList.map((g, index) => (
             <div>
-              <ul> {g}</ul> <Radio  Genres={Genres} index = {index} />
+              <ul> <b>{g}</b></ul> <Radio  Genres={Genres} index = {index} />
             </div>
           ))}
           <div>

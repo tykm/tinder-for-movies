@@ -51,7 +51,7 @@ export function Movies({genreList, admin, currUser, room}) {
           <p>Time Left to Vote: <b>{seconds}</b> seconds</p>
           {movieList.map((m, index) => (
             <div>
-              <ul> {m} </ul>
+              <ul> <b>{m}</b> </ul>
               <Radio  Genres={Movies} index = {index} />
             </div>
           ))}

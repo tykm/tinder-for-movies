@@ -1,28 +1,26 @@
 import React, { useState } from "react";
 import { socket } from "./App.js";
+import "./Genres.css";
 export function Radio({ Genres, index }) {
     const [radio, setRadio] = useState("");
     return(
-        <div><form>
-              <label>Like</label>
-              <input type="radio"
+        <div>
+              <input className= "rad" type="radio"
               value = "Like"
               checked = {radio==="Like"}
-              name = {index}
               onChange = {(event)=>{ setRadio(event.target.value); }
               }
               onClick={() => { 
               Genres(index, true);}}
               />
-              <label>Dislike</label>
+              <label>Like</label>
               <input type="radio"
               checked = {radio==="Dislike"}
-              name = {index}
               value = "Dislike"
               onChange = {(event)=>{ setRadio(event.target.value);}}
               onClick={() => { Genres(index, false);}}
               /> 
-        </form>
+              <label>Dislike</label>
         </div>
               )
 }

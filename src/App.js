@@ -23,14 +23,11 @@ export function App() {
     } catch (err) {
       window.alert("Login Failed. Please Try Again");
     }
-  }
+  };
   return (
     <div><center><h1>Tinder for Movies</h1></center>
       {isLogged ? (
-        <div>
-          <Rooms currUser={currUser} email={email}/>
-        </div>
-      ) : (
+        <div><Rooms currUser={currUser} email={email}/></div> ) : (
         <center>
         <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}

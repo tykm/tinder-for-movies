@@ -41,7 +41,6 @@ function Everyone({ currUser, email, room }){
     if (name[0] === currUser) {
         return (
             <div>
-            <div><center><h1>Tinder for Movies</h1></center></div>
                 {everyonesin ?
                     <Genres genreList={genreList} admin={name[0]} currUser={currUser} room={room} />
                      :
