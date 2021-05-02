@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { socket } from "./App.js";
 import { Movies } from "./Movies.js";
+import { Radio } from "./Radio.js";
 import { useTimer } from "react-timer-hook";
 
 export function Genres({ genreList, admin, currUser, room }) {
   const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
+  const [radio, setRadio] = useState("Like");
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 15);
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 60);
   const { seconds, isRunning } = useTimer({
     expiryTimestamp,
     autoStart: true,
@@ -27,7 +29,14 @@ export function Genres({ genreList, admin, currUser, room }) {
     if (newGenres[index] === null) {
       newGenres[index] = isLike ? "1" : "0";
       setGenres(newGenres);
-      console.log(isLike);
+    }
+    else if (newGenres[index] === "1" && !isLike){
+      newGenres[index] = "0"
+      setGenres(newGenres);
+    }
+    else if (newGenres[index] === "0" && isLike){
+      newGenres[index] = "1"
+      setGenres(newGenres);
     }
     console.log(newGenres);
   }
@@ -37,31 +46,16 @@ export function Genres({ genreList, admin, currUser, room }) {
       {timerEnd ? (
         <div>
           {" "}
-          <Movies genreList={genreList} admin={admin} currUser={currUser} room={room}/>{" "}
-        </div>
-      ) : isGenrePage ? (
-        <div>Waiting for Others to Finish!</div>
-      ) : (
+          <Movies genreList={genreList} admin={admin} currUser={currUser} room={room} genres = {genres}/>{" "}
+        </div>) : isGenrePage ? (
+        <div>Waiting for Others to Finish!</div>):(
         <div>
           <center>Vote on Genres</center>
           {seconds}
           {genreList.map((g, index) => (
             <div>
-              <ul>Genre {g}</ul>
-              <button
-                onClick={() => {
-                  Genres(index, true);
-                }}
-              >
-                Like
-              </button>
-              <button
-                onClick={() => {
-                  Genres(index, false);
-                }}
-              >
-                Dislike
-              </button>
+            {genres[index]!=null ? <p>{genres[index]}</p>:null}
+              <ul> {g}</ul> <Radio radio={radio} Genres={Genres} setRadio={setRadio} index = {index} />
             </div>
           ))}
           <div>
