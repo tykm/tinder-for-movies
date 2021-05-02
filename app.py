@@ -3,7 +3,7 @@ import os
 from collections import Counter
 import requests
 from flask import Flask, send_from_directory, json, session
-from flask_socketio import SocketIO, join_room
+from flask_socketio import SocketIO, join_room, rooms
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
@@ -87,27 +87,30 @@ def on_login():  # data is whatever arg you pass in your emit call on client
 
 @SOCKETIO.on('onCreateRoom')
 def create_room(data):
-    inRoom = False
     if data["rName"] not in ROOMS:
         ROOMS[data["rName"]] = {'activeUsers' : [], 'genreVotes' : {}, 'movieVotes' : {}}
         ROOMS[data["rName"]]['activeUsers'].append(data["currUser"])
         join_room(data["rName"])
         get_genres(data["rName"])
         print(ROOMS[data["rName"]]['genreVotes'])
-        inRoom = True
-        #SOCKETIO.emit('inRoom', False, broadcast=False, include_self=True)
-    SOCKETIO.emit('onRoom', [ROOMS[data["rName"]]['activeUsers'], inRoom], broadcast=False, room=data['rName'])
+        SOCKETIO.emit('couldNotCreate',{"room" : data["rName"]}, broadcast=False, room=data['rName'])
+        SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=False, room=data['rName'])
+    else:
+        print(rooms())
+        SOCKETIO.emit('couldNotCreate', 'Room Already Exists Please Join Room or Create a New Room', room=rooms()[0])
+    
 
 @SOCKETIO.on('onJoinRoom')
 def joining_room(data):
-    inRoom = False
     if data["rName"] in ROOMS:
         ROOMS[data["rName"]]['activeUsers'].append(data["currUser"])
         join_room(data["rName"])
-        #.emit('roomNotExists', False, broadcast=False, include_self=True)
-        inRoom = True
-
-    SOCKETIO.emit('onRoom', [ROOMS[data["rName"]]['activeUsers'], inRoom], broadcast=False, room=data['rName'])
+        SOCKETIO.emit('couldNotCreate', {"room" : data["rName"]}, broadcast=False, room=data['rName'])
+        SOCKETIO.emit('onRoom', ROOMS[data["rName"]]['activeUsers'], broadcast=False, room=data['rName'])
+    else:
+        print(rooms())
+        SOCKETIO.emit('couldNotCreate', 'Room Does Not Exist Please Create Room', room=rooms()[0])
+    
 
 def add_user(email, name):
     """ Helper function to add player """

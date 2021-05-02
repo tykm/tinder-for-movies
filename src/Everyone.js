@@ -33,12 +33,14 @@ function Everyone({ currUser, email, room }){
             console.log(genreList);
         });
         socket.on('onRoom', (data)=>{
-            setName(data[0])
-            console.log(data[0])
-        })
+            setName(data);
+            console.log(data);
+        });
     }, [])
 
     if (name[0] === currUser) {
+        console.log(name[0], 'Name[0]');
+        console.log(currUser, 'Current User');
         return (
             <div>
                 {everyonesin ?
@@ -53,6 +55,8 @@ function Everyone({ currUser, email, room }){
             </div>
         )
     } else {
+        console.log(name[0], 'Name[0]');
+        console.log(currUser, 'Current User');
         return (
             <div>
             {everyonesin ?
