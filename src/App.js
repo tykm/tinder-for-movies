@@ -9,7 +9,8 @@ export function App() {
 
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
   const [currUser, setCurrUser] = useState("");
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
+  const [about, setAbout] = useState(false);
 
   function onLoginButton(response) {
     try {
@@ -18,7 +19,7 @@ export function App() {
 
       let infoNE = [response.profileObj.name, response.profileObj.email];
       setCurrUser(infoNE[0]);
-      setEmail(infoNE[1])
+      setEmail(infoNE[1]);
       socket.emit("email", infoNE);
       setLog(true);
     } catch (err) {
@@ -30,18 +31,48 @@ export function App() {
     <div>
       {isLogged ? (
         <div>
-          <Rooms currUser={currUser} email={email}/>
+          <Rooms currUser={currUser} email={email} />
         </div>
       ) : (
-        <GoogleLogin
-          clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
-          buttonText="Login"
-          onSuccess={onLoginButton}
-          onFailure={onLoginButton}
-          cookiePolicy={"single_host_origin"}
-        />
+        <center>
+          <center>
+            <h1>Tinder for Movies</h1>
+          </center>
+          <GoogleLogin
+            clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
+            buttonText="Login"
+            onSuccess={onLoginButton}
+            onFailure={onLoginButton}
+            cookiePolicy={"single_host_origin"}
+          />
+          <br />
+          <br />
+          <button
+            className="aboutButton"
+            onClick={() => {
+              setAbout(!about);
+            }}
+          >
+            About
+          </button>
+          {about ? (
+            <div>
+              <h2>Functionality</h2>
+              <h2>Why it Matters</h2>
+              <h2> Developed By</h2>
+              <p>
+                Tyler Kim
+                <br />
+                Darshil Patel
+                <br />
+                Mahi Gada
+                <br />
+                Dezrianna Chapman
+              </p>
+            </div>
+          ) : null}
+        </center>
       )}
-
     </div>
   );
 }
