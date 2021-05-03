@@ -1,7 +1,7 @@
 # Project 3 - Tinder for Movies
 
 Developed by Tyler Kim, Dezrianna Chapman, Mahi Gada, Darshil Patel
-Preview Application: [https://tinder-for-movies.herokuapp.com/](https://tinder-for-movies.herokuapp.com/) 
+Preview Application: [https://tinder-for-movies.herokuapp.com/](https://tinder-for-movies.herokuapp.com/)
 
 When testing the app Naman or TA's please use the following credentials as the first users login:
 Email: `tinderformovies1.0@gmail.com`
@@ -57,18 +57,18 @@ CLI Command: `git clone https://github.com/tykm/tinder-for-movies/`
 9. Copy paste that value (looks like 'postgress://...')
 10. Open your .env file and set `DATABASE_URL` variable: `touch .env && echo "DATABASE_URL='copy-paste-database-url-here'" > .env`
 11. Push to Heroku: `git push heroku main`
- 
+
 ##Linting
 
 1. `pylint app.py`
 2. `npx eslint src/*.js`
 
-* E1101 because it gives the error of Instance of 'SQLAlchemy' has no 'Column' member (no-member) and we need to have the db setup the way we have it.
-* W0621 Redefining name 'USERS' from outer scope (line 13) (redefined-outer-name) we need to use that var in a function no other way as we update that var
-* C0103 Variable name "USERS" doesn't conform to snake_case naming style (invalid-name) it is a global var that we use in a function
-* W1508 os.getenv default type is builtins.int. Expected str or None. (invalid-envvar-default) had to use os.getenv for apikeys
-* W0611 says unused session import flask even when we use it
-* W0612 variable name unused however, it was only used for adding to database
+- E1101 because it gives the error of Instance of 'SQLAlchemy' has no 'Column' member (no-member) and we need to have the db setup the way we have it.
+- W0621 Redefining name 'USERS' from outer scope (line 13) (redefined-outer-name) we need to use that var in a function no other way as we update that var
+- C0103 Variable name "USERS" doesn't conform to snake_case naming style (invalid-name) it is a global var that we use in a function
+- W1508 os.getenv default type is builtins.int. Expected str or None. (invalid-envvar-default) had to use os.getenv for apikeys
+- W0611 says unused session import flask even when we use it
+- W0612 variable name unused however, it was only used for adding to database
 
 ## Tech Issues
 
@@ -88,4 +88,3 @@ I think the biggest improvement to make is the way we have people exit our page.
 Currently another thing we should fix is the way we send and receive information from the database. It would probably be better to have it so that users who have made rooms previously can view previous information.
 Overall the best way to improve the app would be to make it have more flesshed out functionality, however, for what our goal is the only way to do that would just be to make it so that users are more aware of each other.
 This might include adding a list of their names or showing who may have voted for what or even which users voted for the movie that won.
-

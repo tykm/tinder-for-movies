@@ -35,14 +35,14 @@
     transform: rotate(360deg);
   }
 }
-h1{
+h1 {
   font-family: "Trebuchet MS", sans-serif;
   color: #53688a;
 }
-button{
+button {
   font-family: "Trebuchet MS", sans-serif;
 }
-html{
+html {
   background-color: #f9c885;
 }
 .aboutButton {
@@ -55,12 +55,12 @@ html{
   font-size: 1em;
   width: 10%;
 }
-h2{
+h2 {
   color: #523b58;
   font-family: "Trebuchet MS", sans-serif;
 }
-p{
-  color: #694A61;
+p {
+  color: #694a61;
   font-family: "Trebuchet MS", sans-serif;
 }
 .everyoneButton {
@@ -73,18 +73,18 @@ p{
   font-size: 1em;
   width: 13%;
 }
-.name{
+.name {
   font-family: "Trebuchet MS", sans-serif;
-  color: #694A61;
+  color: #694a61;
 }
-.room{
-    border: 0.25em solid #9b5134;
-    border-radius: 10px;
-    height: 22px;
-    width: 230px;
+.room {
+  border: 0.25em solid #9b5134;
+  border-radius: 10px;
+  height: 22px;
+  width: 230px;
 }
 
-input{
+input {
   font: 1em "Trebuchet MS", sans-serif;
   color: #9b5134;
   outline: 0;

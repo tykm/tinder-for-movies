@@ -4,7 +4,7 @@ import { Winner } from "./Winner.js";
 import { useTimer } from "react-timer-hook";
 import { Radio } from "./Radio.js";
 import "./Genres.css";
-export function Movies({genreList, admin, currUser, room}) {
+export function Movies({ genreList, admin, currUser, room }) {
   const [movies, setMovies] = useState(Array(10).fill(null)); // sets board to empty array
   const [movieList, setMovieList] = useState(Array(10).fill(null));
   const [isMoviePage, setMoviePage] = useState(false);
@@ -17,7 +17,7 @@ export function Movies({genreList, admin, currUser, room}) {
     onExpire: () => {
       setTimerEnd(true);
       console.log(movies, "Before timerEnd");
-      socket.emit("onSubmitMovies", {movies, room});
+      socket.emit("onSubmitMovies", { movies, room });
     },
   });
   function Movies(index, isLike) {
@@ -41,38 +41,49 @@ export function Movies({genreList, admin, currUser, room}) {
       {timerEnd ? (
         <div>
           {" "}
-          <Winner genreList={genreList} admin={admin} currUser={currUser} room={room}/>{" "}
+          <Winner
+            genreList={genreList}
+            admin={admin}
+            currUser={currUser}
+            room={room}
+          />{" "}
         </div>
       ) : isMoviePage ? (
-         <div>
+        <div>
           <center>
             <h1>Tinder for Movies</h1>
             <h3>Waiting for Others to Finish!</h3>
           </center>
-         </div>
+        </div>
       ) : (
         <div>
           <center>
             <h1>Tinder for Movies</h1>
             <h2>Vote on Movies</h2>
-            <p>Time Left to Vote: <b>{seconds}</b> seconds</p>
-          {movieList.map((m, index) => (
+            <p>
+              Time Left to Vote: <b>{seconds}</b> seconds
+            </p>
+            {movieList.map((m, index) => (
+              <div>
+                <ul>
+                  {" "}
+                  <b>{m}</b>{" "}
+                </ul>
+                <Radio Genres={Movies} index={index} />
+              </div>
+            ))}
             <div>
-              <ul> <b>{m}</b> </ul>
-              <Radio  Genres={Movies} index = {index} />
+              <br />
+              <button
+                className="choiceButton"
+                onClick={() => {
+                  setMoviePage(true);
+                }}
+              >
+                Submit
+              </button>
             </div>
-          ))}
-          <div>
-          <br/>
-            <button className="choiceButton"
-              onClick={() => {
-                setMoviePage(true);
-              }}
-            >
-              Submit
-            </button>
-          </div>
-         </center>
+          </center>
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-button{
+button {
   background-color: white;
   font-family: "Trebuchet MS", sans-serif;
   color: #9b5134;
@@ -6,23 +6,22 @@ button{
   outline: 0;
   border-radius: 0.7rem;
   font-size: 1em;
-
 }
-.login{
-    width: 8%;
+.login {
+  width: 8%;
 }
-.genres{
-    width: 11%;
+.genres {
+  width: 11%;
 }
-.decline{
-    width: 5%;
+.decline {
+  width: 5%;
 }
-.desc{
-    width: 34%;
+.desc {
+  width: 34%;
 }
-img{
-    width: 23%;
+img {
+  width: 23%;
 }
-p{
-    font-size: 1.1em;
+p {
+  font-size: 1.1em;
 }

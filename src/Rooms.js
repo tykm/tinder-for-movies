@@ -4,55 +4,70 @@ import Everyone from "./Everyone.js";
 import "./App.css";
 
 export function Rooms({ currUser, email }) {
-    const roomName = useRef(null);
-    const [entered, setEntered] = useState(false);
-    const [room, setRoom] = useState("");
+  const roomName = useRef(null);
+  const [entered, setEntered] = useState(false);
+  const [room, setRoom] = useState("");
 
-    function createRoom (rName) {
-        console.log(rName);
-        if (rName !== ""){
-            socket.emit('onCreateRoom', {rName, currUser});
-        }
+  function createRoom(rName) {
+    console.log(rName);
+    if (rName !== "") {
+      socket.emit("onCreateRoom", { rName, currUser });
     }
-    function joinRoom(rName){
-        console.log(rName);
-        if (rName !== ""){
-            socket.emit('onJoinRoom', {rName, currUser});
-        }
+  }
+  function joinRoom(rName) {
+    console.log(rName);
+    if (rName !== "") {
+      socket.emit("onJoinRoom", { rName, currUser });
     }
-    
-    useEffect(() => {
+  }
+
+  useEffect(() => {
     socket.on("couldNotCreate", (data) => {
-    if (data.room) {  
+      if (data.room) {
         console.log(data);
         setEntered(true);
         setRoom(data.room);
-    }
-    else{
+      } else {
         alert(data);
-    }
+      }
     });
   }, []);
 
-    return(
+  return (
+    <div>
+      {entered ? (
+        <Everyone currUser={currUser} email={email} room={room} />
+      ) : (
         <div>
-    
-            {entered ? <Everyone currUser={currUser} email={email} room={room} />
-            :
-            <div>
-                <center>
-                 <h1>Tinder for Movies</h1>
-                 <input className = "room" ref={roomName} type="text"/>
-                <br />
-                <br />
-                <button className = "aboutButton" onClick={() => { createRoom(roomName.current.value);}}> Create Room </button>
-                <br />
-                <br />
-                <button className = "aboutButton" onClick={() => { joinRoom(roomName.current.value);}}> Join Room </button>
-                </center>
-            </div>
-            }
+          <center>
+            <h1>Tinder for Movies</h1>
+            <input className="room" ref={roomName} type="text" />
+            <br />
+            <br />
+            <button
+              className="aboutButton"
+              onClick={() => {
+                createRoom(roomName.current.value);
+              }}
+            >
+              {" "}
+              Create Room{" "}
+            </button>
+            <br />
+            <br />
+            <button
+              className="aboutButton"
+              onClick={() => {
+                joinRoom(roomName.current.value);
+              }}
+            >
+              {" "}
+              Join Room{" "}
+            </button>
+          </center>
         </div>
-    );
+      )}
+    </div>
+  );
 }
 export default Rooms;
