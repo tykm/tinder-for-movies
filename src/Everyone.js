@@ -45,6 +45,7 @@ function Everyone({ currUser, email, room }){
                     <Genres genreList={genreList} admin={name[0]} currUser={currUser} room={room} />
                      :
                     <div>
+                        <center><h1>Tinder for Movies</h1></center>
                         <center><h2>Users Logged In:</h2>
                         {name.map((n) => ( <div className="name">{n}</div>))}
                         <br /> <button className="everyoneButton" onClick={genrePage}> Everyone's In </button></center>

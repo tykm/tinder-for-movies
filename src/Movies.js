@@ -44,11 +44,18 @@ export function Movies({genreList, admin, currUser, room}) {
           <Winner genreList={genreList} admin={admin} currUser={currUser} room={room}/>{" "}
         </div>
       ) : isMoviePage ? (
-         <div><center><h3>Waiting for Others to Finish!</h3></center></div>
+         <div>
+          <center>
+            <h1>Tinder for Movies</h1>
+            <h3>Waiting for Others to Finish!</h3>
+          </center>
+         </div>
       ) : (
         <div>
-          <center><h2>Vote on Movies</h2>
-          <p>Time Left to Vote: <b>{seconds}</b> seconds</p>
+          <center>
+            <h1>Tinder for Movies</h1>
+            <h2>Vote on Movies</h2>
+            <p>Time Left to Vote: <b>{seconds}</b> seconds</p>
           {movieList.map((m, index) => (
             <div>
               <ul> <b>{m}</b> </ul>

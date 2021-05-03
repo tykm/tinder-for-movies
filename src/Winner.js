@@ -56,6 +56,7 @@ export function Winner({genreList, admin, currUser, room}) {
  const page=(
         <div>
         <center>
+            <h1>Tinder for Movies</h1>
             <h2>Winning Movie: {movieL}</h2>
             <img src={pic} alt="Movie Poster" />
             <p> 

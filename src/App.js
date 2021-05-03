@@ -25,10 +25,11 @@ export function App() {
     }
   };
   return (
-    <div><center><h1>Tinder for Movies</h1></center>
+    <div>
       {isLogged ? (
         <div><Rooms currUser={currUser} email={email}/></div> ) : (
         <center>
+        <center><h1>Tinder for Movies</h1></center>
         <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
           buttonText="Login"
