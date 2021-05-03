@@ -42,7 +42,6 @@ export function Movies({ genreList, admin, currUser, room }) {
         <div>
           {" "}
           <Winner
-            genreList={genreList}
             admin={admin}
             currUser={currUser}
             room={room}

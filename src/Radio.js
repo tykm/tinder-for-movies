@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { socket } from "./App.js";
 import "./Genres.css";
 export function Radio({ Genres, index }) {
   const [radio, setRadio] = useState("");
