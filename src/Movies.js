@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { socket } from "./App.js";
 import { Winner } from "./Winner.js";
 import { useTimer } from "react-timer-hook";
+import { Radio } from "./Radio.js";
+import "./Genres.css";
 export function Movies({genreList, admin, currUser, room}) {
   const [movies, setMovies] = useState(Array(10).fill(null)); // sets board to empty array
   const [movieList, setMovieList] = useState(Array(10).fill(null));
@@ -42,32 +44,27 @@ export function Movies({genreList, admin, currUser, room}) {
           <Winner genreList={genreList} admin={admin} currUser={currUser} room={room}/>{" "}
         </div>
       ) : isMoviePage ? (
-        <div>Waiting for others to finish!</div>
+         <div>
+          <center>
+            <h1>Tinder for Movies</h1>
+            <h3>Waiting for Others to Finish!</h3>
+          </center>
+         </div>
       ) : (
         <div>
-          {seconds}
-          <center>Vote on Movies</center>
+          <center>
+            <h1>Tinder for Movies</h1>
+            <h2>Vote on Movies</h2>
+            <p>Time Left to Vote: <b>{seconds}</b> seconds</p>
           {movieList.map((m, index) => (
             <div>
-              <ul>Movie {m}</ul>
-              <button
-                onClick={() => {
-                  Movies(index, true);
-                }}
-              >
-                Like
-              </button>
-              <button
-                onClick={() => {
-                  Movies(index, false);
-                }}
-              >
-                Dislike
-              </button>
+              <ul> <b>{m}</b> </ul>
+              <Radio  Genres={Movies} index = {index} />
             </div>
           ))}
           <div>
-            <button
+          <br/>
+            <button className="choiceButton"
               onClick={() => {
                 setMoviePage(true);
               }}
@@ -75,6 +72,7 @@ export function Movies({genreList, admin, currUser, room}) {
               Submit
             </button>
           </div>
+         </center>
         </div>
       )}
     </div>

@@ -8,7 +8,8 @@ export const socket = io(); // Connects to socket connection
 export function App() {
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
   const [currUser, setCurrUser] = useState("");
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
+  const [about, setAbout]=useState(false);
 
   function onLoginButton(response) {
     try {
@@ -22,17 +23,13 @@ export function App() {
     } catch (err) {
       window.alert("Login Failed. Please Try Again");
     }
-  }
+  };
   return (
     <div>
-     <p>
-      Hello
-      </p>
       {isLogged ? (
-        <div>
-          <Rooms currUser={currUser} email={email}/>
-        </div>
-      ) : (
+        <div><Rooms currUser={currUser} email={email}/></div> ) : (
+        <center>
+        <center><h1>Tinder for Movies</h1></center>
         <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
           buttonText="Login"
@@ -40,8 +37,14 @@ export function App() {
           onFailure={onLoginButton}
           cookiePolicy={"single_host_origin"}
         />
+        <br/><br/>
+        <button className = "aboutButton" onClick={() => {
+                setAbout(!about);
+              }}>About</button>
+        {about ? (<div><h2>Functionality</h2><h2>Why it Matters</h2><h2> Developed By</h2>
+        <p>Tyler Kim<br/>Darshil Patel<br/>Mahi Gada<br/>Dezrianna Chapman</p></div>) : null}
+         </center>
       )}
-
     </div>
   );
 }

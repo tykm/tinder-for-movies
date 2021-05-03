@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { socket } from "./App.js";
 import Genres from "./Genres.js";
-
+import "./App.css";
 function Everyone({ currUser, email, room }){
     const [name, setName] = useState([]); // State variable, list of messages
     const [everyonesin, setEveryonesIn] = useState(false);
@@ -47,8 +47,10 @@ function Everyone({ currUser, email, room }){
                     <Genres genreList={genreList} admin={name[0]} currUser={currUser} room={room} />
                      :
                     <div>
+                        <center><h1>Tinder for Movies</h1></center>
+                        <center><h2>Users Logged In:</h2>
                         {name.map((n) => ( <div className="name">{n}</div>))}
-                        <button onClick={genrePage}> Everyone's In </button>
+                        <br /> <button className="everyoneButton" onClick={genrePage}> Everyone's In </button></center>
                     </div>
                     
                 }
@@ -59,14 +61,15 @@ function Everyone({ currUser, email, room }){
         console.log(currUser, 'Current User');
         return (
             <div>
+             <div><center><h1>Tinder for Movies</h1></center></div>
             {everyonesin ?
                 <Genres genreList={genreList} admin={name[0]} currUser={currUser} room={room} />
                 :
                 <div>
+                <center><h2>Users Logged In:</h2>
                     {name.map((n) => (<div className="name">{n}</div>))}
-                    <div>Waiting for Admin to start voting</div>
+                    <br/><div className="name"><b>Waiting for Admin to Begin voting</b></div></center>
                 </div> 
-                
             }
             </div>
         );

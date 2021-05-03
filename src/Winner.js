@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { socket, App, genreList } from "./App.js";
 import { Genres } from "./Genres.js";
+import "./Winner.css";
 //THERE ARE 4 WARNINGS FOR WINNER.JS, IDK WHAT HAPPENS IF YOU DELETE THEM
 export function Winner({genreList, admin, currUser, room}) {
     const [leaves,setLeave] = useState(false);
@@ -55,25 +56,29 @@ export function Winner({genreList, admin, currUser, room}) {
  console.log(admin, "this is the admin")
  const page=(
         <div>
-            <p>{movieL}</p>
+        <center>
+            <h1>Tinder for Movies</h1>
+            <h2>Winning Movie: {movieL}</h2>
             <img src={pic} alt="Movie Poster" />
             <p> 
                 User likes: {userL}<br/>
                 User rating: {voteL}<br/>
+                <div className = "desc">
                 Movie Description: <br/>
-                {desc} <br/>
+               {desc} <br/></div>
             </p>
-             <input type='button' value="Return to Login" onClick={leave}/>
-             <input type='button' value="Return to Genres Page" onClick={()=>{regen(); socket.emit('restartGame',room);}}/>
+             <button className = "login" onClick={leave}> Return to Login </button> {" "}
+             <button className = "genres" onClick={()=>{regen(); socket.emit('restartGame',room);}}>Return to Genres Page</button> {" "}
             {currUser === admin && decline < 2 ? 
-                <input type='button' value="Decline" onClick={() => {isDecline(prev=>prev+1); 
+                <button className = "decline" onClick={() => {isDecline(prev=>prev+1); 
                     console.log(decline, "Decline was Clicked");
                     socket.emit('onDecline', {decline, room})
                 }}
-                /> 
+                >Decline</button> 
             : 
                 null
             }
+        </center> <br/>
         </div>
             
     )
