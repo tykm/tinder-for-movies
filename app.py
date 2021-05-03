@@ -168,11 +168,12 @@ def reset_genre_votes(data):
     #print(ROOMS[data]['genreVotes'])
     for keys in ROOMS[data]['genreVotes']:
         ROOMS[data]['genreVotes'][keys][0] = 0
+    ROOMS[data]['room']['movieVotes'] = {}
     genres = []
     for keys in ROOMS[data]['genreVotes']:
         genres.append(keys)
     print(genres)
-    SOCKETIO.emit('restartGame', genres)
+    SOCKETIO.emit('restartGame', genres, room=data)
 
 @SOCKETIO.on('genres')
 def send_genres(data):

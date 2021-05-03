@@ -69,13 +69,15 @@ export function Winner({genreList, admin, currUser, room}) {
                 {desc} <br/>
             </p>
              <input type='button' value="Return to Login" onClick={leave}/>
-             <input type='button' value="Return to Genres Page" onClick={()=>{regen(); socket.emit('restartGame', room);}}/>
             {currUser === admin && decline < 2 ? 
-                <input type='button' value="Decline" onClick={() => {isDecline(prev=>prev+1); 
-                    console.log(decline, "Decline was Clicked");
-                    socket.emit('onDecline', {decline, room})
-                }}
-                /> 
+                <div>
+                    <input type='button' value="Return to Genres Page" onClick={()=>{regen(); socket.emit('restartGame', room);}}/>
+                    <input type='button' value="Decline" onClick={() => {isDecline(prev=>prev+1); 
+                        console.log(decline, "Decline was Clicked");
+                        socket.emit('onDecline', {decline, room})
+                    }}
+                />
+                </div>
             : 
                 null
             }
