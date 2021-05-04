@@ -10,15 +10,6 @@ export function Genres({ genreList, admin, currUser, room }) {
   const [timerEnd, setTimerEnd] = useState(false);
   
   console.log("Here is genreList ")
-  
-  useEffect(() => {
-    socket.on("restartGame", (data) => {
-      console.log("Admin forced restart!");
-      genreList = data;
-      setGenres(data);
-      console.log(data);
-    });
-  }, []);
 
   const expiryTimestamp = new Date();
   expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 5);

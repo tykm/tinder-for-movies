@@ -24,6 +24,11 @@ function Everyone({ currUser, email, room }) {
   }
 
   useEffect(() => {
+    socket.on("restartGame", (data) => {
+      console.log("Admin forced restart!");
+      console.log(data);
+      setEveryonesIn(true);
+    });
     socket.on("everyonesIn", (data) => {
       console.log(data);
       setEveryonesIn(data);
