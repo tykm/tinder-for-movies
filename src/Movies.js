@@ -10,8 +10,8 @@ export function Movies({ genreList, admin, currUser, room, email }) {
   const [isMoviePage, setMoviePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
   const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 5);
-  const { seconds } = useTimer({
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 15);
+  const { seconds, isRunning } = useTimer({
     expiryTimestamp,
     autoStart: true,
     onExpire: () => {
