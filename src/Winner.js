@@ -61,7 +61,7 @@ export function Winner({ genreList, admin, currUser, room }) {
         <p>
           User likes: {userL}
           <br />
-          User rating: {voteL}
+          Movie rating: {voteL}
           <br />
           <div className="desc">
             Movie Description: <br />
