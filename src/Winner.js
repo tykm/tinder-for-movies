@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+ 
 import { socket, App } from "./App.js";
+ 
 import { Genres } from "./Genres.js";
 import "./Winner.css";
 //THERE ARE 4 WARNINGS FOR WINNER.JS, IDK WHAT HAPPENS IF YOU DELETE THEM
@@ -21,6 +23,7 @@ export function Winner({ genreList, admin, currUser, room }) {
   }, []);
   //[name, number of like, rating, picture, dezcription]
   // will need props to get information from the other component
+ 
   // let changes while const will not be reassigned
   if (decline === 0) {
     movieL = info[0];
@@ -109,5 +112,6 @@ export function Winner({ genreList, admin, currUser, room }) {
       </div>
     );
   }
+ 
 }
 export default Winner;
