@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { socket } from "./App.js";
 import Genres from "./Genres.js";
 import "./App.css";
-function Everyone({ currUser, email, room }) {
+function Everyone({ currUser, email, room, setLog }) {
   const [name, setName] = useState([]); // State variable, list of messages
   const [everyonesin, setEveryonesIn] = useState(false);
   const [genreList, setGenreList] = useState([
@@ -55,6 +55,7 @@ function Everyone({ currUser, email, room }) {
             admin={name[0]}
             currUser={currUser}
             room={room}
+            setLog={setLog}
           />
         ) : (
           <div>
@@ -87,6 +88,7 @@ function Everyone({ currUser, email, room }) {
             currUser={currUser}
             room={room}
             email={email}
+            setLog={setLog}
           />
         ) : (
           <div>

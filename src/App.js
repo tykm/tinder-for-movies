@@ -34,7 +34,7 @@ export function App() {
         </center>
       {isLogged ? (
         <div>
-          <Rooms currUser={currUser} email={email} />
+          <Rooms currUser={currUser} email={email} setLog={setLog} />
         </div>
       ) : (
         <center>

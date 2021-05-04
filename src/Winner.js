@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { socket, App } from "./App.js";
 import Everyone from "./Everyone.js";
+import GoogleLogout from "react-google-login";
 import "./Winner.css";
 //THERE ARE 4 WARNINGS FOR WINNER.JS, IDK WHAT HAPPENS IF YOU DELETE THEM
-export function Winner({ genreList, admin, currUser, room, email }) {
-  const [leaves, setLeave] = useState(false);
+export function Winner({ genreList, admin, currUser, room, email, setLog }) {
   const [reges, setRegen] = useState(false);
   const [info, setInfo] = useState([]);
   const [decline, isDecline] = useState(0);
-  const [genres, setGenres] = useState(Array(10).fill(null));
   let movieL, userL, voteL, pic, desc;
   useEffect(() => {
     socket.on("movieWinner", (data) => {
@@ -48,7 +47,8 @@ export function Winner({ genreList, admin, currUser, room, email }) {
     desc = info[14];
   }
   function leave() {
-    setLeave(true);
+    setLog(false);
+    socket.emit('onLogout', {room, currUser});
   }
   function regen() {
     setRegen(true);
@@ -70,10 +70,13 @@ export function Winner({ genreList, admin, currUser, room, email }) {
             {desc} <br />
           </div>
         </p>
-        <button className="login" onClick={leave}>
-          {" "}
-          Return to Login{" "}
-        </button>{" "}
+        <GoogleLogout
+          clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
+          buttonText="Logout"
+          onSuccess={leave}
+          onFailure={leave}
+          cookiePolicy={"single_host_origin"}
+        />
         {currUser === admin && decline < 2 ? (
           <div>
             <button
@@ -101,14 +104,8 @@ export function Winner({ genreList, admin, currUser, room, email }) {
       <br />
     </div>
   );
-  if (leaves === false && reges === false) {
+  if (reges === false) {
     return page;
-  } else if (leaves === true) {
-    return (
-      <div>
-        <App />
-      </div>
-    );
   } else if (reges === true) {
     return (
       <div>
