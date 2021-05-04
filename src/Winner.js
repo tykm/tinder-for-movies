@@ -8,6 +8,7 @@ export function Winner({ genreList, admin, currUser, room }) {
   const [reges, setRegen] = useState(false);
   const [info, setInfo] = useState([]);
   const [decline, isDecline] = useState(0);
+  const [genres, setGenres] = useState(Array(10).fill(null));
   let movieL, userL, voteL, pic, desc;
   useEffect(() => {
     socket.on("movieWinner", (data) => {
@@ -17,6 +18,11 @@ export function Winner({ genreList, admin, currUser, room }) {
     socket.on("onDecline", (data) => {
       isDecline(data + 1);
       console.log(isDecline);
+    });
+    socket.on("restartGame", (data) => {
+      console.log("Admin restart in winner.js!")
+      console.log(data);
+      setRegen(true);
     });
   }, []);
   //[name, number of like, rating, picture, dezcription]
@@ -78,7 +84,7 @@ export function Winner({ genreList, admin, currUser, room }) {
                 socket.emit("restartGame", room);
               }}
             >
-              Return to Genres Page
+              Restart Game
             </button>{" "}
             <button
               className="decline"
@@ -107,7 +113,7 @@ export function Winner({ genreList, admin, currUser, room }) {
   } else if (reges === true) {
     return (
       <div>
-        <Genres genreList={genreList} admin={admin} currUser={currUser} />
+        <Genres genreList={genres} admin={admin} currUser={currUser} />
       </div>
     );
   }

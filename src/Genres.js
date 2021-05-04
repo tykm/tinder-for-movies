@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { socket } from "./App.js";
 import { Movies } from "./Movies.js";
 import { Radio } from "./Radio.js";
@@ -8,6 +8,17 @@ export function Genres({ genreList, admin, currUser, room }) {
   const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
+  
+  console.log("Here is genreList ")
+  
+  useEffect(() => {
+    socket.on("restartGame", (data) => {
+      console.log("Admin forced restart!");
+      genreList = data;
+      setGenres(data);
+      console.log(data);
+    });
+  }, []);
 
   const expiryTimestamp = new Date();
   expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 5);

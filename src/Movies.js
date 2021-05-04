@@ -32,6 +32,7 @@ export function Movies({ genreList, admin, currUser, room }) {
 
   useEffect(() => {
     socket.on("moviesList", (data) => {
+      console.log("Received new movies:")
       console.log(data);
       setMovieList(data);
     });
