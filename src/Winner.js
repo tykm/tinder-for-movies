@@ -118,7 +118,6 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
   if (reges === false) {
     return page;
   } else if (reges === true) {
-    console.log(currUser, 'Before restart Curruser')
     return (
       <div>
         <Everyone currUser={currUser} email={email} room={room} />

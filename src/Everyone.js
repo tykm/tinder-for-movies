@@ -27,8 +27,8 @@ function Everyone({ currUser, email, room, setLog }) {
     socket.on("restart", (data) => {
       console.log("Admin forced restart!");
       console.log(data);
-      setGenreList(data);
-      setEveryonesIn(true);
+      setGenreList(data[0]);
+      setName(data[1]);
     });
     socket.on("everyonesIn", (data) => {
       console.log(data);
@@ -55,6 +55,7 @@ function Everyone({ currUser, email, room, setLog }) {
             admin={name[0]}
             currUser={currUser}
             room={room}
+            email={email}
             setLog={setLog}
           />
         ) : (
