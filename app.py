@@ -177,11 +177,15 @@ def start_vote(data):
 def reset_genre_votes(data):
     '''resetting the genrevotes dictionary for future use'''
     print("Restarting back to genres!")
-    genres = []
     for keys in ROOMS[data]['genreVotes']:
         ROOMS[data]['genreVotes'][keys][0] = 0
-    ROOMS[data]["movieVotes"].clear()
-    SOCKETIO.emit('restartGame', room=data)
+    get_genres(data)
+    genres = []
+    for keys in ROOMS[data]['genreVotes']:
+        genres.append(keys)
+    ROOMS[data]["movieVotes"].clear
+    SOCKETIO.emit('restartTrue', room=data)
+    SOCKETIO.emit('restart', genres, room=data)
     #movies = get_movies(data)
     #print(movies)
     #SOCKETIO.emit('moviesList', movies, broadcast=True, room=data)

@@ -24,9 +24,10 @@ function Everyone({ currUser, email, room }) {
   }
 
   useEffect(() => {
-    socket.on("restartGame", (data) => {
+    socket.on("restart", (data) => {
       console.log("Admin forced restart!");
       console.log(data);
+      setGenreList(data);
       setEveryonesIn(true);
     });
     socket.on("everyonesIn", (data) => {
@@ -91,6 +92,7 @@ function Everyone({ currUser, email, room }) {
             admin={name[0]}
             currUser={currUser}
             room={room}
+            email={email}
           />
         ) : (
           <div>

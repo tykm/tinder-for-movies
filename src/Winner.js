@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { socket, App } from "./App.js";
-import { Genres } from "./Genres.js";
+import Everyone from "./Everyone.js";
 import "./Winner.css";
 //THERE ARE 4 WARNINGS FOR WINNER.JS, IDK WHAT HAPPENS IF YOU DELETE THEM
-export function Winner({ genreList, admin, currUser, room }) {
+export function Winner({ genreList, admin, currUser, room, email }) {
   const [leaves, setLeave] = useState(false);
   const [reges, setRegen] = useState(false);
   const [info, setInfo] = useState([]);
@@ -19,8 +19,8 @@ export function Winner({ genreList, admin, currUser, room }) {
       isDecline(data + 1);
       console.log(isDecline);
     });
-    socket.on("restartGame", (data) => {
-      console.log("Admin restart in winner.js!")
+    socket.on("restartTrue", (data) => {
+      console.log("Admin restart in winner.js!");
       console.log(data);
       setRegen(true);
     });
@@ -113,7 +113,7 @@ export function Winner({ genreList, admin, currUser, room }) {
   } else if (reges === true) {
     return (
       <div>
-        <Genres genreList={genres} admin={admin} currUser={currUser} />
+        <Everyone currUser={currUser} email={email} room={room} />
       </div>
     );
   }
