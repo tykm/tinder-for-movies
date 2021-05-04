@@ -3,7 +3,7 @@ import os
 from collections import Counter
 import requests
 from flask import Flask, send_from_directory, json, session
-from flask_socketio import SocketIO, join_room, rooms
+from flask_socketio import SocketIO, join_room, rooms, leave_room
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
@@ -168,6 +168,13 @@ def on_email(user_info):
     SOCKETIO.emit('onLogin', data, broadcast=True)
 
 
+@SOCKETIO.on('onLogout')
+def on_logout(data):
+    '''Logout Function'''
+    leave_room(data['room'])
+    ROOMS[data["room"]]['activeUsers'].remove(str(data['currUser']))
+    SOCKETIO.emit('onRoom', ROOMS[data["room"]]['activeUsers'], broadcast=False, room=data['room'])
+
 @SOCKETIO.on('everyonesIn')
 def start_vote(data):
     '''emit for everyone's in button'''
@@ -176,8 +183,19 @@ def start_vote(data):
 @SOCKETIO.on('restartGame')
 def reset_genre_votes(data):
     '''resetting the genrevotes dictionary for future use'''
+    print("Restarting back to genres!")
     for keys in ROOMS[data]['genreVotes']:
         ROOMS[data]['genreVotes'][keys][0] = 0
+    get_genres(data)
+    genres = []
+    for keys in ROOMS[data]['genreVotes']:
+        genres.append(keys)
+    ROOMS[data]["movieVotes"].clear
+    SOCKETIO.emit('restartTrue', room=data)
+    SOCKETIO.emit('restart', [genres, ROOMS[data]['activeUsers']], room=data)
+    #movies = get_movies(data)
+    #print(movies)
+    #SOCKETIO.emit('moviesList', movies, broadcast=True, room=data)
 
 @SOCKETIO.on('genres')
 def send_genres(data):
@@ -325,6 +343,7 @@ def get_movies(data):
         #MOVIESVOTES holds {"Title" : [userVotes, rating, posterpath, description]}
         #for all movies in genre
         #movies holds the  titles of the movies in a list
+    print(movies)
     return movies
 
 

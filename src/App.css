@@ -37,48 +37,57 @@
 }
 h1 {
   font-family: "Trebuchet MS", sans-serif;
-  color: #53688a;
+  color: #cb2c31;
+  font-size: 2.25em;
+  text-shadow: -1px 0 #dcdcdc, 0 1px #dcdcdc, 1px 0 #dcdcdc, 0 -1px #dcdcdc;
 }
 button {
+  background-color: #ED688B;
   font-family: "Trebuchet MS", sans-serif;
-}
-html {
-  background-color: #f9c885;
-}
-.aboutButton {
-  background-color: white;
-  font-family: "Trebuchet MS", sans-serif;
-  color: #9b5134;
+  color: white;
   border: 0;
   outline: 0;
   border-radius: 0.7rem;
   font-size: 1em;
-  width: 10%;
+}
+
+html{
+  animation: scroll 70s ease-in-out infinite;
+  background-image:url('marble.jpg');
+  background-size:161%;
+}
+
+@keyframes scroll {
+   0% { background-position: 0 0; }
+	100% { background-position: -32em 0; }
+}
+
+@media (prefers-reduced-motion) {
+  html {
+    animation: scroll 200s linear infinite;
+  }
+}
+
+.aboutButton {
+  width: 7%;
 }
 h2 {
-  color: #523b58;
+  color: #10559a;
   font-family: "Trebuchet MS", sans-serif;
 }
 p {
-  color: #694a61;
+  color: #2588ad;
   font-family: "Trebuchet MS", sans-serif;
 }
 .everyoneButton {
-  background-color: white;
-  font-family: "Trebuchet MS", sans-serif;
-  color: #9b5134;
-  border: 0;
-  outline: 0;
-  border-radius: 0.7rem;
-  font-size: 1em;
-  width: 13%;
+  width: 9%;
 }
 .name {
   font-family: "Trebuchet MS", sans-serif;
-  color: #694a61;
+  color: #2588ad;
 }
 .room {
-  border: 0.25em solid #9b5134;
+  border: 0.25em solid #cb2c31;
   border-radius: 10px;
   height: 22px;
   width: 230px;
@@ -89,4 +98,7 @@ input {
   color: #9b5134;
   outline: 0;
   font-weight: 300;
+}
+.aboutFormat{
+  width: 65%;
 }

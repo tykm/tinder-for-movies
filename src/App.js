@@ -26,11 +26,15 @@ export function App() {
       window.alert("Login Failed. Please Try Again");
     }
   }
+
   return (
     <div>
+        <center>
+            <h1>Tinder for Movies</h1>
+        </center>
       {isLogged ? (
         <div>
-          <Rooms currUser={currUser} email={email} />
+          <Rooms currUser={currUser} email={email} setLog={setLog} />
         </div>
       ) : (
         <center>
@@ -46,7 +50,7 @@ export function App() {
                 setAbout(!about);
               }}>About</button>
         {about ? (<div><h2>Functionality</h2>
-        <h3>
+       <div className = "aboutFormat">
         <p>Our app is designed to allow a group of users to make movie selections based on the number of likes a movie has gotten.
         This is done by allowing our users to come togther and choose which movies they like or dislike. 
         Users start off by logging in and creating or joining a voting room.
@@ -56,9 +60,10 @@ export function App() {
         If the admin, who is the creator of the room, decides that they don't like the movie choice they can decline the movie selection up to three times.
         After that they can decide to start over on the login or genre voting page.
         </p>
-        </h3>
+        </div>
+     
         <h2>Why it Matters</h2>
-        <h3>
+       <div className = "aboutFormat">
         <p>The reason our app is being made is to give people an oppurtunity to find new content.
         During the last year people have been really isolated and left with few options on ways to entertain themselves.
         Even with access to the internet doing the same things everyday can be boring and it can be hard to find new ways to entertain yourself.
@@ -66,7 +71,7 @@ export function App() {
         The user is also able to have their friends help them make a choice which allows them to have some form of interaction with each other.
         With everything that is happening we thought it would be best to make something that could be entertaining, socially safe, and allow for people to interact with each other.
         </p>
-        </h3>
+        </div>
         <h2> Developed By</h2>
         <p>Tyler Kim<br/>Darshil Patel<br/>Mahi Gada<br/>Dezrianna Chapman</p></div>) : null}
          </center>

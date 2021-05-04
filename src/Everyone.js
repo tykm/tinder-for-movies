@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { socket } from "./App.js";
 import Genres from "./Genres.js";
 import "./App.css";
-function Everyone({ currUser, email, room }) {
+function Everyone({ currUser, email, room, setLog }) {
   const [name, setName] = useState([]); // State variable, list of messages
   const [everyonesin, setEveryonesIn] = useState(false);
   const [genreList, setGenreList] = useState([
@@ -24,6 +24,12 @@ function Everyone({ currUser, email, room }) {
   }
 
   useEffect(() => {
+    socket.on("restart", (data) => {
+      console.log("Admin forced restart!");
+      console.log(data);
+      setGenreList(data[0]);
+      setName(data[1]);
+    });
     socket.on("everyonesIn", (data) => {
       console.log(data);
       setEveryonesIn(data);
@@ -49,12 +55,11 @@ function Everyone({ currUser, email, room }) {
             admin={name[0]}
             currUser={currUser}
             room={room}
+            email={email}
+            setLog={setLog}
           />
         ) : (
           <div>
-            <center>
-              <h1>Tinder for Movies</h1>
-            </center>
             <center>
               <h2>Users Logged In:</h2>
               {name.map((n) => (
@@ -76,9 +81,6 @@ function Everyone({ currUser, email, room }) {
     return (
       <div>
         <div>
-          <center>
-            <h1>Tinder for Movies</h1>
-          </center>
         </div>
         {everyonesin ? (
           <Genres
@@ -86,6 +88,8 @@ function Everyone({ currUser, email, room }) {
             admin={name[0]}
             currUser={currUser}
             room={room}
+            email={email}
+            setLog={setLog}
           />
         ) : (
           <div>
