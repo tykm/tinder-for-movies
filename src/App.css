@@ -44,6 +44,9 @@ button {
 }
 html {
   background-color: #f9c885;
+  
+  
+
 }
 .aboutButton {
   background-color: white;
@@ -89,4 +92,7 @@ input {
   color: #9b5134;
   outline: 0;
   font-weight: 300;
+}
+.aboutFormat{
+  width: 65%;
 }
