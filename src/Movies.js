@@ -4,7 +4,7 @@ import { Winner } from "./Winner.js";
 import { useTimer } from "react-timer-hook";
 import { Radio } from "./Radio.js";
 import "./Genres.css";
-export function Movies({ genreList, admin, currUser, room }) {
+export function Movies({ genreList, admin, currUser, room, email, setLog }) {
   const [movies, setMovies] = useState(Array(10).fill(null)); // sets board to empty array
   const [movieList, setMovieList] = useState(Array(10).fill(null));
   const [isMoviePage, setMoviePage] = useState(false);
@@ -32,6 +32,7 @@ export function Movies({ genreList, admin, currUser, room }) {
 
   useEffect(() => {
     socket.on("moviesList", (data) => {
+      console.log("Received new movies:")
       console.log(data);
       setMovieList(data);
     });
@@ -45,19 +46,19 @@ export function Movies({ genreList, admin, currUser, room }) {
             admin={admin}
             currUser={currUser}
             room={room}
+            email={email}
+            setLog={setLog}
           />{" "}
         </div>
       ) : isMoviePage ? (
         <div>
           <center>
-            <h1>Tinder for Movies</h1>
             <h3>Waiting for Others to Finish!</h3>
           </center>
         </div>
       ) : (
         <div>
           <center>
-            <h1>Tinder for Movies</h1>
             <h2>Vote on Movies</h2>
             <p>
               Time Left to Vote: <b>{seconds}</b> seconds

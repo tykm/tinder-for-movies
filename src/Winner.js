@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
- 
 import { socket, App } from "./App.js";
- 
-import { Genres } from "./Genres.js";
+import Everyone from "./Everyone.js";
+import GoogleLogout from "react-google-login";
 import "./Winner.css";
 //THERE ARE 4 WARNINGS FOR WINNER.JS, IDK WHAT HAPPENS IF YOU DELETE THEM
-export function Winner({ genreList, admin, currUser, room }) {
-  const [leaves, setLeave] = useState(false);
+export function Winner({ genreList, admin, currUser, room, email, setLog }) {
   const [reges, setRegen] = useState(false);
   const [info, setInfo] = useState([]);
   const [decline, isDecline] = useState(0);
@@ -20,10 +18,14 @@ export function Winner({ genreList, admin, currUser, room }) {
       isDecline(data + 1);
       console.log(isDecline);
     });
+    socket.on("restartTrue", (data) => {
+      console.log("Admin restart in winner.js!");
+      console.log(data);
+      setRegen(true);
+    });
   }, []);
   //[name, number of like, rating, picture, dezcription]
   // will need props to get information from the other component
- 
   // let changes while const will not be reassigned
   if (decline === 0) {
     movieL = info[0];
@@ -45,7 +47,8 @@ export function Winner({ genreList, admin, currUser, room }) {
     desc = info[14];
   }
   function leave() {
-    setLeave(true);
+    setLog(false);
+    socket.emit('onLogout', {room, currUser});
   }
   function regen() {
     setRegen(true);
@@ -55,7 +58,6 @@ export function Winner({ genreList, admin, currUser, room }) {
   const page = (
     <div>
       <center>
-        <h1>Tinder for Movies</h1>
         <h2>Winning Movie: {movieL}</h2>
         <img src={pic} alt="Movie Poster" />
         <p>
@@ -68,50 +70,48 @@ export function Winner({ genreList, admin, currUser, room }) {
             {desc} <br />
           </div>
         </p>
-        <button className="login" onClick={leave}>
-          {" "}
-          Return to Login{" "}
-        </button>{" "}
-        <button
-          className="genres"
-          onClick={() => {
-            regen();
-            socket.emit("restartGame", room);
-          }}
-        >
-          Return to Genres Page
-        </button>{" "}
+        <GoogleLogout
+          clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
+          buttonText="Logout"
+          onSuccess={leave}
+          onFailure={leave}
+          cookiePolicy={"single_host_origin"}
+        />
         {currUser === admin && decline < 2 ? (
-          <button
-            className="decline"
-            onClick={() => {
-              isDecline((prev) => prev + 1);
-              console.log(decline, "Decline was Clicked");
-              socket.emit("onDecline", { decline, room });
-            }}
-          >
-            Decline
-          </button>
+          <div>
+            <button
+              className="genres"
+              onClick={() => {
+                regen();
+                socket.emit("restartGame", room);
+              }}
+            >
+              Restart Game
+            </button>{" "}
+            <button
+              className="decline"
+              onClick={() => {
+                isDecline((prev) => prev + 1);
+                console.log(decline, "Decline was Clicked");
+                socket.emit("onDecline", { decline, room });
+              }}
+            >
+              Decline
+            </button>
+          </div>
         ) : null}
       </center>{" "}
       <br />
     </div>
   );
-  if (leaves === false && reges === false) {
+  if (reges === false) {
     return page;
-  } else if (leaves === true) {
-    return (
-      <div>
-        <App />
-      </div>
-    );
   } else if (reges === true) {
     return (
       <div>
-        <Genres genreList={genreList} admin={admin} currUser={currUser} />
+        <Everyone currUser={currUser} email={email} room={room} />
       </div>
     );
   }
- 
 }
 export default Winner;
