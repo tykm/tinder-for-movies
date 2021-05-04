@@ -170,6 +170,7 @@ def on_email(user_info):
 
 @SOCKETIO.on('onLogout')
 def on_logout(data):
+    '''Logout Function'''
     leave_room(data['room'])
     ROOMS[data["room"]]['activeUsers'].remove(str(data['currUser']))
     SOCKETIO.emit('onRoom', ROOMS[data["room"]]['activeUsers'], broadcast=False, room=data['room'])
