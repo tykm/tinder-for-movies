@@ -40,7 +40,6 @@ export function Rooms({ currUser, email }) {
       ) : (
         <div>
           <center>
-            <h1>Tinder for Movies</h1>
             <input className="room" ref={roomName} type="text" />
             <br />
             <br />

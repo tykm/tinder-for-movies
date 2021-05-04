@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { socket } from "./App.js";
 import { Movies } from "./Movies.js";
 import { Radio } from "./Radio.js";
 import { useTimer } from "react-timer-hook";
 import "./Genres.css";
-export function Genres({ genreList, admin, currUser, room }) {
+export function Genres({ genreList, admin, currUser, room, email }) {
   const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
+  
+  console.log("Here is genreList ")
 
   const expiryTimestamp = new Date();
+
   expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 10);
   const { seconds, isRunning } = useTimer({
     expiryTimestamp,
@@ -49,19 +52,18 @@ export function Genres({ genreList, admin, currUser, room }) {
             admin={admin}
             currUser={currUser}
             room={room}
+            email={email}
           />{" "}
         </div>
       ) : isGenrePage ? (
         <div>
           <center>
-            <h1>Tinder for Movies</h1>
             <h3>Waiting for Others to Finish!</h3>
           </center>
         </div>
       ) : (
         <div>
           <center>
-            <h1>Tinder for Movies</h1>
             <h2>Vote on Genres</h2>
             <p>
               Time Left to Vote: <b>{seconds}</b> seconds
