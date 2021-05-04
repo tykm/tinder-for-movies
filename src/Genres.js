@@ -57,14 +57,12 @@ export function Genres({ genreList, admin, currUser, room, email }) {
       ) : isGenrePage ? (
         <div>
           <center>
-            <h1>Tinder for Movies</h1>
             <h3>Waiting for Others to Finish!</h3>
           </center>
         </div>
       ) : (
         <div>
           <center>
-            <h1>Tinder for Movies</h1>
             <h2>Vote on Genres</h2>
             <p>
               Time Left to Vote: <b>{seconds}</b> seconds

@@ -59,9 +59,6 @@ function Everyone({ currUser, email, room }) {
         ) : (
           <div>
             <center>
-              <h1>Tinder for Movies</h1>
-            </center>
-            <center>
               <h2>Users Logged In:</h2>
               {name.map((n) => (
                 <div className="name">{n}</div>
@@ -82,9 +79,6 @@ function Everyone({ currUser, email, room }) {
     return (
       <div>
         <div>
-          <center>
-            <h1>Tinder for Movies</h1>
-          </center>
         </div>
         {everyonesin ? (
           <Genres

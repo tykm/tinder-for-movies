@@ -52,14 +52,12 @@ export function Movies({ genreList, admin, currUser, room, email }) {
       ) : isMoviePage ? (
         <div>
           <center>
-            <h1>Tinder for Movies</h1>
             <h3>Waiting for Others to Finish!</h3>
           </center>
         </div>
       ) : (
         <div>
           <center>
-            <h1>Tinder for Movies</h1>
             <h2>Vote on Movies</h2>
             <p>
               Time Left to Vote: <b>{seconds}</b> seconds
