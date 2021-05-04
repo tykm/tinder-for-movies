@@ -45,6 +45,7 @@ button {
 html {
   
   background-image:url('marble.jpg');
+  opacity: 0.75;
   
 
 }

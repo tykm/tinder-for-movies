@@ -58,13 +58,8 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
   console.log(decline, 'this is decline');
   const page = (
     <div>
-      <GoogleLogout
-          clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
-          buttonText="Logout"
-          onSuccess={leave}
-          onFailure={leave}
-          cookiePolicy={"single_host_origin"}
-        />
+    
+     
       <center>
         <h2>Winning Movie: {movieL}</h2>
         <img src={pic} alt="Movie Poster" />
@@ -79,8 +74,7 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
           </div>
         </p>
         {currUser === admin ? (
-          <div>
-            <br></br>
+          <div> {" "}
             <button
               className="genres"
               onClick={() => {
@@ -91,8 +85,7 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
               Restart Game
             </button>
             {decline < 2 ? (
-            <div>
-            <br></br>
+         
             <button
               className="decline"
               onClick={() => {
@@ -103,10 +96,23 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
             >
               Decline
             </button>
-            </div>
+         
           ) : null}
-          </div>
-        ) : null}
+          {" "} <GoogleLogout
+          clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
+          buttonText="Logout"
+          onSuccess={leave}
+          onFailure={leave}
+          cookiePolicy={"single_host_origin"}
+        />
+     </div>) : ( <GoogleLogout
+          clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
+          buttonText="Logout"
+          onSuccess={leave}
+          onFailure={leave}
+          cookiePolicy={"single_host_origin"}
+        />)
+     }
       </center>{" "}
       <br />
     </div>
