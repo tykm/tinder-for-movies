@@ -50,13 +50,26 @@ button {
   border-radius: 0.7rem;
   font-size: 1em;
 }
-html {
-  
+
+html{
+  animation: scroll 70s ease-in-out infinite;
   background-image:url('marble.jpg');
   background-size:161%;
 }
+
+@keyframes scroll {
+   0% { background-position: 0 0; }
+	100% { background-position: -32em 0; }
+}
+
+@media (prefers-reduced-motion) {
+  html {
+    animation: scroll 200s linear infinite;
+  }
+}
+
 .aboutButton {
-  width: 10%;
+  width: 7%;
 }
 h2 {
   color: #10559a;
@@ -67,7 +80,7 @@ p {
   font-family: "Trebuchet MS", sans-serif;
 }
 .everyoneButton {
-  width: 13%;
+  width: 9%;
 }
 .name {
   font-family: "Trebuchet MS", sans-serif;
