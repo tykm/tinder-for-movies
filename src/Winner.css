@@ -1,7 +1,7 @@
 button {
-  background-color: white;
+  background-color: #ED688B;
   font-family: "Trebuchet MS", sans-serif;
-  color: #9b5134;
+  color: white;
   border: 0;
   outline: 0;
   border-radius: 0.7rem;
@@ -10,11 +10,15 @@ button {
 .login {
   width: 8%;
 }
-.genres {
-  width: 11%;
+.restart {
+  height: 1.3em;
+  width: 9%;
+  margin-right: 0.5em;
 }
 .decline {
-  width: 5%;
+  height: 1.3em;
+  width: 6%;
+  margin-right: 0.5em;
 }
 .desc {
   width: 34%;
@@ -25,6 +29,8 @@ img {
 p {
   font-size: 1.1em;
 }
-.logout{
-  padding-left: 52em;
+.buttons{
+  display: flex;
+  justify-content: center;
+  
 }
