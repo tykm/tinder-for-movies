@@ -1,12 +1,12 @@
-h2{
+h2 {
   color: #523b58;
   font-family: "Trebuchet MS", sans-serif;
 }
-p{
-  color: #694A61;
+p {
+  color: #694a61;
   font-family: "Trebuchet MS", sans-serif;
 }
-.choiceButton{
+.choiceButton {
   background-color: white;
   font-family: "Trebuchet MS", sans-serif;
   color: #9b5134;
@@ -16,12 +16,37 @@ p{
   font-size: 1em;
   width: 7%;
 }
-ul{
-  padding:0;
-  color: #694A61;
+ul {
+  padding: 0;
+  color: #694a61;
   font-family: "Trebuchet MS", sans-serif;
 }
-h3{
+h3 {
   color: #523b58;
   font-family: "Trebuchet MS", sans-serif;
+}
+label {
+  font-family: "Trebuchet MS", sans-serif;
+  color: #694a61;
+}
+
+input[type="radio"] {
+  width: 1em;
+  height: 1em;
+  background-color: #694a61;
+}
+input[type="radio"].rad:checked {
+  background-color: #694a61;
+  color: #694a61;
+}
+
+input[type="radio"]:hover,
+input[type="radio"]:focus {
+  color: #694a61;
+}
+
+input[type="radio"]:active {
+  background-color: white;
+  color: #694a61;
+  outline: 1px solid #694a61;
 }

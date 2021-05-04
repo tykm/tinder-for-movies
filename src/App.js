@@ -10,7 +10,7 @@ export function App() {
   const [isLogged, setLog] = useState(false); // useState to check if user is logged in
   const [currUser, setCurrUser] = useState("");
   const [email, setEmail] = useState("");
-  const [about, setAbout]=useState(false);
+  const [about, setAbout] = useState(false);
 
   function onLoginButton(response) {
     try {
@@ -19,7 +19,7 @@ export function App() {
 
       let infoNE = [response.profileObj.name, response.profileObj.email];
       setCurrUser(infoNE[0]);
-      setEmail(infoNE[1])
+      setEmail(infoNE[1]);
       socket.emit("email", infoNE);
       setLog(true);
     } catch (err) {
@@ -27,10 +27,10 @@ export function App() {
     }
   }
   return (
-    <div><center><h1>Tinder for Movies</h1></center>
+    <div>
       {isLogged ? (
         <div>
-          <Rooms currUser={currUser} email={email}/>
+          <Rooms currUser={currUser} email={email} />
         </div>
       ) : (
         <center>
