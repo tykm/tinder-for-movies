@@ -55,6 +55,7 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
   }
   console.log(currUser, "this is the currUser");
   console.log(admin, "this is the admin");
+  console.log(decline, 'this is decline');
   const page = (
     <div>
       <center>
@@ -77,8 +78,9 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
           onFailure={leave}
           cookiePolicy={"single_host_origin"}
         />
-        {currUser === admin && decline < 2 ? (
+        {currUser === admin ? (
           <div>
+            <br></br>
             <button
               className="genres"
               onClick={() => {
@@ -87,7 +89,10 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
               }}
             >
               Restart Game
-            </button>{" "}
+            </button>
+            {decline < 2 ? (
+            <div>
+            <br></br>
             <button
               className="decline"
               onClick={() => {
@@ -98,6 +103,8 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
             >
               Decline
             </button>
+            </div>
+          ) : null}
           </div>
         ) : null}
       </center>{" "}
@@ -107,6 +114,7 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
   if (reges === false) {
     return page;
   } else if (reges === true) {
+    console.log(currUser, 'Before restart Curruser')
     return (
       <div>
         <Everyone currUser={currUser} email={email} room={room} />
