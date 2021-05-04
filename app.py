@@ -3,7 +3,7 @@ import os
 from collections import Counter
 import requests
 from flask import Flask, send_from_directory, json, session
-from flask_socketio import SocketIO, join_room, rooms
+from flask_socketio import SocketIO, join_room, rooms, leave_room
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
@@ -167,6 +167,12 @@ def on_email(user_info):
     data = [USERS, names]
     SOCKETIO.emit('onLogin', data, broadcast=True)
 
+
+@SOCKETIO.on('onLogout')
+def on_logout(data):
+    leave_room(data['room'])
+    ROOMS[data["room"]]['activeUsers'].remove(str(data['currUser']))
+    SOCKETIO.emit('onRoom', ROOMS[data["room"]]['activeUsers'], broadcast=False, room=data['room'])
 
 @SOCKETIO.on('everyonesIn')
 def start_vote(data):

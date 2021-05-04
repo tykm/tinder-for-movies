@@ -3,7 +3,7 @@ import { socket } from "./App.js";
 import Everyone from "./Everyone.js";
 import "./App.css";
 
-export function Rooms({ currUser, email }) {
+export function Rooms({ currUser, email, setLog }) {
   const roomName = useRef(null);
   const [entered, setEntered] = useState(false);
   const [room, setRoom] = useState("");
@@ -36,7 +36,7 @@ export function Rooms({ currUser, email }) {
   return (
     <div>
       {entered ? (
-        <Everyone currUser={currUser} email={email} room={room} />
+        <Everyone currUser={currUser} email={email} room={room} setLog={setLog} />
       ) : (
         <div>
           <center>

@@ -4,7 +4,7 @@ import { Movies } from "./Movies.js";
 import { Radio } from "./Radio.js";
 import { useTimer } from "react-timer-hook";
 import "./Genres.css";
-export function Genres({ genreList, admin, currUser, room, email }) {
+export function Genres({ genreList, admin, currUser, room, email, setLog }) {
   const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
@@ -53,6 +53,7 @@ export function Genres({ genreList, admin, currUser, room, email }) {
             currUser={currUser}
             room={room}
             email={email}
+            setLog={setLog}
           />{" "}
         </div>
       ) : isGenrePage ? (
