@@ -34,6 +34,7 @@ export function App() {
         </div>
       ) : (
         <center>
+        <center><h1>Tinder for Movies</h1></center>
         <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
           buttonText="Login"
