@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { socket } from "./App.js";
 import { Movies } from "./Movies.js";
 import { Radio } from "./Radio.js";
@@ -14,7 +14,7 @@ export function Genres({ genreList, admin, currUser, room, email, setLog }) {
   const expiryTimestamp = new Date();
 
   expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 45);
-  const { seconds, isRunning } = useTimer({
+  const { seconds } = useTimer({
     expiryTimestamp,
     autoStart: true,
     onExpire: () => {
