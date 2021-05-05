@@ -100,7 +100,7 @@ export function App() {
                 <br />
                 <a href="https://github.com/darshilpatel32">Darshil Patel</a>
                 <br />
-                <a href="">Mahi Gada</a>
+                <a href="https://github.com/mahigada">Mahi Gada</a>
                 <br />
                 <a href="https://github.com/DezChap">Dezrianna Chapman</a>
               </p>
