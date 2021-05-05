@@ -13,8 +13,8 @@ export function Genres({ genreList, admin, currUser, room, email, setLog }) {
 
   const expiryTimestamp = new Date();
 
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 3);
-  const { seconds, isRunning } = useTimer({
+  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 45);
+  const { seconds } = useTimer({
     expiryTimestamp,
     autoStart: true,
     onExpire: () => {

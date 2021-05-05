@@ -64,7 +64,7 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
         <p>
           User likes: {userL}
           <br />
-          User rating: {voteL}
+          Movie rating: {voteL}
           <br />
           <div className="desc">
             Movie Description: <br />
@@ -123,7 +123,10 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
   if (reges === false) {
     return page;
   } else if (reges === true) {
+<<<<<<< HEAD
     console.log(currUser, "Before restart Curruser");
+=======
+>>>>>>> 99a5d3a99d8169fb655cec6fd73bfc5058a929ed
     return (
       <div>
         <Everyone currUser={currUser} email={email} room={room} />

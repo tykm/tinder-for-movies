@@ -1,13 +1,9 @@
 # Project 3 - Tinder for Movies
 
 Developed by Tyler Kim, Dezrianna Chapman, Mahi Gada, Darshil Patel
-Preview Application: [https://tinder-for-movies.herokuapp.com/](https://tinder-for-movies.herokuapp.com/)
+Preview Application: [https://tinder-for-movies4.herokuapp.com/](https://tinder-for-movies4.herokuapp.com/)
 
-When testing the app Naman or TA's please use the following credentials as the first users login:
-Email: `tinderformovies1.0@gmail.com`
-Password: `movies12!@`
-
-- The reason you have to use admin to log in as the first user is because we need presisting DB now and in the future when we add multiple rooms the admin will have created the room so they will be able to reserve admin rights. It is more for sprint 2 but we wanted to have the core functionalities done for sprint 1 so we decided to do it this way.
+After the login create a room and make sure to have other users join that room. Make sure to vote for the Genre and Movie. Click the submit button at the end of the page for each. View the results where the admin can restart the game or decline. When a user is done they are able to logout and return to the login page.
 
 ## Clone the repo
 
@@ -72,19 +68,20 @@ CLI Command: `git clone https://github.com/tykm/tinder-for-movies/`
 
 ## Tech Issues
 
-1. When we first started using a Javascript timere called interval where we had an issue stopping the timer at zero. We had to switch over to react-timer-hook which helped fix the issue we were having.
-2. While we worked on the google-oauth we had received 404 errors where it would login, but not connect to anything. This issue was later fixed by updating a socket issue we were having in our app.py.
-3. Another issue we had is with the pull and merges. Usually forgetting to pull before working on the code would give us a lot of errors later on. This issue also lead us to have errors in our code while we were linting. Github also gave us some issues with the workflow, but we fixed most of the issues by going through and fixing the issues.
-
+1. Some issue we had were duplicate words appearing on the page. This was a rendering issue that was solved after deleting a few lines of code and rearranging where the title would show up.
+2. Another issue we had was getting our restart to work. When the game would restart it would only be for the admin and there were a couple of other issues where it wouldn't work with other users.
+3. We had a lot of issues connecting our google-oauth to the Heroku. For some reason the transfer between our Cloud9 and github to Heroku was making it so that users could no longer login. We were able to fix it after trying many different methods to do with the API key setup.
 ## Problems
 
-1. Genre.js page had an issue with a one click lag so we had to populate it on App.js. This allowed for their to be a fix with the way the users interacted with the page and the way the data collected from the votes was handled.
-2. In our user story we said that we would include a link to the trailer and the review. We had to remove the trailer and review links from the page, because the Movie API did not have a way to access reviews and most movies rarely had a trailer to be associated with them
-3. Admin session is currently operating on one person as an admin the person who created the room is in charge of anyone who enters the room. This issue could be fixed by changing how data is saved in the database. This is fixed when we changed our database and will be completely fixed when we start the functionality for rooms.
+1. Before we presented we found an issue where the restart button failed to restart the Genres component. We were able to quickly fix this so that when clicked a new round of voting could begin.
+2. Some of our buttons early on worked in resetting the game, but not is resetting the list for the movies. Where able to fix this later on using by having the data be resent when the button was clicked so that the old data would clear.
+3. We had an issue with users who entered the room showing up multiple times. We were able to fix this by changing the way data was inserted into the database so that no duplicates would occur.
 
 ## What to Improve
 
-I think the biggest improvement to make is the way we have people exit our page. The functionality of our ending page is a little lacking. We have it right now where there is no way to return to login scren or to retry the votes. Also having a set admin who is the first person to be logged into the database is giving us issues.
-Currently another thing we should fix is the way we send and receive information from the database. It would probably be better to have it so that users who have made rooms previously can view previous information.
-Overall the best way to improve the app would be to make it have more flesshed out functionality, however, for what our goal is the only way to do that would just be to make it so that users are more aware of each other.
-This might include adding a list of their names or showing who may have voted for what or even which users voted for the movie that won.
+I think that for the most part our app runs well and we implemented most of the things we wanted.
+Maybe if there was more time we would format it different or stylize it more. 
+We would also probably include a way to view previous movie choices or a way to see what a person has voted for.
+Our group could have also added more features and expanded our database, but for what we have this is a great start to an app that could be marketable.
+We should also add a function where if everyone has submitted it will move on to the next page instead of wait the full time even if everyone has already voted.
+This includes displaying the number of people who have/haven't voted.

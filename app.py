@@ -221,7 +221,7 @@ def reset_genre_votes(data):
         genres.append(keys)
     ROOMS[data]["movieVotes"].clear
     SOCKETIO.emit('restartTrue', room=data)
-    SOCKETIO.emit('restart', genres, room=data)
+    SOCKETIO.emit('restart', [genres, ROOMS[data]['activeUsers']], room=data)
     #movies = get_movies(data)
     #print(movies)
     #SOCKETIO.emit('moviesList', movies, broadcast=True, room=data)
