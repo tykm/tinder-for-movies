@@ -58,7 +58,7 @@ CLI Command: `git clone https://github.com/tykm/tinder-for-movies/`
 10. Open your .env file and set `DATABASE_URL` variable: `touch .env && echo "DATABASE_URL='copy-paste-database-url-here'" > .env`
 11. Push to Heroku: `git push heroku main`
 
-##Linting
+## Linting
 
 1. `pylint app.py`
 2. `npx eslint src/*.js`

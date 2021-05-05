@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { socket, App } from "./App.js";
+import { socket} from "./App.js";
 import Everyone from "./Everyone.js";
 import GoogleLogout from "react-google-login";
 import "./Winner.css";
