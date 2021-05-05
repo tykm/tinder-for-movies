@@ -36,7 +36,12 @@ export function Rooms({ currUser, email, setLog }) {
   return (
     <div>
       {entered ? (
-        <Everyone currUser={currUser} email={email} room={room} setLog={setLog} />
+        <Everyone
+          currUser={currUser}
+          email={email}
+          room={room}
+          setLog={setLog}
+        />
       ) : (
         <div>
           <center>

@@ -48,17 +48,16 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
   }
   function leave() {
     setLog(false);
-    socket.emit('onLogout', {room, currUser});
+    socket.emit("onLogout", { room, currUser });
   }
   function regen() {
     setRegen(true);
   }
   console.log(currUser, "this is the currUser");
   console.log(admin, "this is the admin");
-  console.log(decline, 'this is decline');
+  console.log(decline, "this is decline");
   const page = (
     <div>
-      
       <center>
         <h2>Winning Movie: {movieL}</h2>
         <img src={pic} alt="Movie Poster" />
@@ -72,9 +71,10 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
             {desc} <br />
           </div>
         </p>
-        
+
         {currUser === admin ? (
-          <div className="buttons"> {" "}
+          <div className="buttons">
+            {" "}
             <button
               className="restart"
               onClick={() => {
@@ -83,34 +83,39 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
               }}
             >
               Restart Game
-            </button> {" "}
+            </button>{" "}
             {decline < 2 ? (
-            <button
-              className="decline"
-              onClick={() => {
-                isDecline((prev) => prev + 1);
-                console.log(decline, "Decline was Clicked");
-                socket.emit("onDecline", { decline, room });
-              }}
-            >
-              Decline
-            </button>
-         
-          ) : null}
-          <GoogleLogout
-          clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
-          buttonText="Logout"
-          onSuccess={leave}
-          onFailure={leave}
-          cookiePolicy={"single_host_origin"}
-        /></div>
-        ) : <div className="buttons"> <GoogleLogout
-          clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
-          buttonText="Logout"
-          onSuccess={leave}
-          onFailure={leave}
-          cookiePolicy={"single_host_origin"}
-        /></div>}
+              <button
+                className="decline"
+                onClick={() => {
+                  isDecline((prev) => prev + 1);
+                  console.log(decline, "Decline was Clicked");
+                  socket.emit("onDecline", { decline, room });
+                }}
+              >
+                Decline
+              </button>
+            ) : null}
+            <GoogleLogout
+              clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
+              buttonText="Logout"
+              onSuccess={leave}
+              onFailure={leave}
+              cookiePolicy={"single_host_origin"}
+            />
+          </div>
+        ) : (
+          <div className="buttons">
+            {" "}
+            <GoogleLogout
+              clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
+              buttonText="Logout"
+              onSuccess={leave}
+              onFailure={leave}
+              cookiePolicy={"single_host_origin"}
+            />
+          </div>
+        )}
       </center>{" "}
       <br />
     </div>
@@ -118,7 +123,7 @@ export function Winner({ genreList, admin, currUser, room, email, setLog }) {
   if (reges === false) {
     return page;
   } else if (reges === true) {
-    console.log(currUser, 'Before restart Curruser')
+    console.log(currUser, "Before restart Curruser");
     return (
       <div>
         <Everyone currUser={currUser} email={email} room={room} />

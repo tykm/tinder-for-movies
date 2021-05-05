@@ -79,8 +79,7 @@ function Everyone({ currUser, email, room, setLog }) {
     console.log(currUser, "Current User");
     return (
       <div>
-        <div>
-        </div>
+        <div></div>
         {everyonesin ? (
           <Genres
             genreList={genreList}

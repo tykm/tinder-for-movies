@@ -8,8 +8,8 @@ export function Genres({ genreList, admin, currUser, room, email, setLog }) {
   const [genres, setGenres] = useState(Array(10).fill(null)); // sets board to empty array
   const [isGenrePage, setGenrePage] = useState(false);
   const [timerEnd, setTimerEnd] = useState(false);
-  
-  console.log("Here is genreList ")
+
+  console.log("Here is genreList ");
 
   const expiryTimestamp = new Date();
 

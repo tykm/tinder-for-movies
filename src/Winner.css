@@ -1,5 +1,5 @@
 button {
-  background-color: #ED688B;
+  background-color: #ed688b;
   font-family: "Trebuchet MS", sans-serif;
   color: white;
   border: 0;
@@ -29,8 +29,7 @@ img {
 p {
   font-size: 1.1em;
 }
-.buttons{
+.buttons {
   display: flex;
   justify-content: center;
-  
 }

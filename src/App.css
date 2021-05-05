@@ -42,7 +42,7 @@ h1 {
   text-shadow: -1px 0 #dcdcdc, 0 1px #dcdcdc, 1px 0 #dcdcdc, 0 -1px #dcdcdc;
 }
 button {
-  background-color: #ED688B;
+  background-color: #ed688b;
   font-family: "Trebuchet MS", sans-serif;
   color: white;
   border: 0;
@@ -51,15 +51,19 @@ button {
   font-size: 1em;
 }
 
-html{
+html {
   animation: scroll 70s ease-in-out infinite;
-  background-image:url('marble.jpg');
-  background-size:161%;
+  background-image: url("marble.jpg");
+  background-size: 161%;
 }
 
 @keyframes scroll {
-   0% { background-position: 0 0; }
-	100% { background-position: -32em 0; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -32em 0;
+  }
 }
 
 @media (prefers-reduced-motion) {
@@ -99,6 +103,6 @@ input {
   outline: 0;
   font-weight: 300;
 }
-.aboutFormat{
+.aboutFormat {
   width: 65%;
 }
