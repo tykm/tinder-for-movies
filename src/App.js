@@ -96,13 +96,13 @@ export function App() {
               </div>
               <h2> Developed By</h2>
               <p>
-                <a href="https://github.com/tykm">Tyler Kim</a>
+                <a href="https://github.com/tykm" target="_blank" rel="noreferrer noopener">Tyler Kim</a>
                 <br />
-                <a href="https://github.com/darshilpatel32">Darshil Patel</a>
+                <a href="https://github.com/darshilpatel32" target="_blank" rel="noreferrer noopener">Darshil Patel</a>
                 <br />
-                <a href="https://github.com/mahigada">Mahi Gada</a>
+                <a href="https://github.com/mahigada" target="_blank" rel="noreferrer noopener">Mahi Gada</a>
                 <br />
-                <a href="https://github.com/DezChap">Dezrianna Chapman</a>
+                <a href="https://github.com/DezChap" target="_blank" rel="noreferrer noopener">Dezrianna Chapman</a>
               </p>
             </div>
           ) : null}
