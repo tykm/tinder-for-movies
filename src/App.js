@@ -96,13 +96,13 @@ export function App() {
               </div>
               <h2> Developed By</h2>
               <p>
-                Tyler Kim
+                <a href="https://github.com/tykm">Tyler Kim</a>
                 <br />
-                Darshil Patel
+                <a href="https://github.com/darshilpatel32">Darshil Patel</a>
                 <br />
-                Mahi Gada
+                <a href="">Mahi Gada</a>
                 <br />
-                Dezrianna Chapman
+                <a href="https://github.com/DezChap">Dezrianna Chapman</a>
               </p>
             </div>
           ) : null}

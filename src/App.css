@@ -106,3 +106,7 @@ input {
 .aboutFormat {
   width: 65%;
 }
+a {
+  color: #2588ad;
+  font-family: "Trebuchet MS", sans-serif;
+}
