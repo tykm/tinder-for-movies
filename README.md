@@ -68,13 +68,13 @@ CLI Command: `git clone https://github.com/tykm/tinder-for-movies/`
 
 ## Tech Issues
 
-1. Some issue we had were duplicate words appearing on the page. This was a rendering issue that was solved after deleting a few lines of code and rearranging where the title would show up.
+1. Some issue we had were duplicate words appearing on the page. This was a rendering issue that was solved after deleting a few lines of code and rearranging where the title would show up and implementing the google logout functionality.
 2. Another issue we had was getting our restart to work. When the game would restart it would only be for the admin and there were a couple of other issues where it wouldn't work with other users.
 3. We had a lot of issues connecting our google-oauth to the Heroku. For some reason the transfer between our Cloud9 and github to Heroku was making it so that users could no longer login. We were able to fix it after trying many different methods to do with the API key setup.
 ## Problems
 
 1. Before we presented we found an issue where the restart button failed to restart the Genres component. We were able to quickly fix this so that when clicked a new round of voting could begin.
-2. Some of our buttons early on worked in resetting the game, but not is resetting the list for the movies. Where able to fix this later on using by having the data be resent when the button was clicked so that the old data would clear.
+2. Some of our buttons early on worked in resetting the game, but not is resetting the list for the movies. Where able to fix this later on by having the data be resent when the button was clicked so that the old data would clear.
 3. We had an issue with users who entered the room showing up multiple times. We were able to fix this by changing the way data was inserted into the database so that no duplicates would occur.
 
 ## What to Improve
