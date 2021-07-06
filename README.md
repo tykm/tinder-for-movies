@@ -1,7 +1,7 @@
 # Project 3 - Tinder for Movies
 
 Developed by Tyler Kim, Dezrianna Chapman, Mahi Gada, Darshil Patel
-Preview Application: [https://tinder-for-movies4.herokuapp.com/](https://tinder-for-movies4.herokuapp.com/)
+<br /> Preview Application: [https://tinder-for-movies4.herokuapp.com/](https://tinder-for-movies4.herokuapp.com/)
 
 After the login create a room and make sure to have other users join that room. Make sure to vote for the Genre and Movie. Click the submit button at the end of the page for each. View the results where the admin can restart the game or decline. When a user is done they are able to logout and return to the login page.
 
